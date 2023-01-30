@@ -1,8 +1,9 @@
-package com.kyrillosg.rijksstudio
+package com.kyrillosg.rijksstudio.feature.collection
 
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import com.kyrillosg.rijksstudio.R
 import com.kyrillosg.rijksstudio.core.ui.ViewBindingFragment
 import com.kyrillosg.rijksstudio.databinding.FragmentCollectionDetailBinding
 

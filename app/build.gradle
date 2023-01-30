@@ -38,6 +38,9 @@ android {
 
 dependencies {
 
+    implementation(libs.bundles.kotlinx.coroutines)
+    implementation(libs.bundles.koin)
+
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
@@ -48,6 +51,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
 
     implementation(libs.material)
+    implementation(libs.napier)
 
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext.junit)
