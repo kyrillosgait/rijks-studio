@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.kyrillosg.rijksstudio.core.ui.ViewBindingFragment
-import com.kyrillosg.rijksstudio.databinding.FragmentSecondBinding
+import com.kyrillosg.rijksstudio.databinding.FragmentCollectionDetailBinding
 
-class SecondFragment : ViewBindingFragment<FragmentSecondBinding>(FragmentSecondBinding::inflate) {
+class CollectionDetailFragment : ViewBindingFragment<FragmentCollectionDetailBinding>(
+    bindingProvider = FragmentCollectionDetailBinding::inflate
+) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonSecond.setOnClickListener {
+        binding.toolbar.title = "Rijksdetail"
+        binding.toolbar.setNavigationOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
     }
