@@ -16,9 +16,11 @@
         tools:title="List" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/collectionListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
-        android:padding="8dp" />
+        tools:itemCount="5"
+        tools:listitem="@layout/item_image_with_label" />
 
 </FrameLayout>

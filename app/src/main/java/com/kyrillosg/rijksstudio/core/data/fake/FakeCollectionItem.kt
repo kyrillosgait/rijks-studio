@@ -4,10 +4,10 @@ import com.kyrillosg.rijksstudio.core.data.CollectionItem
 import java.util.*
 
 data class FakeCollectionItem(
-    override val id: CollectionItem.Id,
+    override val itemId: CollectionItem.Id,
     override val title: String,
     override val author: String,
-    override val image: String?
+    override val imageUrl: String?
 ) : CollectionItem {
 
     companion object {
@@ -21,9 +21,9 @@ data class FakeCollectionItem(
         ): CollectionItem {
             val imageUrl = "https://via.placeholder.com/${imageWidth}x${imageHeight}.${imageFormat}?text=$imageText"
             return FakeCollectionItem(
-                id = CollectionItem.Id(title),
+                itemId = CollectionItem.Id(title),
                 title = title,
-                image = imageUrl,
+                imageUrl = imageUrl,
                 author = author,
             )
         }

@@ -1,10 +1,10 @@
 package com.kyrillosg.rijksstudio.core.data
 
 interface CollectionItem {
-    val id: Id
+    val itemId: Id
     val title: String
     val author: String
-    val image: String?
+    val imageUrl: String?
 
     @JvmInline
     value class Id(val value: String)

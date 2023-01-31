@@ -4,32 +4,37 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kyrillosg.rijksstudio.core.data.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.GetCollectionItemsUseCase
-import io.github.aakira.napier.Napier
+import com.kyrillosg.rijksstudio.feature.collection.adapter.CollectionListViewData
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class CollectionListViewModel(
     private val getCollectionItemsUseCase: GetCollectionItemsUseCase,
 ) : ViewModel() {
 
-    private val _collectionItems: MutableStateFlow<CollectionListUiState> =
-        MutableStateFlow(CollectionListUiState.Loading)
+    private val _collectionList: MutableStateFlow<List<CollectionItem>> =
+        MutableStateFlow(emptyList())
 
-    val collectionItems: StateFlow<CollectionListUiState>
-        get() = _collectionItems
+    val collectionList: Flow<List<CollectionListViewData>>
+        get() = _collectionList.map { items ->
+            items
+                .groupBy { it.author }
+                .flatMap { authorWithItems ->
+                    val headerItem = CollectionListViewData.Header(authorWithItems.key)
+                    val imageWithLabelItems = authorWithItems.value.map { collectionItem ->
+                        CollectionListViewData.ImageWithLabel.from(collectionItem)
+                    }
+                    listOf(headerItem) + imageWithLabelItems
+                }
+        }
 
     init {
         viewModelScope.launch {
-
-            val collectionItems = getCollectionItemsUseCase(Unit).also {
-                it.forEach {
-                    Napier.v { "CollectionItem - $it" }
-                }
-            }
-            _collectionItems.value = CollectionListUiState.Success(collectionItems)
+            val collectionItems = getCollectionItemsUseCase(Unit)
+            _collectionList.value = collectionItems
         }
-
     }
 }
 
