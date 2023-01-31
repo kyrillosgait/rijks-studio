@@ -3,6 +3,7 @@ package com.kyrillosg.rijksstudio.feature.collection.adapter
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import coil.load
 import com.kyrillosg.rijksstudio.R
 import com.kyrillosg.rijksstudio.databinding.ItemHeaderBinding
 import com.kyrillosg.rijksstudio.databinding.ItemImageWithLabelBinding
@@ -29,6 +30,9 @@ sealed class CollectionListViewHolder(binding: ViewBinding) : RecyclerView.ViewH
 
         fun bind(item: CollectionListViewData.ImageWithLabel) {
             binding.label.text = item.label
+            binding.image.load(item.image) {
+                crossfade(true)
+            }
         }
 
         companion object {

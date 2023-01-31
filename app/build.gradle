@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.kapt'
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
 android {
@@ -40,6 +41,8 @@ dependencies {
 
     implementation(libs.bundles.kotlinx.coroutines)
     implementation(libs.bundles.koin)
+    implementation(libs.bundles.ktor)
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
@@ -51,6 +54,9 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.paging.runtime)
 
+    debugImplementation(libs.chucker.debug)
+    releaseImplementation(libs.chucker.release)
+    implementation(libs.coil)
     implementation(libs.material)
     implementation(libs.napier)
 
