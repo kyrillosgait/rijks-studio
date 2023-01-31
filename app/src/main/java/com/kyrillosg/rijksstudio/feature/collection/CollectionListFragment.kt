@@ -38,8 +38,8 @@ class CollectionListFragment : ViewBindingFragment<FragmentCollectionListBinding
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.collectionList.collect { items ->
-                    collectionListAdapter.submitList(items)
+                viewModel.collectionPagingData.collect { items ->
+                    collectionListAdapter.submitData(items)
                 }
             }
         }
@@ -54,11 +54,7 @@ class CollectionListFragment : ViewBindingFragment<FragmentCollectionListBinding
                 toast("Loading...")
             }
             is CollectionListUiState.Success -> {
-                collectionListAdapter.submitList(
-                    uiState.collectionItems.map {
-                        CollectionListViewData.ImageWithLabel.from(collectionItem = it)
-                    }
-                )
+                toast("Success!")
             }
         }
     }

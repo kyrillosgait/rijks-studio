@@ -14,6 +14,7 @@ sealed interface CollectionListViewData {
         override val uniqueId: String,
         val image: String?,
         val label: String,
+        val header: String,
     ) : CollectionListViewData {
 
         companion object {
@@ -22,6 +23,7 @@ sealed interface CollectionListViewData {
                     uniqueId = collectionItem.itemId.value,
                     image = collectionItem.imageUrl,
                     label = collectionItem.title,
+                    header = collectionItem.author
                 )
             }
         }

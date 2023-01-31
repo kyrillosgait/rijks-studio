@@ -2,16 +2,17 @@ package com.kyrillosg.rijksstudio.feature.collection.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import com.kyrillosg.rijksstudio.databinding.ItemHeaderBinding
 import com.kyrillosg.rijksstudio.databinding.ItemImageWithLabelBinding
 
-class CollectionListAdapter : ListAdapter<CollectionListViewData, CollectionListViewHolder>(DiffCallback()) {
+class CollectionListAdapter : PagingDataAdapter<CollectionListViewData, CollectionListViewHolder>(DiffCallback()) {
 
-    override fun getItemViewType(position: Int): Int = when (getItem(position)) {
+    override fun getItemViewType(position: Int): Int = when (val item = getItem(position)) {
         is CollectionListViewData.Header -> CollectionListViewHolder.Header.LAYOUT_ID
         is CollectionListViewData.ImageWithLabel -> CollectionListViewHolder.ImageWithLabel.LAYOUT_ID
+        else -> error("no item viewType for item: $item in position: $position")
     }
 
     override fun onCreateViewHolder(

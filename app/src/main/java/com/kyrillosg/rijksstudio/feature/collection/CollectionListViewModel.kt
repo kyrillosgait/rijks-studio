@@ -2,16 +2,21 @@ package com.kyrillosg.rijksstudio.feature.collection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.insertSeparators
+import androidx.paging.map
 import com.kyrillosg.rijksstudio.core.data.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.GetCollectionItemsUseCase
+import com.kyrillosg.rijksstudio.core.domain.GetPaginatedCollectionItems
 import com.kyrillosg.rijksstudio.feature.collection.adapter.CollectionListViewData
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class CollectionListViewModel(
     private val getCollectionItemsUseCase: GetCollectionItemsUseCase,
+    private val getPaginatedCollectionItemsUseCase: GetPaginatedCollectionItems,
 ) : ViewModel() {
 
     private val _collectionList: MutableStateFlow<List<CollectionItem>> =
@@ -29,6 +34,26 @@ class CollectionListViewModel(
                     listOf(headerItem) + imageWithLabelItems
                 }
         }
+
+    val collectionPagingData: Flow<PagingData<CollectionListViewData>>
+        get() = getPaginatedCollectionItemsUseCase(Unit)
+            .map { pagingData ->
+                pagingData
+                    // Kinda lame that PagingData<T> doesn't allow any kind of transformations,
+                    // as we now have to keep a useless property in the `ImageWithLabel` model
+                    // just to be able to map it to the header where needed
+                    .map { collectionItem -> CollectionListViewData.ImageWithLabel.from(collectionItem) }
+                    .insertSeparators { before, after ->
+                        when {
+                            before?.header != after?.header && after?.header != null -> {
+                                CollectionListViewData.Header(after.header)
+                            }
+                            else -> null
+                        }
+                    }
+            }
+            .flowOn(Dispatchers.Default)
+            .cachedIn(viewModelScope)
 
     init {
         viewModelScope.launch {
