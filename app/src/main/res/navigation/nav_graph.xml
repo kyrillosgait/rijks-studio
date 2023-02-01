@@ -3,26 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/collection_list">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/collection_list"
         android:name="com.kyrillosg.rijksstudio.feature.collection.CollectionListFragment"
-        android:label="@string/first_fragment_label"
+        android:label="CollectionListFragment"
         tools:layout="@layout/fragment_collection_list">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_list_to_detail"
+            app:destination="@id/collection_detail" />
     </fragment>
+
     <fragment
-        android:id="@+id/SecondFragment"
+        android:id="@+id/collection_detail"
         android:name="com.kyrillosg.rijksstudio.feature.collection.CollectionDetailFragment"
-        android:label="@string/second_fragment_label"
+        android:label="CollectionDetailFragment"
         tools:layout="@layout/fragment_collection_detail">
 
+        <argument
+            android:name="collectionItemId"
+            app:argType="com.kyrillosg.rijksstudio.core.data.CollectionItem$Id" />
+
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_detail_to_list"
+            app:popUpTo="@id/collection_list" />
     </fragment>
 </navigation>

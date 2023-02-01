@@ -37,12 +37,15 @@ class CollectionListViewModel(
 
     val collectionPagingData: Flow<PagingData<CollectionListViewData>>
         get() = getPaginatedCollectionItemsUseCase(Unit)
+            .distinctUntilChanged()
             .map { pagingData ->
                 pagingData
                     // Kinda lame that PagingData<T> doesn't allow any kind of transformations,
                     // as we now have to keep a useless property in the `ImageWithLabel` model
                     // just to be able to map it to the header where needed
-                    .map { collectionItem -> CollectionListViewData.ImageWithLabel.from(collectionItem) }
+                    .map { collectionItem ->
+                        CollectionListViewData.ImageWithLabel.from(collectionItem)
+                    }
                     .insertSeparators { before, after ->
                         when {
                             before?.header != after?.header && after?.header != null -> {

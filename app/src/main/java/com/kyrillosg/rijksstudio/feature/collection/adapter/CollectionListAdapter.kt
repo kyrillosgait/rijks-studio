@@ -7,7 +7,11 @@ import androidx.recyclerview.widget.DiffUtil
 import com.kyrillosg.rijksstudio.databinding.ItemHeaderBinding
 import com.kyrillosg.rijksstudio.databinding.ItemImageWithLabelBinding
 
-class CollectionListAdapter : PagingDataAdapter<CollectionListViewData, CollectionListViewHolder>(DiffCallback()) {
+typealias OnCollectionItemClicked = (id: String) -> Unit
+
+class CollectionListAdapter(
+    private val onCollectionItemClicked: OnCollectionItemClicked,
+) : PagingDataAdapter<CollectionListViewData, CollectionListViewHolder>(DiffCallback()) {
 
     override fun getItemViewType(position: Int): Int = when (val item = getItem(position)) {
         is CollectionListViewData.Header -> CollectionListViewHolder.Header.LAYOUT_ID
@@ -28,7 +32,8 @@ class CollectionListAdapter : PagingDataAdapter<CollectionListViewData, Collecti
             }
             CollectionListViewHolder.ImageWithLabel.LAYOUT_ID -> {
                 CollectionListViewHolder.ImageWithLabel(
-                    binding = ItemImageWithLabelBinding.inflate(inflater, parent, false)
+                    binding = ItemImageWithLabelBinding.inflate(inflater, parent, false),
+                    onCollectionItemClicked = onCollectionItemClicked
                 )
             }
             else -> error("viewType $viewType is not supported")
@@ -36,7 +41,7 @@ class CollectionListAdapter : PagingDataAdapter<CollectionListViewData, Collecti
     }
 
     override fun onBindViewHolder(holder: CollectionListViewHolder, position: Int) {
-        val item = getItem(position) ?: return
+        val item = getItem(position)
 
         when (holder) {
             is CollectionListViewHolder.Header -> {

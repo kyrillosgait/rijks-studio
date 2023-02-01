@@ -26,12 +26,16 @@ sealed class CollectionListViewHolder(binding: ViewBinding) : RecyclerView.ViewH
 
     class ImageWithLabel(
         private val binding: ItemImageWithLabelBinding,
+        private val onCollectionItemClicked: OnCollectionItemClicked,
     ) : CollectionListViewHolder(binding) {
 
         fun bind(item: CollectionListViewData.ImageWithLabel) {
             binding.label.text = item.label
             binding.image.load(item.image) {
                 crossfade(true)
+            }
+            binding.root.setOnClickListener {
+                onCollectionItemClicked(item.uniqueId)
             }
         }
 

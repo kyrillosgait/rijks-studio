@@ -7,12 +7,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kyrillosg.rijksstudio.R
+import androidx.recyclerview.widget.RecyclerView
+import com.kyrillosg.rijksstudio.core.data.CollectionItem
 import com.kyrillosg.rijksstudio.core.ui.ViewBindingFragment
 import com.kyrillosg.rijksstudio.core.ui.toast
 import com.kyrillosg.rijksstudio.databinding.FragmentCollectionListBinding
 import com.kyrillosg.rijksstudio.feature.collection.adapter.CollectionListAdapter
-import com.kyrillosg.rijksstudio.feature.collection.adapter.CollectionListViewData
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -21,15 +21,20 @@ class CollectionListFragment : ViewBindingFragment<FragmentCollectionListBinding
 ) {
 
     private val viewModel: CollectionListViewModel by viewModel()
-    private val collectionListAdapter = CollectionListAdapter()
+    private val collectionListAdapter = CollectionListAdapter(
+        onCollectionItemClicked = { id ->
+            findNavController().navigate(
+                directions = CollectionListFragmentDirections.actionListToDetail(
+                    collectionItemId = CollectionItem.Id(id)
+                )
+            )
+        }
+    ).apply {
+        stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.toolbar.title = "Rijkscollection"
-        binding.toolbar.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
 
         binding.collectionListRecyclerView.apply {
             adapter = collectionListAdapter
