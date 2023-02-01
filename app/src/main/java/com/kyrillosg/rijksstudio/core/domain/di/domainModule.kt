@@ -14,4 +14,8 @@ val domainModule = module {
     factoryOf(::DefaultGetPaginatedCollectionItemsUseCase) {
         bind<GetPaginatedCollectionItems>()
     }
+
+    factoryOf(::DefaultGetDetailedCollectionItemUseCase) {
+        bind<GetDetailedCollectionItemUseCase>()
+    }
 }

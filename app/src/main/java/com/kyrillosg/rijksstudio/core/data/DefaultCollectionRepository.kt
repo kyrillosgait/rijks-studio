@@ -28,4 +28,8 @@ class DefaultCollectionRepository(
             }
         ).flow
     }
+
+    override suspend fun getDetailedCollectionItem(id: CollectionItem.Id): DetailedCollectionItem? {
+        return rijksService.getCollectionDetails(id.value).artObject
+    }
 }

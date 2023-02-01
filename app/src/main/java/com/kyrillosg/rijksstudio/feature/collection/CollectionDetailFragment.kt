@@ -26,6 +26,7 @@ class CollectionDetailFragment : ViewBindingFragment<FragmentCollectionDetailBin
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.detailedCollectionItem.collect { item ->
                     binding.image.load(item.imageUrl)
+                    binding.description.text = item.description
                 }
             }
         }

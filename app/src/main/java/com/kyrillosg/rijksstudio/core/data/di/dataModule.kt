@@ -3,7 +3,7 @@ package com.kyrillosg.rijksstudio.core.data.di
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kyrillosg.rijksstudio.core.data.*
-import com.kyrillosg.rijksstudio.core.data.fake.FakeRijksService
+import com.kyrillosg.rijksstudio.core.data.network.DefaultRijksService
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
@@ -45,6 +45,7 @@ private fun provideHttpClient(context: Context): HttpClient {
         install(ContentNegotiation) {
             json(Json {
                 ignoreUnknownKeys = true
+                coerceInputValues = true
             })
         }
         engine {

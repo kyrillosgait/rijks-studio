@@ -7,5 +7,7 @@ interface CollectionRepository {
 
     suspend fun getCollectionItems(): List<CollectionItem>
 
+    suspend fun getDetailedCollectionItem(id: CollectionItem.Id): DetailedCollectionItem?
+
     fun getCollectionItemsPaginated(): Flow<PagingData<CollectionItem>>
 }
