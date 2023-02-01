@@ -11,7 +11,7 @@ import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.ui.ViewBindingFragment
 import com.kyrillosg.rijksstudio.core.ui.toast
 import com.kyrillosg.rijksstudio.databinding.FragmentCollectionDetailBinding
-import com.kyrillosg.rijksstudio.feature.common.UiState
+import com.kyrillosg.rijksstudio.core.ui.UiState
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

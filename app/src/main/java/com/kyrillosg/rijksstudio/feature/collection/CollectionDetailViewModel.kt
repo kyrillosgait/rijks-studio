@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.domain.GetDetailedCollectionItemUseCase
-import com.kyrillosg.rijksstudio.feature.common.UiState
+import com.kyrillosg.rijksstudio.core.ui.UiState
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
