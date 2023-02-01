@@ -9,15 +9,12 @@ class DefaultRijksService(
     private val client: HttpClient,
 ) : RijksService {
 
-    override suspend fun getCollectionItems(
-        page: Int,
-        pageSize: Int,
-    ): CollectionItemResponse {
-        val response = client.get("https://www.rijksmuseum.nl/api/en/collection") {
+    override suspend fun getCollection(filter: RijksService.CollectionFilter): CollectionResponse {
+        val response = client.get("https://www.rijksmuseum.nl/api/${filter.language}/collection") {
             url {
                 parameters.append("key", "placeholder")
-                parameters.append("p", page.toString())
-                parameters.append("ps", pageSize.toString())
+                parameters.append("p", filter.page.toString())
+                parameters.append("ps", filter.pageSize.toString())
                 parameters.append("s", "artist")
                 parameters.append("imgonly", "True")
                 parameters.append("toppieces", "True")

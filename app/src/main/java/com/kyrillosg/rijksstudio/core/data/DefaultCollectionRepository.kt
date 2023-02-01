@@ -9,21 +9,22 @@ import kotlinx.coroutines.flow.Flow
 
 class DefaultCollectionRepository(
     private val rijksService: RijksService,
+    private val cache: CollectionItemCache,
 ) : CollectionRepository {
 
     override suspend fun getCollectionItems(): List<CollectionItem> {
-        return rijksService.getCollectionItems(page = 0, pageSize = 20).artObjects
+        return rijksService.getCollection(RijksService.CollectionFilter()).artObjects
     }
 
     override fun getCollectionItemsPaginated(): Flow<PagingData<CollectionItem>> {
         return Pager(
             config = PagingConfig(
                 pageSize = PAGE_SIZE,
-                initialLoadSize = 2 * PAGE_SIZE,
-                enablePlaceholders = false
+                initialLoadSize = 3 * PAGE_SIZE,
+                enablePlaceholders = true,
             ),
             pagingSourceFactory = {
-                CollectionPagingSource(rijksService)
+                CollectionPagingSource(rijksService, cache)
             }
         ).flow
     }

@@ -1,5 +1,7 @@
 package com.kyrillosg.rijksstudio.core.data
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 interface CollectionItem {
@@ -9,6 +11,7 @@ interface CollectionItem {
     val imageUrl: String?
 
     @Serializable
+    @Parcelize
     @JvmInline
-    value class Id(val value: String)
+    value class Id(val value: String) : Parcelable
 }
