@@ -1,23 +1,11 @@
 package com.kyrillosg.rijksstudio.core.data
 
-import com.kyrillosg.rijksstudio.core.data.network.CollectionDetailsResponse
-import com.kyrillosg.rijksstudio.core.data.network.CollectionResponse
+import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
 
 interface RijksService {
 
-    suspend fun getCollection(filter: CollectionFilter): CollectionResponse
+    suspend fun getCollection(filter: CollectionFilter): List<CollectionItem>
 
-    suspend fun getCollectionDetails(
-        objectNumber: String,
-    ): CollectionDetailsResponse
-
-    data class CollectionFilter(
-        val page: Int = 0,
-        val pageSize: Int = PAGE_SIZE,
-        val language: String = "en",
-    )
-
-    companion object {
-        const val PAGE_SIZE = 20
-    }
+    suspend fun getCollectionDetails(filter: CollectionDetailsFilter): DetailedCollectionItem?
 }

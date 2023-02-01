@@ -1,6 +1,6 @@
 package com.kyrillosg.rijksstudio.core.data.network
 
-import com.kyrillosg.rijksstudio.core.data.CollectionItem
+import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
 import kotlinx.serialization.Serializable
 
 @Serializable

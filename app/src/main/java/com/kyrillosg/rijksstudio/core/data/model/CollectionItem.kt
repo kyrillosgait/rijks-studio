@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.core.data
+package com.kyrillosg.rijksstudio.core.data.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

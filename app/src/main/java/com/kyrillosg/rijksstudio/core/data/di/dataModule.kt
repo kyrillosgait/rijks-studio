@@ -3,7 +3,9 @@ package com.kyrillosg.rijksstudio.core.data.di
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kyrillosg.rijksstudio.BuildConfig
-import com.kyrillosg.rijksstudio.core.data.*
+import com.kyrillosg.rijksstudio.core.data.CollectionRepository
+import com.kyrillosg.rijksstudio.core.data.DefaultCollectionRepository
+import com.kyrillosg.rijksstudio.core.data.RijksService
 import com.kyrillosg.rijksstudio.core.data.network.DefaultRijksService
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
@@ -25,10 +27,6 @@ val dataModule = module {
 
     singleOf(::DefaultRijksService) {
         bind<RijksService>()
-    }
-
-    singleOf(::DefaultCollectionItemCache) {
-        bind<CollectionItemCache>()
     }
 
     single {

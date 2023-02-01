@@ -1,30 +1,34 @@
 package com.kyrillosg.rijksstudio.core.data.fake
 
-import com.kyrillosg.rijksstudio.core.data.CollectionItem
+import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
 import java.util.*
 
-data class FakeCollectionItem(
+data class FakeDetailedCollectionItem(
     override val itemId: CollectionItem.Id,
     override val title: String,
     override val author: String,
-    override val imageUrl: String?
-) : CollectionItem {
+    override val imageUrl: String?,
+    override val description: String,
+) : DetailedCollectionItem {
 
     companion object {
         fun create(
             author: String = "Salvador Dalí",
             title: String = UUID.randomUUID().toString(),
+            description: String = title.repeat(10),
             imageText: String = title,
             imageHeight: Int = 720,
             imageWidth: Int = 480,
             imageFormat: String = "png",
-        ): CollectionItem {
+        ): DetailedCollectionItem {
             val imageUrl = "https://via.placeholder.com/${imageWidth}x${imageHeight}.${imageFormat}?text=$imageText"
-            return FakeCollectionItem(
+            return FakeDetailedCollectionItem(
                 itemId = CollectionItem.Id(title),
                 title = title,
                 imageUrl = imageUrl,
                 author = author,
+                description = description
             )
         }
     }

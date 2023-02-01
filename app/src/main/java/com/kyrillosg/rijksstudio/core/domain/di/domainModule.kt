@@ -7,10 +7,6 @@ import org.koin.dsl.module
 
 val domainModule = module {
 
-    factoryOf(::DefaultGetCollectionItemsUseCase) {
-        bind<GetCollectionItemsUseCase>()
-    }
-
     factoryOf(::DefaultGetPaginatedCollectionItemsUseCase) {
         bind<GetPaginatedCollectionItems>()
     }

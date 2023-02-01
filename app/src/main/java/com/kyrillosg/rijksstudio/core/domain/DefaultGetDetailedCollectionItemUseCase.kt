@@ -1,8 +1,8 @@
 package com.kyrillosg.rijksstudio.core.domain
 
-import com.kyrillosg.rijksstudio.core.data.CollectionItem
+import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.data.CollectionRepository
-import com.kyrillosg.rijksstudio.core.data.DetailedCollectionItem
+import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
 
 class DefaultGetDetailedCollectionItemUseCase(
     private val repository: CollectionRepository,
