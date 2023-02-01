@@ -1,20 +1,22 @@
 package com.kyrillosg.rijksstudio.core.data.network
 
 import com.kyrillosg.rijksstudio.core.data.RijksService
+import com.kyrillosg.rijksstudio.core.data.di.NetworkConfiguration
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 
 class DefaultRijksService(
     private val client: HttpClient,
+    private val networkConfiguration: NetworkConfiguration,
 ) : RijksService {
 
     override suspend fun getCollection(
         filter: RijksService.CollectionFilter
     ): CollectionResponse {
-        val response = client.get("https://www.rijksmuseum.nl/api/${filter.language}/collection") {
+        val response = client.get("${networkConfiguration.baseUrl}/${filter.language}/collection") {
             url {
-                parameters.append("key", "placeholder")
+                parameters.append("key", networkConfiguration.apiKey)
                 parameters.append("p", filter.page.toString())
                 parameters.append("ps", filter.pageSize.toString())
                 parameters.append("s", "artist")
@@ -29,9 +31,9 @@ class DefaultRijksService(
     override suspend fun getCollectionDetails(
         objectNumber: String,
     ): CollectionDetailsResponse {
-        val response = client.get("https://www.rijksmuseum.nl/api/en/collection/$objectNumber") {
+        val response = client.get("${networkConfiguration.baseUrl}/en/collection/$objectNumber") {
             url {
-                parameters.append("key", "")
+                parameters.append("key", networkConfiguration.apiKey)
             }
         }
 

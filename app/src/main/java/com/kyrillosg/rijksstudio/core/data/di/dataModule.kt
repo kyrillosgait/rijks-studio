@@ -2,6 +2,7 @@ package com.kyrillosg.rijksstudio.core.data.di
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.kyrillosg.rijksstudio.BuildConfig
 import com.kyrillosg.rijksstudio.core.data.*
 import com.kyrillosg.rijksstudio.core.data.network.DefaultRijksService
 import io.github.aakira.napier.Napier
@@ -29,7 +30,19 @@ val dataModule = module {
     singleOf(::DefaultCollectionItemCache) {
         bind<CollectionItemCache>()
     }
+
+    single {
+        NetworkConfiguration(
+            baseUrl = "https://www.rijksmuseum.nl/api",
+            apiKey = BuildConfig.API_KEY,
+        )
+    }
 }
+
+data class NetworkConfiguration(
+    val baseUrl: String,
+    val apiKey: String,
+)
 
 private fun provideHttpClient(context: Context): HttpClient {
     return HttpClient(OkHttp) {
