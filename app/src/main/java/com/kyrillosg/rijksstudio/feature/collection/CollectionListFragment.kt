@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.ui.ViewBindingFragment
-import com.kyrillosg.rijksstudio.core.ui.toast
 import com.kyrillosg.rijksstudio.databinding.FragmentCollectionListBinding
 import com.kyrillosg.rijksstudio.feature.collection.adapter.CollectionListAdapter
 import kotlinx.coroutines.launch
@@ -46,20 +45,6 @@ class CollectionListFragment : ViewBindingFragment<FragmentCollectionListBinding
                 viewModel.collectionPagingData.collect { items ->
                     collectionListAdapter.submitData(items)
                 }
-            }
-        }
-    }
-
-    private fun renderState(uiState: CollectionListUiState) {
-        when (uiState) {
-            CollectionListUiState.Error -> {
-                toast("An error occurred")
-            }
-            CollectionListUiState.Loading -> {
-                toast("Loading...")
-            }
-            is CollectionListUiState.Success -> {
-                toast("Success!")
             }
         }
     }

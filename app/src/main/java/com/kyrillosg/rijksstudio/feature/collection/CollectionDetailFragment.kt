@@ -9,7 +9,9 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.ui.ViewBindingFragment
+import com.kyrillosg.rijksstudio.core.ui.toast
 import com.kyrillosg.rijksstudio.databinding.FragmentCollectionDetailBinding
+import com.kyrillosg.rijksstudio.feature.common.UiState
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -25,13 +27,27 @@ class CollectionDetailFragment : ViewBindingFragment<FragmentCollectionDetailBin
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.detailedCollectionItem.collect { item ->
-                    binding.image.load(item.imageUrl)
-                    binding.description.text = item.description
+                viewModel.detailedCollectionItem.collect { uiState ->
+                    renderState(uiState)
                 }
             }
         }
 
         viewModel.getDetails(args.collectionItemId)
+    }
+
+    private fun renderState(uiState: UiState<DetailedCollectionItem>) {
+        when (uiState) {
+            is UiState.Error -> {
+                toast(uiState.message)
+            }
+            UiState.Loading -> {
+                toast("Loading...")
+            }
+            is UiState.Success -> {
+                binding.image.load(uiState.data.imageUrl)
+                binding.description.text = uiState.data.description
+            }
+        }
     }
 }
