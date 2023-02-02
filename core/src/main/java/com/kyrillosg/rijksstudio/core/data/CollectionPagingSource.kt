@@ -1,14 +1,12 @@
-package com.kyrillosg.rijksstudio.core.data.paging
+package com.kyrillosg.rijksstudio.core.data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.kyrillosg.rijksstudio.core.data.CollectionFilter
 import com.kyrillosg.rijksstudio.core.data.DefaultCollectionRepository.Companion.PAGE_SIZE
-import com.kyrillosg.rijksstudio.core.data.RijksService
-import com.kyrillosg.rijksstudio.core.data.cache.Cache
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.cache.Cache
+import com.kyrillosg.rijksstudio.core.model.CollectionItem
 
-class CollectionPagingSource(
+internal class CollectionPagingSource(
     private val service: RijksService,
     private val cache: Cache<CollectionFilter, List<CollectionItem>>,
 ) : PagingSource<Int, CollectionItem>() {

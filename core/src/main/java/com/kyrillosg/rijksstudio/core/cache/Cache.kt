@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.core.data.cache
+package com.kyrillosg.rijksstudio.core.cache
 
 interface Cache<Key, Value> {
 

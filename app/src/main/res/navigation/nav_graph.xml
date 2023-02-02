@@ -24,7 +24,7 @@
 
         <argument
             android:name="collectionItemId"
-            app:argType="com.kyrillosg.rijksstudio.core.data.model.CollectionItem$Id" />
+            app:argType="com.kyrillosg.rijksstudio.core.model.CollectionItem$Id" />
 
         <action
             android:id="@+id/action_detail_to_list"

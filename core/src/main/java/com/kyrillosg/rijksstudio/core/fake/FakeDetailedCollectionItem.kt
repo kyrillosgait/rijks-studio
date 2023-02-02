@@ -1,10 +1,10 @@
-package com.kyrillosg.rijksstudio.core.data.fake
+package com.kyrillosg.rijksstudio.core.fake
 
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
-import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
+import com.kyrillosg.rijksstudio.core.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
 import java.util.*
 
-data class FakeDetailedCollectionItem(
+internal data class FakeDetailedCollectionItem(
     override val itemId: CollectionItem.Id,
     override val title: String,
     override val author: String,

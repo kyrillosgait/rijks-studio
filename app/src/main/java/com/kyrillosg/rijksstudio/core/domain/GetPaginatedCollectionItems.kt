@@ -1,7 +1,7 @@
 package com.kyrillosg.rijksstudio.core.domain
 
 import androidx.paging.PagingData
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.common.SynchronousUseCase
 import kotlinx.coroutines.flow.Flow
 

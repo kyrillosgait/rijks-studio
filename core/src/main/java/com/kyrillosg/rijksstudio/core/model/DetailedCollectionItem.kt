@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.core.data.model
+package com.kyrillosg.rijksstudio.core.model
 
 interface DetailedCollectionItem : CollectionItem {
 

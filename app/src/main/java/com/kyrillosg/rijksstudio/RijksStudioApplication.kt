@@ -2,6 +2,7 @@ package com.kyrillosg.rijksstudio
 
 import android.app.Application
 import com.kyrillosg.rijksstudio.core.data.di.dataModule
+import com.kyrillosg.rijksstudio.core.di.coreModule
 import com.kyrillosg.rijksstudio.core.domain.di.domainModule
 import com.kyrillosg.rijksstudio.feature.collection.di.collectionFeatureModule
 import io.github.aakira.napier.DebugAntilog
@@ -19,6 +20,7 @@ class RijksStudioApplication : Application() {
             androidLogger()
             androidContext(this@RijksStudioApplication)
             modules(
+                coreModule,
                 dataModule,
                 domainModule,
                 collectionFeatureModule,

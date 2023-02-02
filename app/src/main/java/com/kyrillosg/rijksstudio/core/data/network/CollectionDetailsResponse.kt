@@ -1,7 +1,7 @@
 package com.kyrillosg.rijksstudio.core.data.network
 
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
-import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
+import com.kyrillosg.rijksstudio.core.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
 import kotlinx.serialization.Serializable
 
 @Serializable

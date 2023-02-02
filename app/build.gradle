@@ -49,6 +49,8 @@ android {
 
 dependencies {
 
+    implementation(project(":core"))
+
     implementation(libs.bundles.kotlinx.coroutines)
     implementation(libs.bundles.koin)
     implementation(libs.bundles.ktor)

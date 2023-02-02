@@ -3,18 +3,17 @@ package com.kyrillosg.rijksstudio.core.data
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.kyrillosg.rijksstudio.core.data.cache.simpleCacheOf
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
-import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
-import com.kyrillosg.rijksstudio.core.data.paging.CollectionPagingSource
+import com.kyrillosg.rijksstudio.core.cache.cacheOf
+import com.kyrillosg.rijksstudio.core.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
 import kotlinx.coroutines.flow.Flow
 
-class DefaultCollectionRepository(
+internal class DefaultCollectionRepository(
     private val rijksService: RijksService,
 ) : CollectionRepository {
 
-    private val itemCache = simpleCacheOf<CollectionFilter, List<CollectionItem>>()
-    private val detailCache = simpleCacheOf<CollectionDetailsFilter, DetailedCollectionItem>()
+    private val itemCache = cacheOf<CollectionFilter, List<CollectionItem>>()
+    private val detailCache = cacheOf<CollectionDetailsFilter, DetailedCollectionItem>()
 
     override fun getCollectionItemsPaginated(): Flow<PagingData<CollectionItem>> {
         return Pager(

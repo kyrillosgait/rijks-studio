@@ -2,8 +2,8 @@ package com.kyrillosg.rijksstudio.feature.collection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
-import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
+import com.kyrillosg.rijksstudio.core.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.domain.GetDetailedCollectionItemUseCase
 import com.kyrillosg.rijksstudio.core.ui.UiState
 import kotlinx.coroutines.flow.*

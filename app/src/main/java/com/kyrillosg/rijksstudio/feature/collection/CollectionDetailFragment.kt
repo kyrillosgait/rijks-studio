@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import coil.load
-import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
+import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.ui.ViewBindingFragment
 import com.kyrillosg.rijksstudio.core.ui.toast
 import com.kyrillosg.rijksstudio.databinding.FragmentCollectionDetailBinding

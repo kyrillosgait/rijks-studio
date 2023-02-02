@@ -1,11 +1,13 @@
-package com.kyrillosg.rijksstudio.core.data.fake
+package com.kyrillosg.rijksstudio.core.fake
 
-import com.kyrillosg.rijksstudio.core.data.*
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
-import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
+import com.kyrillosg.rijksstudio.core.data.CollectionDetailsFilter
+import com.kyrillosg.rijksstudio.core.data.CollectionFilter
+import com.kyrillosg.rijksstudio.core.data.RijksService
+import com.kyrillosg.rijksstudio.core.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
 import kotlinx.coroutines.delay
 
-class FakeRijksService : RijksService {
+internal class FakeRijksService : RijksService {
 
     private val fakeAuthors = setOf("Salvador Dalí", "Vincent van Gogh")
     private val fakeImageDimensions = setOf(48, 72, 108, 144, 192, 256)

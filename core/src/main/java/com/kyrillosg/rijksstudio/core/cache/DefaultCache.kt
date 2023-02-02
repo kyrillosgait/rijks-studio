@@ -1,6 +1,6 @@
-package com.kyrillosg.rijksstudio.core.data.cache
+package com.kyrillosg.rijksstudio.core.cache
 
-class DefaultCache<Key, Value> : Cache<Key, Value> {
+internal class DefaultCache<Key, Value> : Cache<Key, Value> {
 
     private val cache = hashMapOf<Int, Entry<Value>>()
 
@@ -16,4 +16,4 @@ class DefaultCache<Key, Value> : Cache<Key, Value> {
     data class Entry<Value>(val value: Value)
 }
 
-fun <Key, Value> simpleCacheOf() = DefaultCache<Key, Value>()
+internal fun <Key, Value> cacheOf() = DefaultCache<Key, Value>()

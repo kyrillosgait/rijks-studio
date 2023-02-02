@@ -4,8 +4,8 @@ import com.kyrillosg.rijksstudio.core.data.CollectionDetailsFilter
 import com.kyrillosg.rijksstudio.core.data.CollectionFilter
 import com.kyrillosg.rijksstudio.core.data.RijksService
 import com.kyrillosg.rijksstudio.core.data.di.NetworkConfiguration
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
-import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
+import com.kyrillosg.rijksstudio.core.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
