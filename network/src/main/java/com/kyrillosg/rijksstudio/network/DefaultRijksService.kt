@@ -1,16 +1,18 @@
-package com.kyrillosg.rijksstudio.core.data.network
+package com.kyrillosg.rijksstudio.network
 
 import com.kyrillosg.rijksstudio.core.data.CollectionDetailsFilter
 import com.kyrillosg.rijksstudio.core.data.CollectionFilter
 import com.kyrillosg.rijksstudio.core.data.RijksService
-import com.kyrillosg.rijksstudio.core.data.di.NetworkConfiguration
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
+import com.kyrillosg.rijksstudio.network.di.NetworkConfiguration
+import com.kyrillosg.rijksstudio.network.model.CollectionDetailsResponse
+import com.kyrillosg.rijksstudio.network.model.CollectionResponse
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 
-class DefaultRijksService(
+internal class DefaultRijksService(
     private val client: HttpClient,
     private val config: NetworkConfiguration,
 ) : RijksService {

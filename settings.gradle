@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "Rijksstudio"
 include ':app'
 include ':core'
+include ':network'

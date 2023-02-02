@@ -1,24 +1,27 @@
-package com.kyrillosg.rijksstudio.core.data.network
+package com.kyrillosg.rijksstudio.network.model
 
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
-import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CollectionDetailsResponse(
-    val artObject: NetworkCollectionDetailsItem,
+internal data class CollectionResponse(
+    val artObjects: List<NetworkCollectionItem>,
 )
 
 @Serializable
-data class NetworkCollectionDetailsItem(
+internal data class NetworkCollectionItem(
     val objectNumber: String,
     val principalOrFirstMaker: String,
     val webImage: NetworkCollectionImage? = null,
     override val title: String,
-    override val description: String = "",
-) : DetailedCollectionItem {
+) : CollectionItem {
 
     override val itemId: CollectionItem.Id = CollectionItem.Id(objectNumber)
     override val author: String = principalOrFirstMaker
     override val imageUrl: String? = webImage?.url
 }
+
+@Serializable
+internal data class NetworkCollectionImage(
+    val url: String,
+)

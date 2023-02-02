@@ -1,24 +1,20 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.kapt'
     id 'org.jetbrains.kotlin.plugin.serialization'
-    id 'org.jetbrains.kotlin.plugin.parcelize'
-    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
-    namespace 'com.kyrillosg.rijksstudio'
+    namespace 'com.kyrillosg.rijksstudio.network'
     compileSdk libs.versions.compileSdk.get().toInteger()
 
     defaultConfig {
-        applicationId "com.kyrillosg.rijksstudio"
         minSdk libs.versions.minSdk.get().toInteger()
         targetSdk libs.versions.targetSdk.get().toInteger()
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -28,8 +24,9 @@ android {
         debug {
             buildConfigField "String", "API_KEY", properties.getProperty("API_KEY")
         }
+
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             buildConfigField "String", "API_KEY", properties.getProperty("API_KEY")
@@ -42,36 +39,19 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
     }
-    buildFeatures {
-        viewBinding true
-    }
 }
 
 dependencies {
-
     implementation(project(":core"))
-    implementation(project(":network"))
 
     implementation(libs.bundles.kotlinx.coroutines)
     implementation(libs.bundles.koin)
     implementation(libs.bundles.ktor)
     implementation(libs.kotlinx.serialization.json)
 
-    implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    kapt(libs.androidx.lifecycle.compiler)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.androidx.paging.runtime)
-
-    implementation(libs.coil)
-    implementation(libs.material)
+    debugImplementation(libs.chucker.debug)
+    releaseImplementation(libs.chucker.release)
     implementation(libs.napier)
 
     testImplementation(libs.junit4)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.test.espresso.core)
 }
