@@ -16,6 +16,7 @@ internal data class FakeDetailedCollectionItem(
         fun create(
             author: String = "Salvador Dalí",
             title: String = UUID.randomUUID().toString(),
+            id: CollectionItem.Id = CollectionItem.Id(title),
             description: String = title.repeat(10),
             imageText: String = title,
             imageHeight: Int = 720,
@@ -24,7 +25,7 @@ internal data class FakeDetailedCollectionItem(
         ): DetailedCollectionItem {
             val imageUrl = "https://via.placeholder.com/${imageWidth}x${imageHeight}.${imageFormat}?text=$imageText"
             return FakeDetailedCollectionItem(
-                itemId = CollectionItem.Id(title),
+                itemId = id,
                 title = title,
                 imageUrl = imageUrl,
                 author = author,

@@ -2,9 +2,9 @@ package com.kyrillosg.rijksstudio.network.di
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.kyrillosg.rijksstudio.core.data.RijksService
+import com.kyrillosg.rijksstudio.core.data.RijksGateway
 import com.kyrillosg.rijksstudio.network.BuildConfig
-import com.kyrillosg.rijksstudio.network.DefaultRijksService
+import com.kyrillosg.rijksstudio.network.DefaultRijksGateway
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
@@ -19,8 +19,8 @@ import org.koin.dsl.module
 val networkModule = module {
     singleOf(::provideHttpClient)
 
-    singleOf(::DefaultRijksService) {
-        bind<RijksService>()
+    singleOf(::DefaultRijksGateway) {
+        bind<RijksGateway>()
     }
 
     single {

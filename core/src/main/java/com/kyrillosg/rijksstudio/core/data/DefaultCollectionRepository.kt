@@ -9,7 +9,7 @@ import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
 import kotlinx.coroutines.flow.Flow
 
 internal class DefaultCollectionRepository(
-    private val rijksService: RijksService,
+    private val rijksGateway: RijksGateway,
 ) : CollectionRepository {
 
     private val itemCache = cacheOf<CollectionFilter, List<CollectionItem>>()
@@ -23,7 +23,7 @@ internal class DefaultCollectionRepository(
                 enablePlaceholders = true,
             ),
             pagingSourceFactory = {
-                CollectionPagingSource(rijksService, itemCache)
+                CollectionPagingSource(rijksGateway, itemCache)
             }
         ).flow
     }
@@ -33,9 +33,8 @@ internal class DefaultCollectionRepository(
     ): DetailedCollectionItem? {
         val filter = CollectionDetailsFilter(id.value)
         return detailCache.get(filter)
-            ?: rijksService.getCollectionDetails(filter)?.also {
-                detailCache.put(filter, it)
-            }
+            ?: rijksGateway.getCollectionDetails(filter)
+                ?.also { detailCache.put(filter, it) }
     }
 
     companion object {

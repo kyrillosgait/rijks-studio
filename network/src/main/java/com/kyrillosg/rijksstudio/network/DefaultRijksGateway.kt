@@ -2,7 +2,7 @@ package com.kyrillosg.rijksstudio.network
 
 import com.kyrillosg.rijksstudio.core.data.CollectionDetailsFilter
 import com.kyrillosg.rijksstudio.core.data.CollectionFilter
-import com.kyrillosg.rijksstudio.core.data.RijksService
+import com.kyrillosg.rijksstudio.core.data.RijksGateway
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
 import com.kyrillosg.rijksstudio.network.di.NetworkConfiguration
@@ -12,10 +12,10 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 
-internal class DefaultRijksService(
+internal class DefaultRijksGateway(
     private val client: HttpClient,
     private val config: NetworkConfiguration,
-) : RijksService {
+) : RijksGateway {
 
     override suspend fun getCollection(filter: CollectionFilter): List<CollectionItem> {
         val response = client.get("${config.baseUrl}/${filter.language}/collection") {

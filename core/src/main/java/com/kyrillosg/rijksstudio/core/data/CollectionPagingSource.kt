@@ -7,7 +7,7 @@ import com.kyrillosg.rijksstudio.core.cache.Cache
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
 
 internal class CollectionPagingSource(
-    private val service: RijksService,
+    private val service: RijksGateway,
     private val cache: Cache<CollectionFilter, List<CollectionItem>>,
 ) : PagingSource<Int, CollectionItem>() {
 

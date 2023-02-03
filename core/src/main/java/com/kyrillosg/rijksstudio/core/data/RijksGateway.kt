@@ -3,7 +3,7 @@ package com.kyrillosg.rijksstudio.core.data
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
 
-interface RijksService {
+interface RijksGateway {
 
     suspend fun getCollection(filter: CollectionFilter): List<CollectionItem>
 
