@@ -4,6 +4,7 @@ plugins {
     id 'org.jetbrains.kotlin.kapt'
     id 'org.jetbrains.kotlin.plugin.serialization'
     id 'org.jetbrains.kotlin.plugin.parcelize'
+    id 'de.mannodermaus.android-junit5'
 }
 
 android {
@@ -34,6 +35,10 @@ android {
     testOptions {
         unitTests.all { useJUnitPlatform() }
     }
+}
+
+junitPlatform {
+    configurationParameter("junit.jupiter.testinstance.lifecycle.default", "per_class")
 }
 
 dependencies {

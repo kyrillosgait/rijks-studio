@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.kapt'
     id 'org.jetbrains.kotlin.plugin.serialization'
+    id 'de.mannodermaus.android-junit5'
 }
 
 android {
@@ -39,6 +40,10 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
     }
+}
+
+junitPlatform {
+    configurationParameter("junit.jupiter.testinstance.lifecycle.default", "per_class")
 }
 
 dependencies {

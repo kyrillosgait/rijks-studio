@@ -24,6 +24,7 @@ chucker = "3.5.2"
 coil = "2.2.2"
 junit4 = "4.13.2"
 junit5 = "5.9.2"
+junit5Android = "1.8.2.1"
 material = "1.8.0"
 napier = "2.6.1"
 
@@ -73,3 +74,4 @@ android-library = { id = "com.android.library", version.ref = "androidGradlePlug
 androidx-navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "androidxNavigation" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "junit5Android" }
