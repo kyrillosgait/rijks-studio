@@ -23,6 +23,7 @@ androidxTestExtJunit = "1.1.4"
 chucker = "3.5.2"
 coil = "2.2.2"
 junit4 = "4.13.2"
+junit5 = "5.9.2"
 material = "1.8.0"
 napier = "2.6.1"
 
@@ -44,6 +45,8 @@ coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 junit4 = { module = "junit:junit", version.ref = "junit4" }
+junit5-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit5" }
+junit5-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit5" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }

@@ -45,6 +45,9 @@ android {
     buildFeatures {
         viewBinding true
     }
+    testOptions {
+        unitTests.all { useJUnitPlatform() }
+    }
 }
 
 dependencies {
@@ -71,7 +74,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.napier)
 
-    testImplementation(libs.junit4)
+    testImplementation(libs.junit5.api)
+    testRuntimeOnly(libs.junit5.engine)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }

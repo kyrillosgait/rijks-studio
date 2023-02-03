@@ -53,5 +53,6 @@ dependencies {
     releaseImplementation(libs.chucker.release)
     implementation(libs.napier)
 
-    testImplementation(libs.junit4)
+    testImplementation(libs.junit5.api)
+    testRuntimeOnly(libs.junit5.engine)
 }

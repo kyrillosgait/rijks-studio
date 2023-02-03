@@ -10,6 +10,16 @@ import io.github.aakira.napier.Napier
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.dsl.module
+
+val rijksStudioModule = module {
+    includes(
+        coreModule,
+        networkModule,
+        domainModule,
+        collectionFeatureModule,
+    )
+}
 
 class RijksStudioApplication : Application() {
 
@@ -19,12 +29,7 @@ class RijksStudioApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@RijksStudioApplication)
-            modules(
-                coreModule,
-                networkModule,
-                domainModule,
-                collectionFeatureModule,
-            )
+            modules(rijksStudioModule)
         }
 
         if (BuildConfig.DEBUG) {
