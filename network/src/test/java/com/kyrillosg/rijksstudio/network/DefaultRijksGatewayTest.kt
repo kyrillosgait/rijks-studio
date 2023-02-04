@@ -77,7 +77,8 @@ class DefaultRijksGatewayTest {
             runTest {
                 println("Mock collection item response: $collectionItemsSuccessJson")
                 val filter = CollectionFilter(page = 0, pageSize = 20)
-                val collectionItems = gateway.getCollection(filter)
+                val data = gateway.getCollection(filter)
+                val collectionItems = data.items
 
                 collectionItems.forEach {
                     println("Deserialized: $it")

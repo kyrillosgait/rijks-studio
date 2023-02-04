@@ -2,6 +2,7 @@ package com.kyrillosg.rijksstudio.core.fake
 
 import com.kyrillosg.rijksstudio.core.data.CollectionDetailsFilter
 import com.kyrillosg.rijksstudio.core.data.CollectionFilter
+import com.kyrillosg.rijksstudio.core.data.PaginatedData
 import com.kyrillosg.rijksstudio.core.data.RijksGateway
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
@@ -16,9 +17,13 @@ internal class FakeRijksGateway(
     }
 ) : RijksGateway {
 
-    override suspend fun getCollection(filter: CollectionFilter): List<CollectionItem> {
+    override suspend fun getCollection(filter: CollectionFilter): PaginatedData<List<CollectionItem>> {
         val start = filter.page * filter.pageSize
-        return (start until start + filter.pageSize).map { collectionItems[it] }.toList()
+        val items = (start until start + filter.pageSize).map { collectionItems[it] }.toList()
+        return PaginatedData(
+            items = items,
+            total = collectionItems.count(),
+        )
     }
 
     override suspend fun getCollectionDetails(filter: CollectionDetailsFilter): DetailedCollectionItem? {

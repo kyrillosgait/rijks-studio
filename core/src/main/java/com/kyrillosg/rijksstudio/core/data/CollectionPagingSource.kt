@@ -8,24 +8,30 @@ import com.kyrillosg.rijksstudio.core.model.CollectionItem
 
 internal class CollectionPagingSource(
     private val service: RijksGateway,
-    private val cache: Cache<CollectionFilter, List<CollectionItem>>,
+    private val cache: Cache<CollectionFilter, PaginatedData<List<CollectionItem>>>,
 ) : PagingSource<Int, CollectionItem>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CollectionItem> {
-        val position = params.key ?: 0
+        val page = params.key ?: 0
 
         return try {
-            val filter = CollectionFilter(position, params.loadSize)
+            val filter = CollectionFilter(page, params.loadSize)
 
-            val items = cache.get(filter) ?: service.getCollection(filter).also {
-                cache.put(filter, it)
-            }
+            val paginatedData = cache.get(filter)
+                ?: service.getCollection(filter).also { cache.put(filter, it) }
 
-            val nextKey = position + (params.loadSize / PAGE_SIZE)
+            val total = paginatedData.total
+            val itemsBefore = page * PAGE_SIZE
+            val itemsAfter = total - itemsBefore + paginatedData.items.size
+
+            val willReachApiLimit = (page + 1) * params.loadSize >= 10_000
+
             LoadResult.Page(
-                data = items,
-                prevKey = if (position == 0) null else position - 1,
-                nextKey = nextKey
+                data = paginatedData.items,
+                prevKey = if (page == 0) null else page - 1,
+                nextKey = if (itemsAfter == 0 || willReachApiLimit) null else page + 1,
+                itemsBefore = page * PAGE_SIZE,
+                itemsAfter = itemsAfter,
             )
         } catch (exception: Exception) {
             return LoadResult.Error(exception)

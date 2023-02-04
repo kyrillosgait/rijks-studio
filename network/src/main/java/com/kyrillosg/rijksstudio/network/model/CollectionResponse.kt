@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class CollectionResponse(
     val artObjects: List<NetworkCollectionItem>,
+    val count: Int,
 )
 
 @Serializable

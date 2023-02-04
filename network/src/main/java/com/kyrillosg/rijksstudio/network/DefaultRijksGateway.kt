@@ -2,6 +2,7 @@ package com.kyrillosg.rijksstudio.network
 
 import com.kyrillosg.rijksstudio.core.data.CollectionDetailsFilter
 import com.kyrillosg.rijksstudio.core.data.CollectionFilter
+import com.kyrillosg.rijksstudio.core.data.PaginatedData
 import com.kyrillosg.rijksstudio.core.data.RijksGateway
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
@@ -17,7 +18,7 @@ internal class DefaultRijksGateway(
     private val config: NetworkConfiguration,
 ) : RijksGateway {
 
-    override suspend fun getCollection(filter: CollectionFilter): List<CollectionItem> {
+    override suspend fun getCollection(filter: CollectionFilter): PaginatedData<List<CollectionItem>> {
         val response = client.get("${config.baseUrl}/${filter.language}/collection") {
             url {
                 parameters.append("key", config.apiKey)
@@ -29,7 +30,12 @@ internal class DefaultRijksGateway(
             }
         }
 
-        return response.body<CollectionResponse>().artObjects
+        val body = response.body<CollectionResponse>()
+
+        return PaginatedData(
+            items = body.artObjects,
+            total = body.count,
+        )
     }
 
     override suspend fun getCollectionDetails(filter: CollectionDetailsFilter): DetailedCollectionItem {

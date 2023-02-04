@@ -12,7 +12,7 @@ internal class DefaultCollectionRepository(
     private val rijksGateway: RijksGateway,
 ) : CollectionRepository {
 
-    private val itemCache = cacheOf<CollectionFilter, List<CollectionItem>>()
+    private val itemCache = cacheOf<CollectionFilter, PaginatedData<List<CollectionItem>>>()
     private val detailCache = cacheOf<CollectionDetailsFilter, DetailedCollectionItem>()
 
     override fun getCollectionItemsPaginated(): Flow<PagingData<CollectionItem>> {
@@ -20,7 +20,7 @@ internal class DefaultCollectionRepository(
             config = PagingConfig(
                 pageSize = PAGE_SIZE,
                 initialLoadSize = 3 * PAGE_SIZE,
-                enablePlaceholders = true,
+                enablePlaceholders = false,
             ),
             pagingSourceFactory = {
                 CollectionPagingSource(rijksGateway, itemCache)
