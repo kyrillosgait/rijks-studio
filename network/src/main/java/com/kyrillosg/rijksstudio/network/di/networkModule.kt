@@ -50,6 +50,7 @@ private fun provideHttpClient(context: Context): HttpClient {
         install(ContentNegotiation) {
             json(Json {
                 ignoreUnknownKeys = true
+                prettyPrint = true
                 coerceInputValues = true
             })
         }

@@ -16,6 +16,7 @@ class RijksStudioAppModuleCheck {
 
                 // False positives
                 String::class,
+                List::class,
                 HttpClientEngine::class,
                 HttpClientConfig::class,
             )

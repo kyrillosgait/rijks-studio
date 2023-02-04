@@ -59,6 +59,7 @@ ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "k
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
@@ -66,7 +67,7 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 [bundles]
 koin = ["koin-android", "koin-core", "koin-test"]
 kotlinx-coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-core", "kotlinx-coroutines-test"]
-ktor = ["ktor-client-android", "ktor-client-core", "ktor-client-logging", "ktor-client-okhttp", "ktor-client-serialization", "ktor-serialization-kotlinx-json", "ktor-client-content-negotiation"]
+ktor = ["ktor-client-android", "ktor-client-core", "ktor-client-logging", "ktor-client-okhttp", "ktor-client-serialization", "ktor-serialization-kotlinx-json", "ktor-client-content-negotiation", "ktor-client-mock"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

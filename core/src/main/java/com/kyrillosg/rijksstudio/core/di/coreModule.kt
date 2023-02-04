@@ -12,8 +12,4 @@ val coreModule = module {
     singleOf(::DefaultCollectionRepository) {
         bind<CollectionRepository>()
     }
-
-    singleOf(::FakeRijksGateway) {
-        bind<RijksGateway>()
-    }
 }
