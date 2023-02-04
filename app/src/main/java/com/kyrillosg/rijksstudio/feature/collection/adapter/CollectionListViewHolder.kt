@@ -29,13 +29,13 @@ sealed class CollectionListViewHolder(binding: ViewBinding) : RecyclerView.ViewH
         private val onCollectionItemClicked: OnCollectionItemClicked,
     ) : CollectionListViewHolder(binding) {
 
-        fun bind(item: CollectionListViewData.ImageWithLabel) {
-            binding.label.text = item.label
-            binding.image.load(item.image) {
+        fun bind(item: CollectionListViewData.ImageWithLabel?) {
+            binding.label.text = item?.label.orEmpty()
+            binding.image.load(item?.image) {
                 crossfade(true)
             }
             binding.root.setOnClickListener {
-                onCollectionItemClicked(item.uniqueId)
+                item?.uniqueId?.let { onCollectionItemClicked(it) }
             }
         }
 

@@ -13,10 +13,11 @@ class CollectionListAdapter(
     private val onCollectionItemClicked: OnCollectionItemClicked,
 ) : PagingDataAdapter<CollectionListViewData, CollectionListViewHolder>(DiffCallback()) {
 
-    override fun getItemViewType(position: Int): Int = when (val item = getItem(position)) {
+    override fun getItemViewType(position: Int): Int = when (getItem(position)) {
         is CollectionListViewData.Header -> CollectionListViewHolder.Header.LAYOUT_ID
         is CollectionListViewData.ImageWithLabel -> CollectionListViewHolder.ImageWithLabel.LAYOUT_ID
-        else -> error("no item viewType for item: $item in position: $position")
+        // Support for paging3 placeholders
+        null -> CollectionListViewHolder.ImageWithLabel.LAYOUT_ID
     }
 
     override fun onCreateViewHolder(
@@ -33,7 +34,7 @@ class CollectionListAdapter(
             CollectionListViewHolder.ImageWithLabel.LAYOUT_ID -> {
                 CollectionListViewHolder.ImageWithLabel(
                     binding = ItemImageWithLabelBinding.inflate(inflater, parent, false),
-                    onCollectionItemClicked = onCollectionItemClicked
+                    onCollectionItemClicked = onCollectionItemClicked,
                 )
             }
             else -> error("viewType $viewType is not supported")
@@ -48,7 +49,7 @@ class CollectionListAdapter(
                 holder.bind(item as CollectionListViewData.Header)
             }
             is CollectionListViewHolder.ImageWithLabel -> {
-                holder.bind(item as CollectionListViewData.ImageWithLabel)
+                holder.bind(item as CollectionListViewData.ImageWithLabel?)
             }
         }
     }
