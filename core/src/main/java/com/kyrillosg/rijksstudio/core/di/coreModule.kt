@@ -12,4 +12,8 @@ val coreModule = module {
     singleOf(::DefaultCollectionRepository) {
         bind<CollectionRepository>()
     }
+
+    single<RijksGateway> {
+        FakeRijksGateway()
+    }
 }

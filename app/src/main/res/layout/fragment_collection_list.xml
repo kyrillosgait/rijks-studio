@@ -4,5 +4,6 @@
     android:id="@+id/collectionListRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="vertical"
     tools:itemCount="5"
     tools:listitem="@layout/item_image_with_label" />

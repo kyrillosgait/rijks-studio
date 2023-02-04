@@ -6,11 +6,18 @@ import com.kyrillosg.rijksstudio.core.data.PaginatedData
 import com.kyrillosg.rijksstudio.core.data.RijksGateway
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
+import kotlinx.coroutines.delay
 
 internal class FakeRijksGateway(
-    private val collectionItems: List<DetailedCollectionItem> = (0..250).map {
+    private val collectionItems: List<DetailedCollectionItem> = (0..2250).map { index ->
         FakeDetailedCollectionItem.create(
-            author = if (it < 100) "Salvador Dalí" else "Vincent van Gogh",
+            author = when (index) {
+                in 0 until 105 -> "Leonardo da Vinci"
+                in 105 until 237 -> "Pablo Picasso"
+                in 237 until 243 -> "Salvador Dalí"
+                in 243 until 257 -> "Unknown"
+                else -> "Vincent van Gogh"
+            },
             imageWidth = setOf(144, 192, 256).random(),
             imageHeight = setOf(144, 192, 256).random()
         )
@@ -18,6 +25,8 @@ internal class FakeRijksGateway(
 ) : RijksGateway {
 
     override suspend fun getCollection(filter: CollectionFilter): PaginatedData<List<CollectionItem>> {
+        delay(1_000)
+
         val start = filter.page * filter.pageSize
         val items = (start until start + filter.pageSize).map { collectionItems[it] }.toList()
         return PaginatedData(

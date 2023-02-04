@@ -2,15 +2,16 @@ package com.kyrillosg.rijksstudio.core.data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.kyrillosg.rijksstudio.core.data.DefaultCollectionRepository.Companion.PAGE_SIZE
 import com.kyrillosg.rijksstudio.core.cache.Cache
+import com.kyrillosg.rijksstudio.core.data.DefaultCollectionRepository.Companion.PAGE_SIZE
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
-import io.github.aakira.napier.Napier
 
 internal class CollectionPagingSource(
     private val service: RijksGateway,
     private val cache: Cache<CollectionFilter, PaginatedData<List<CollectionItem>>>,
 ) : PagingSource<Int, CollectionItem>() {
+
+    override val jumpingSupported: Boolean = true
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CollectionItem> {
         val page = params.key ?: 0
@@ -41,8 +42,7 @@ internal class CollectionPagingSource(
 
     override fun getRefreshKey(state: PagingState<Int, CollectionItem>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
-            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+            anchorPosition / PAGE_SIZE
         }
     }
 }

@@ -30,7 +30,7 @@ sealed class CollectionListViewHolder(binding: ViewBinding) : RecyclerView.ViewH
     ) : CollectionListViewHolder(binding) {
 
         fun bind(item: CollectionListViewData.ImageWithLabel?) {
-            binding.label.text = item?.label.orEmpty()
+            binding.label.text = item?.label ?: "placeholder"
             binding.image.load(item?.image) {
                 crossfade(true)
             }

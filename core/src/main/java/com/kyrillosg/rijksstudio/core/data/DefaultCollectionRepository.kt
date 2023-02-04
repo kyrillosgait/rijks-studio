@@ -21,6 +21,7 @@ internal class DefaultCollectionRepository(
                 pageSize = PAGE_SIZE,
                 initialLoadSize = 3 * PAGE_SIZE,
                 enablePlaceholders = true,
+                jumpThreshold = 2 * PAGE_SIZE,
             ),
             pagingSourceFactory = {
                 CollectionPagingSource(rijksGateway, itemCache)

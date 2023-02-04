@@ -30,6 +30,8 @@ class CollectionListViewModel(
                         CollectionListViewData.ImageWithLabel.from(collectionItem)
                     }
                     .insertSeparators { before, after ->
+                        // Inserting separators dynamically don't play very well with list -> detail
+                        // and then back to list
                         when {
                             before?.header != after?.header && after?.header != null -> {
                                 CollectionListViewData.Header(after.header)
