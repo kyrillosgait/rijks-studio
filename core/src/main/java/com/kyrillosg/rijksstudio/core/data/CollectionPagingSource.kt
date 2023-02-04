@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import com.kyrillosg.rijksstudio.core.data.DefaultCollectionRepository.Companion.PAGE_SIZE
 import com.kyrillosg.rijksstudio.core.cache.Cache
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
+import io.github.aakira.napier.Napier
 
 internal class CollectionPagingSource(
     private val service: RijksGateway,
@@ -22,7 +23,7 @@ internal class CollectionPagingSource(
 
             val total = paginatedData.total
             val itemsBefore = page * PAGE_SIZE
-            val itemsAfter = total - itemsBefore + paginatedData.items.size
+            val itemsAfter = total - (itemsBefore + paginatedData.items.size)
 
             val willReachApiLimit = (page + 1) * params.loadSize >= 10_000
 
@@ -30,7 +31,7 @@ internal class CollectionPagingSource(
                 data = paginatedData.items,
                 prevKey = if (page == 0) null else page - 1,
                 nextKey = if (itemsAfter == 0 || willReachApiLimit) null else page + 1,
-                itemsBefore = page * PAGE_SIZE,
+                itemsBefore = itemsBefore,
                 itemsAfter = itemsAfter,
             )
         } catch (exception: Exception) {
