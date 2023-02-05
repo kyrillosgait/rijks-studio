@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.feature.collection
+package com.kyrillosg.rijksstudio.ui.views
 
 import android.content.Context
 import android.graphics.Color

@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.feature.collection
+package com.kyrillosg.rijksstudio.feature.collection.list
 
 import android.os.Bundle
 import android.view.Menu
@@ -17,13 +17,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kyrillosg.rijksstudio.R
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.model.GroupBy
-import com.kyrillosg.rijksstudio.core.ui.ViewBindingFragment
-import com.kyrillosg.rijksstudio.core.ui.toast
+import com.kyrillosg.rijksstudio.ui.ViewBindingFragment
+import com.kyrillosg.rijksstudio.ui.toast
 import com.kyrillosg.rijksstudio.databinding.FragmentCollectionListBinding
-import com.kyrillosg.rijksstudio.feature.collection.adapter.CollectionListAdapter
-import io.github.aakira.napier.Napier
+import com.kyrillosg.rijksstudio.feature.collection.list.adapter.CollectionListAdapter
 import kotlinx.coroutines.launch
-import org.junit.Test.None
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CollectionListFragment : ViewBindingFragment<FragmentCollectionListBinding>(

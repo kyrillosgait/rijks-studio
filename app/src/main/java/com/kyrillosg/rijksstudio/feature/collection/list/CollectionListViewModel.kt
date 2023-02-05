@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalCoroutinesApi::class)
 
-package com.kyrillosg.rijksstudio.feature.collection
+package com.kyrillosg.rijksstudio.feature.collection.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,10 +8,9 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
 import androidx.paging.map
-import com.kyrillosg.rijksstudio.core.domain.GetPaginatedCollectionItems
+import com.kyrillosg.rijksstudio.domain.GetPaginatedCollectionItems
 import com.kyrillosg.rijksstudio.core.model.GroupBy
-import com.kyrillosg.rijksstudio.feature.collection.adapter.CollectionListViewData
-import io.github.aakira.napier.Napier
+import com.kyrillosg.rijksstudio.feature.collection.list.adapter.CollectionListViewData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*

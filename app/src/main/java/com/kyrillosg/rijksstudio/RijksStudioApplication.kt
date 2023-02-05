@@ -2,7 +2,7 @@ package com.kyrillosg.rijksstudio
 
 import android.app.Application
 import com.kyrillosg.rijksstudio.core.di.coreModule
-import com.kyrillosg.rijksstudio.core.domain.di.domainModule
+import com.kyrillosg.rijksstudio.domain.di.domainModule
 import com.kyrillosg.rijksstudio.feature.collection.di.collectionFeatureModule
 import com.kyrillosg.rijksstudio.network.di.networkModule
 import io.github.aakira.napier.DebugAntilog

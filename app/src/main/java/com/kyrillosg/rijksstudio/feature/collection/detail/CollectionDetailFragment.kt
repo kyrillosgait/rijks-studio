@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.feature.collection
+package com.kyrillosg.rijksstudio.feature.collection.detail
 
 import android.os.Bundle
 import android.view.View
@@ -10,10 +10,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
-import com.kyrillosg.rijksstudio.core.ui.ViewBindingFragment
-import com.kyrillosg.rijksstudio.core.ui.toast
+import com.kyrillosg.rijksstudio.ui.ViewBindingFragment
+import com.kyrillosg.rijksstudio.ui.toast
 import com.kyrillosg.rijksstudio.databinding.FragmentCollectionDetailBinding
-import com.kyrillosg.rijksstudio.core.ui.UiState
+import com.kyrillosg.rijksstudio.ui.UiState
+import com.kyrillosg.rijksstudio.ui.views.ColorPaletteView
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

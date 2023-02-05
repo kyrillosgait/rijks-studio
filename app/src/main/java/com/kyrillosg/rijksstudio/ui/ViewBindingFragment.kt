@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.core.ui
+package com.kyrillosg.rijksstudio.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

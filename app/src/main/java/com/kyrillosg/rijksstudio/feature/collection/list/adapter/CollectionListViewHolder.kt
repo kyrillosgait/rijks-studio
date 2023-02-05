@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.feature.collection.adapter
+package com.kyrillosg.rijksstudio.feature.collection.list.adapter
 
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView

@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.core.ui
+package com.kyrillosg.rijksstudio.ui
 
 import android.widget.Toast
 import androidx.fragment.app.Fragment

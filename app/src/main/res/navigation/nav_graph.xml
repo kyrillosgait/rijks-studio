@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/collection_list"
-        android:name="com.kyrillosg.rijksstudio.feature.collection.CollectionListFragment"
+        android:name="com.kyrillosg.rijksstudio.feature.collection.list.CollectionListFragment"
         android:label="CollectionListFragment"
         tools:layout="@layout/fragment_collection_list">
 
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/collection_detail"
-        android:name="com.kyrillosg.rijksstudio.feature.collection.CollectionDetailFragment"
+        android:name="com.kyrillosg.rijksstudio.feature.collection.detail.CollectionDetailFragment"
         android:label="CollectionDetailFragment"
         tools:layout="@layout/fragment_collection_detail">
 

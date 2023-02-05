@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.core.domain
+package com.kyrillosg.rijksstudio.domain
 
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.data.CollectionRepository

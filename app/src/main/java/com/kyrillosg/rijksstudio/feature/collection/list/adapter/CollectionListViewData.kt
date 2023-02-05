@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.feature.collection.adapter
+package com.kyrillosg.rijksstudio.feature.collection.list.adapter
 
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
 

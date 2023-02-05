@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.core.ui
+package com.kyrillosg.rijksstudio.ui
 
 sealed interface UiState<out T> {
     object Loading : UiState<Nothing>

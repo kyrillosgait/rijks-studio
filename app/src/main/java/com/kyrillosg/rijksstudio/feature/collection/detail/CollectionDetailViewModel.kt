@@ -1,11 +1,11 @@
-package com.kyrillosg.rijksstudio.feature.collection
+package com.kyrillosg.rijksstudio.feature.collection.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
-import com.kyrillosg.rijksstudio.core.domain.GetDetailedCollectionItemUseCase
-import com.kyrillosg.rijksstudio.core.ui.UiState
+import com.kyrillosg.rijksstudio.domain.GetDetailedCollectionItemUseCase
+import com.kyrillosg.rijksstudio.ui.UiState
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 

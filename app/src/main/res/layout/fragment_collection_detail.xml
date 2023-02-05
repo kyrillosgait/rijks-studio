@@ -25,7 +25,7 @@
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".feature.collection.CollectionDetailFragment">
+            tools:context=".feature.collection.detail.CollectionDetailFragment">
 
             <ImageView
                 android:id="@+id/image"
@@ -63,7 +63,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/description" />
 
-            <com.kyrillosg.rijksstudio.feature.collection.ColorPaletteView
+            <com.kyrillosg.rijksstudio.ui.views.ColorPaletteView
                 android:id="@+id/colorView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/colorView" />
 
-            <com.kyrillosg.rijksstudio.feature.collection.ColorPaletteView
+            <com.kyrillosg.rijksstudio.ui.views.ColorPaletteView
                 android:id="@+id/normalizedColorView"
                 android:layout_width="0dp"
                 android:paddingBottom="16dp"

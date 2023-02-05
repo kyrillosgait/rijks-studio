@@ -1,10 +1,9 @@
-package com.kyrillosg.rijksstudio.core.domain
+package com.kyrillosg.rijksstudio.domain
 
 import androidx.paging.PagingData
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.data.CollectionRepository
 import com.kyrillosg.rijksstudio.core.model.GroupBy
-import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.Flow
 
 class DefaultGetPaginatedCollectionItemsUseCase(

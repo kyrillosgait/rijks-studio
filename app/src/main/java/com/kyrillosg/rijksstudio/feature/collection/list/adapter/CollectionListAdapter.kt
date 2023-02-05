@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.feature.collection.adapter
+package com.kyrillosg.rijksstudio.feature.collection.list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
