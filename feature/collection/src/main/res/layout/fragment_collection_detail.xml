@@ -94,8 +94,5 @@
                 app:layout_constraintTop_toBottomOf="@id/colorPaletteNormalizedHeader" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
-
 </FrameLayout>
-
