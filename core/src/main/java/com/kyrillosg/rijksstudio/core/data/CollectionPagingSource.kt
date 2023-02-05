@@ -31,7 +31,7 @@ internal class CollectionPagingSource(
             LoadResult.Page(
                 data = paginatedData.items,
                 prevKey = if (page == 0) null else page - 1,
-                nextKey = if (itemsAfter == 0 || willReachApiLimit) null else page + 1,
+                nextKey = if (itemsAfter == 0 || willReachApiLimit) null else page + (filter.pageSize / pageSize),
                 itemsBefore = itemsBefore,
                 itemsAfter = itemsAfter,
             )
