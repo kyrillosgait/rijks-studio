@@ -17,8 +17,8 @@ internal class FakeRijksGateway(
             author = when (index) {
                 in 0 until 105 -> "Leonardo da Vinci"
                 in 105 until 237 -> "Pablo Picasso"
-                in 237 until 243 -> "Salvador Dalí"
-                in 243 until 257 -> "Unknown"
+                in 237 until 843 -> "Salvador Dalí"
+                in 843 until 2057 -> "Unknown"
                 else -> "Vincent van Gogh"
             },
             imageWidth = setOf(144, 192, 256).random(),

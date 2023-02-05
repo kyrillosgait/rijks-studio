@@ -2,6 +2,8 @@ package com.kyrillosg.rijksstudio.feature.collection
 
 import android.os.Bundle
 import android.view.View
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -42,11 +44,37 @@ class CollectionDetailFragment : ViewBindingFragment<FragmentCollectionDetailBin
                 toast(uiState.message)
             }
             UiState.Loading -> {
-                toast("Loading...")
+                binding.progressBar.isVisible = true
+                binding.scrollView.isVisible = false
             }
             is UiState.Success -> {
-                binding.image.load(uiState.data.imageUrl)
+                uiState.data.image?.let { image ->
+                    val ratio = "${image.width}:${image.height}"
+                    ConstraintSet().apply {
+                        clone(binding.constraintLayout)
+                        setDimensionRatio(binding.image.id, ratio)
+                        applyTo(binding.constraintLayout)
+                    }
+
+                    binding.image.load(image.url)
+                }
+
                 binding.description.text = uiState.data.description
+                binding.colorView.init(
+                    colorModels = uiState.data.colors.sortedByDescending { it.percentage }.map {
+                        ColorPaletteView.ColorModel.from(it)
+                    }
+                )
+                binding.colorPaletteHeader.isVisible = uiState.data.colors.isNotEmpty()
+                binding.normalizedColorView.init(
+                    colorModels = uiState.data.normalizedColors.sortedByDescending { it.percentage }.map {
+                        ColorPaletteView.ColorModel.from(it)
+                    }
+                )
+                binding.colorPaletteNormalizedHeader.isVisible = uiState.data.normalizedColors.isNotEmpty()
+
+                binding.progressBar.isVisible = false
+                binding.scrollView.isVisible = true
             }
         }
     }

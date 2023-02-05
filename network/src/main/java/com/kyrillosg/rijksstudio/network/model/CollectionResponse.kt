@@ -1,6 +1,8 @@
 package com.kyrillosg.rijksstudio.network.model
 
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.model.CollectionItemImage
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -13,16 +15,17 @@ internal data class CollectionResponse(
 internal data class NetworkCollectionItem(
     val objectNumber: String,
     val principalOrFirstMaker: String,
-    val webImage: NetworkCollectionImage? = null,
+    @SerialName("webImage") override val image: NetworkCollectionImage? = null,
     override val title: String,
 ) : CollectionItem {
 
     override val itemId: CollectionItem.Id = CollectionItem.Id(objectNumber)
     override val author: String = principalOrFirstMaker
-    override val imageUrl: String? = webImage?.url
 }
 
 @Serializable
 internal data class NetworkCollectionImage(
-    val url: String,
-)
+    override val url: String,
+    override val width: Int,
+    override val height: Int,
+) : CollectionItemImage

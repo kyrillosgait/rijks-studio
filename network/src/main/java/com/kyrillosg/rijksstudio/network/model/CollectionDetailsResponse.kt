@@ -1,7 +1,9 @@
 package com.kyrillosg.rijksstudio.network.model
 
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.model.CollectionItemColor
 import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -13,12 +15,22 @@ internal data class CollectionDetailsResponse(
 internal data class NetworkCollectionDetailsItem(
     val objectNumber: String,
     val principalOrFirstMaker: String,
-    val webImage: NetworkCollectionImage? = null,
+    @SerialName("webImage") override val image: NetworkCollectionImage? = null,
     override val title: String,
     override val description: String = "",
+    override val colors: List<NetworkCollectionColor>,
+    override val normalizedColors: List<NetworkCollectionColor>,
 ) : DetailedCollectionItem {
 
-    override val itemId: CollectionItem.Id = CollectionItem.Id(objectNumber)
-    override val author: String = principalOrFirstMaker
-    override val imageUrl: String? = webImage?.url
+    override val itemId: CollectionItem.Id
+        get() = CollectionItem.Id(objectNumber)
+
+    override val author: String
+        get() = principalOrFirstMaker
 }
+
+@Serializable
+internal data class NetworkCollectionColor(
+    override val percentage: Int,
+    override val hex: String,
+) : CollectionItemColor

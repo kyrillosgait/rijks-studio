@@ -1,6 +1,8 @@
 package com.kyrillosg.rijksstudio.core.fake
 
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.model.CollectionItemColor
+import com.kyrillosg.rijksstudio.core.model.CollectionItemImage
 import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
 import java.util.*
 
@@ -8,8 +10,10 @@ internal data class FakeDetailedCollectionItem(
     override val itemId: CollectionItem.Id,
     override val title: String,
     override val author: String,
-    override val imageUrl: String?,
+    override val image: CollectionItemImage?,
     override val description: String,
+    override val colors: List<CollectionItemColor>,
+    override val normalizedColors: List<CollectionItemColor>,
 ) : DetailedCollectionItem {
 
     companion object {
@@ -22,14 +26,21 @@ internal data class FakeDetailedCollectionItem(
             imageHeight: Int = 720,
             imageWidth: Int = 480,
             imageFormat: String = "png",
+            colors: List<CollectionItemColor> = emptyList(),
         ): DetailedCollectionItem {
             val imageUrl = "https://via.placeholder.com/${imageWidth}x${imageHeight}.${imageFormat}?text=$imageText"
             return FakeDetailedCollectionItem(
                 itemId = id,
                 title = title,
-                imageUrl = imageUrl,
+                image = object : CollectionItemImage {
+                    override val url = imageUrl
+                    override val width = imageWidth
+                    override val height = imageHeight
+                },
                 author = author,
-                description = description
+                description = description,
+                colors = colors,
+                normalizedColors = colors,
             )
         }
     }

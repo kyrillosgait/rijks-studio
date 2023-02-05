@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="64dp">
+
+    <TextView
+        android:id="@+id/firstColor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/secondColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="54%" />
+
+    <TextView
+        android:id="@+id/secondColor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/thirdColor"
+        app:layout_constraintStart_toEndOf="@id/firstColor"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="54%" />
+
+    <TextView
+        android:id="@+id/thirdColor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/fourthColor"
+        app:layout_constraintStart_toEndOf="@id/secondColor"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="54%" />
+
+    <TextView
+        android:id="@+id/fourthColor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/fifthColor"
+        app:layout_constraintStart_toEndOf="@id/thirdColor"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="54%" />
+
+    <TextView
+        android:id="@+id/fifthColor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/sixthColor"
+        app:layout_constraintStart_toEndOf="@id/fourthColor"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="54%" />
+
+    <TextView
+        android:id="@+id/sixthColor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/fifthColor"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="54%" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

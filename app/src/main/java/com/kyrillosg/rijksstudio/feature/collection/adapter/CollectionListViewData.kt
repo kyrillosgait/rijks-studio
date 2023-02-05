@@ -7,7 +7,7 @@ sealed interface CollectionListViewData {
 
     data class Header(
         val label: String,
-        override val uniqueId: String = label,
+        override val uniqueId: String,
     ) : CollectionListViewData
 
     data class ImageWithLabel(
@@ -22,7 +22,7 @@ sealed interface CollectionListViewData {
                 return ImageWithLabel(
                     uniqueId = collectionItem.itemId.value,
                     label = collectionItem.title,
-                    image = collectionItem.imageUrl,
+                    image = collectionItem.image?.url,
                     header = collectionItem.author,
                 )
             }

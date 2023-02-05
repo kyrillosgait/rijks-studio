@@ -13,7 +13,7 @@ val coreModule = module {
         bind<CollectionRepository>()
     }
 
-    single<RijksGateway> {
-        FakeRijksGateway()
-    }
+//    single<RijksGateway> {
+//        FakeRijksGateway()
+//    }
 }

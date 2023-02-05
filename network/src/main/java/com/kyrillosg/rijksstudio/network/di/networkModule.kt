@@ -19,9 +19,9 @@ import org.koin.dsl.module
 val networkModule = module {
     singleOf(::provideHttpClient)
 
-//    singleOf(::DefaultRijksGateway) {
-//        bind<RijksGateway>()
-//    }
+    singleOf(::DefaultRijksGateway) {
+        bind<RijksGateway>()
+    }
 
     single {
         NetworkConfiguration(
