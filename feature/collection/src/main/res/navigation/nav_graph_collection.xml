@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/collection_nav_graph"
+    app:startDestination="@id/collection_list">
+
+    <fragment
+        android:id="@+id/collection_list"
+        android:name="com.kyrillosg.rijksstudio.feature.collection.list.CollectionListFragment"
+        android:label="CollectionListFragment"
+        tools:layout="@layout/fragment_collection_list">
+
+        <action
+            android:id="@+id/action_list_to_detail"
+            app:destination="@id/collection_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/collection_detail"
+        android:name="com.kyrillosg.rijksstudio.feature.collection.detail.CollectionDetailFragment"
+        android:label="CollectionDetailFragment"
+        tools:layout="@layout/fragment_collection_detail">
+
+        <argument
+            android:name="collectionItemId"
+            app:argType="com.kyrillosg.rijksstudio.core.data.model.CollectionItem$Id" />
+
+        <action
+            android:id="@+id/action_detail_to_list"
+            app:popUpTo="@id/collection_list" />
+    </fragment>
+</navigation>

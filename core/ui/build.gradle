@@ -1,31 +1,26 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.kapt'
     id 'org.jetbrains.kotlin.plugin.serialization'
-    id 'org.jetbrains.kotlin.plugin.parcelize'
-    id 'androidx.navigation.safeargs.kotlin'
     id 'de.mannodermaus.android-junit5'
 }
 
 android {
-    namespace 'com.kyrillosg.rijksstudio'
+    namespace 'com.kyrillosg.rijksstudio.core.ui'
     compileSdk libs.versions.compileSdk.get().toInteger()
 
     defaultConfig {
-        applicationId "com.kyrillosg.rijksstudio"
         minSdk libs.versions.minSdk.get().toInteger()
         targetSdk libs.versions.targetSdk.get().toInteger()
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
-
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -39,38 +34,18 @@ android {
     buildFeatures {
         viewBinding true
     }
-    testOptions {
-        unitTests.all { useJUnitPlatform() }
-    }
-}
-
-junitPlatform {
-    configurationParameter("junit.jupiter.testinstance.lifecycle.default", "per_class")
 }
 
 dependencies {
 
-    implementation(project(":core:domain"))
     implementation(project(":core:data"))
-    implementation(project(":core:network"))
-    implementation(project(":core:ui"))
-    implementation(project(":feature:collection"))
 
     implementation(libs.bundles.kotlinx.coroutines)
-    implementation(libs.bundles.koin)
 
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    kapt(libs.androidx.lifecycle.compiler)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.androidx.paging.runtime)
-
-    implementation(libs.coil)
-    implementation(libs.material)
     implementation(libs.napier)
 
     testImplementation(libs.junit5.api)

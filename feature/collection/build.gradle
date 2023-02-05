@@ -1,31 +1,27 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.kapt'
-    id 'org.jetbrains.kotlin.plugin.serialization'
     id 'org.jetbrains.kotlin.plugin.parcelize'
     id 'androidx.navigation.safeargs.kotlin'
     id 'de.mannodermaus.android-junit5'
 }
 
 android {
-    namespace 'com.kyrillosg.rijksstudio'
+    namespace 'com.kyrillosg.rijksstudio.feature.collection'
     compileSdk libs.versions.compileSdk.get().toInteger()
 
     defaultConfig {
-        applicationId "com.kyrillosg.rijksstudio"
         minSdk libs.versions.minSdk.get().toInteger()
         targetSdk libs.versions.targetSdk.get().toInteger()
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
-
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -39,22 +35,13 @@ android {
     buildFeatures {
         viewBinding true
     }
-    testOptions {
-        unitTests.all { useJUnitPlatform() }
-    }
-}
-
-junitPlatform {
-    configurationParameter("junit.jupiter.testinstance.lifecycle.default", "per_class")
 }
 
 dependencies {
 
-    implementation(project(":core:domain"))
-    implementation(project(":core:data"))
-    implementation(project(":core:network"))
     implementation(project(":core:ui"))
-    implementation(project(":feature:collection"))
+    implementation(project(":core:data"))
+    implementation(project(":core:domain"))
 
     implementation(libs.bundles.kotlinx.coroutines)
     implementation(libs.bundles.koin)

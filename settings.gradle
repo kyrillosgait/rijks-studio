@@ -14,6 +14,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Rijksstudio"
 include ':app'
-include ':core'
-include ':network'
-include ':domain'
+include ':feature:collection'
+include ':core:ui'
+include ':core:domain'
+include ':core:data'
+include ':core:network'
