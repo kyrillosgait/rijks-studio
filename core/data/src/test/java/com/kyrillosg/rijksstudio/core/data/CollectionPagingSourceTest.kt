@@ -2,7 +2,10 @@ package com.kyrillosg.rijksstudio.core.data
 
 import androidx.paging.PagingSource
 import com.kyrillosg.rijksstudio.core.data.cache.cacheOf
+import com.kyrillosg.rijksstudio.core.data.fake.FakeDetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.data.fake.FakeRijksGateway
+import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.data.model.GroupBy
 import com.kyrillosg.rijksstudio.core.data.paging.CollectionPagingSource
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.DisplayName
@@ -13,7 +16,7 @@ class CollectionPagingSourceTest {
     private val pageSize = 2
 
     private val fakeItems = (0 until 50).map {
-        com.kyrillosg.rijksstudio.core.data.fake.FakeDetailedCollectionItem.create(
+        FakeDetailedCollectionItem.create(
             author = "Vincent van Gogh",
             imageWidth = setOf(144, 192, 256).random(),
             imageHeight = setOf(144, 192, 256).random()
@@ -27,12 +30,13 @@ class CollectionPagingSourceTest {
         ),
         cache = cacheOf(),
         pageSize = pageSize,
+        groupBy = GroupBy.ARTIST_ASCENDING,
     )
 
     @Test
     @DisplayName("Initial load returns correct LoadResult when loadSize == pageSize")
     fun initialLoad_returnsCorrectLoadResult_whenLoadSizeIsPageSize() = runTest {
-        val expected: PagingSource.LoadResult<Int, com.kyrillosg.rijksstudio.core.data.model.CollectionItem> = PagingSource.LoadResult.Page(
+        val expected: PagingSource.LoadResult<Int, CollectionItem> = PagingSource.LoadResult.Page(
             data = listOf(fakeItems[0], fakeItems[1]),
             prevKey = null,
             nextKey = 1,
@@ -57,7 +61,7 @@ class CollectionPagingSourceTest {
     @Test
     @DisplayName("Initial load returns correct LoadResult when loadSize is multiple of pageSize")
     fun initialLoad_returnsCorrectLoadResult_whenLoadSizeDiffersFromPageSize() = runTest {
-        val expected: PagingSource.LoadResult<Int, com.kyrillosg.rijksstudio.core.data.model.CollectionItem> = PagingSource.LoadResult.Page(
+        val expected: PagingSource.LoadResult<Int, CollectionItem> = PagingSource.LoadResult.Page(
             data = fakeItems.subList(0, 6),
             prevKey = null,
             nextKey = 3,
@@ -83,7 +87,7 @@ class CollectionPagingSourceTest {
     @DisplayName("Refreshing after invalidating returns correct LoadResult")
     fun loadAfterInvalidating_returnsCorrectLoadResult_whenLoadSizeIsPageSize() = runTest {
         val returnedItems = listOf(fakeItems[40], fakeItems[41])
-        val expected: PagingSource.LoadResult<Int, com.kyrillosg.rijksstudio.core.data.model.CollectionItem> = PagingSource.LoadResult.Page(
+        val expected: PagingSource.LoadResult<Int, CollectionItem> = PagingSource.LoadResult.Page(
             data = returnedItems,
             prevKey = 19,
             nextKey = 21,
@@ -109,7 +113,7 @@ class CollectionPagingSourceTest {
     @DisplayName("Refreshing after invalidating returns correct LoadResult when loadSize is multiple of pageSize")
     fun loadAfterInvalidating_returnsCorrectLoadResult_whenLoadSizeDiffersFromPageSize() = runTest {
         val returnedItems = fakeItems.subList(40, 46)
-        val expected: PagingSource.LoadResult<Int, com.kyrillosg.rijksstudio.core.data.model.CollectionItem> = PagingSource.LoadResult.Page(
+        val expected: PagingSource.LoadResult<Int, CollectionItem> = PagingSource.LoadResult.Page(
             data = returnedItems,
             prevKey = 19,
             nextKey = 23,

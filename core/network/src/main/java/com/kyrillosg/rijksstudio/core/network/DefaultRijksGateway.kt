@@ -50,7 +50,7 @@ internal class DefaultRijksGateway(
         )
     }
 
-    override suspend fun getCollectionDetails(filter: CollectionDetailsFilter): DetailedCollectionItem {
+    override suspend fun getCollectionDetails(filter: CollectionDetailsFilter): DetailedCollectionItem? {
         val response = client.get("${config.baseUrl}/${filter.language}/collection/${filter.id}") {
             url {
                 parameters.append("key", config.apiKey)

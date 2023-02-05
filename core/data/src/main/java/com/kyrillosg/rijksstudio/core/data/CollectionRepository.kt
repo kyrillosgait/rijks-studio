@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface CollectionRepository {
 
-    suspend fun getDetailedCollectionItem(id: com.kyrillosg.rijksstudio.core.data.model.CollectionItem.Id): com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem?
+    suspend fun getDetailedCollectionItem(id: CollectionItem.Id): DetailedCollectionItem?
 
-    fun getCollectionItemsPaginated(groupBy: com.kyrillosg.rijksstudio.core.data.model.GroupBy): Flow<PagingData<com.kyrillosg.rijksstudio.core.data.model.CollectionItem>>
+    fun getCollectionItemsPaginated(groupBy: GroupBy): Flow<PagingData<CollectionItem>>
 }

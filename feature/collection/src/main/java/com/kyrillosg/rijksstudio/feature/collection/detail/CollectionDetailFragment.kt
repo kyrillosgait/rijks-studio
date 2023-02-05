@@ -10,6 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
+import com.kyrillosg.rijksstudio.core.ui.UiState
 import com.kyrillosg.rijksstudio.core.ui.ViewBindingFragment
 import com.kyrillosg.rijksstudio.core.ui.toast
 import com.kyrillosg.rijksstudio.core.ui.views.ColorPaletteView
@@ -38,18 +39,18 @@ class CollectionDetailFragment : ViewBindingFragment<FragmentCollectionDetailBin
         viewModel.getDetails(args.collectionItemId)
     }
 
-    private fun renderState(uiState: com.kyrillosg.rijksstudio.core.ui.UiState<DetailedCollectionItem>) {
+    private fun renderState(uiState: UiState<DetailedCollectionItem>) {
         when (uiState) {
-            is com.kyrillosg.rijksstudio.core.ui.UiState.Error -> {
+            is UiState.Error -> {
                 toast(uiState.message)
                 binding.progressBar.isVisible = false
                 binding.scrollView.isVisible = false
             }
-            com.kyrillosg.rijksstudio.core.ui.UiState.Loading -> {
+            UiState.Loading -> {
                 binding.progressBar.isVisible = true
                 binding.scrollView.isVisible = false
             }
-            is com.kyrillosg.rijksstudio.core.ui.UiState.Success -> {
+            is UiState.Success -> {
                 uiState.data.image?.let { image ->
                     val ratio = "${image.width}:${image.height}"
                     ConstraintSet().apply {

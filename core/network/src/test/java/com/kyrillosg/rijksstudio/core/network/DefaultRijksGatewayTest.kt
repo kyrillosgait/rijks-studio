@@ -20,7 +20,7 @@ class DefaultRijksGatewayTest {
     private val collectionItemsSuccessJson = readFile("get_collection_items.json")
     private val collectionItemDetailSuccessJson = readFile("get_collection_item_details.json")
 
-    private val gateway = com.kyrillosg.rijksstudio.core.network.DefaultRijksGateway(
+    private val gateway = DefaultRijksGateway(
         client = HttpClient(MockEngine) {
             engine {
                 addHandler { request ->
@@ -97,7 +97,7 @@ class DefaultRijksGatewayTest {
                 val collectionDetailsItem = gateway.getCollectionDetails(filter)
                 println("Deserialized: $collectionDetailsItem")
 
-                assert(collectionDetailsItem.itemId.value == filter.id)
+                assert(collectionDetailsItem?.itemId?.value == filter.id)
             }
         }
     }

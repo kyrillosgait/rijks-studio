@@ -19,7 +19,7 @@ class CollectionDetailViewModel(
         get() = _detailedCollectionItem
             .filterNotNull()
             .map<DetailedCollectionItem, UiState<DetailedCollectionItem>> {
-                com.kyrillosg.rijksstudio.core.ui.UiState.Success(it)
+                UiState.Success(it)
             }
             .catch { throwable ->
                 throwable.message?.let { emit(UiState.Error(it)) }

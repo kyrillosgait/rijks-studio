@@ -4,18 +4,19 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.kyrillosg.rijksstudio.core.data.CollectionFilter
 import com.kyrillosg.rijksstudio.core.data.RijksGateway
+import com.kyrillosg.rijksstudio.core.data.cache.Cache
 import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
 
 internal class CollectionPagingSource(
     private val service: RijksGateway,
-    private val cache: com.kyrillosg.rijksstudio.core.data.cache.Cache<CollectionFilter, PaginatedData<List<CollectionItem>>>,
+    private val cache: Cache<CollectionFilter, PaginatedData<List<CollectionItem>>>,
     private val pageSize: Int,
     private val groupBy: com.kyrillosg.rijksstudio.core.data.model.GroupBy,
-) : PagingSource<Int, com.kyrillosg.rijksstudio.core.data.model.CollectionItem>() {
+) : PagingSource<Int, CollectionItem>() {
 
     override val jumpingSupported: Boolean = true
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, com.kyrillosg.rijksstudio.core.data.model.CollectionItem> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CollectionItem> {
         val page = params.key ?: 0
 
         return try {
@@ -47,7 +48,7 @@ internal class CollectionPagingSource(
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, com.kyrillosg.rijksstudio.core.data.model.CollectionItem>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, CollectionItem>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             anchorPosition / pageSize
         }

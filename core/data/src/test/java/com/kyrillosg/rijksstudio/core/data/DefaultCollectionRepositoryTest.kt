@@ -1,6 +1,5 @@
 package com.kyrillosg.rijksstudio.core.data
 
-import com.kyrillosg.rijksstudio.core.data.DefaultCollectionRepository
 import com.kyrillosg.rijksstudio.core.data.fake.FakeDetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.data.fake.FakeRijksGateway
 import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
@@ -8,28 +7,16 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import java.util.UUID
+import java.util.*
 
 class DefaultCollectionRepositoryTest {
 
-    private val repository = com.kyrillosg.rijksstudio.core.data.DefaultCollectionRepository(
-        rijksGateway = com.kyrillosg.rijksstudio.core.data.fake.FakeRijksGateway(
+    private val repository = DefaultCollectionRepository(
+        rijksGateway = FakeRijksGateway(
             collectionItems = listOf(
-                com.kyrillosg.rijksstudio.core.data.fake.FakeDetailedCollectionItem.create(
-                    id = com.kyrillosg.rijksstudio.core.data.model.CollectionItem.Id(
-                        "1"
-                    )
-                ),
-                com.kyrillosg.rijksstudio.core.data.fake.FakeDetailedCollectionItem.create(
-                    id = com.kyrillosg.rijksstudio.core.data.model.CollectionItem.Id(
-                        "2"
-                    )
-                ),
-                com.kyrillosg.rijksstudio.core.data.fake.FakeDetailedCollectionItem.create(
-                    id = com.kyrillosg.rijksstudio.core.data.model.CollectionItem.Id(
-                        "100"
-                    )
-                ),
+                FakeDetailedCollectionItem.create(id = CollectionItem.Id("1")),
+                FakeDetailedCollectionItem.create(id = CollectionItem.Id("2")),
+                FakeDetailedCollectionItem.create(id = CollectionItem.Id("100")),
             )
         ),
     )
@@ -42,7 +29,7 @@ class DefaultCollectionRepositoryTest {
         @DisplayName("The correct detailed collection item is returned")
         fun getDetailedCollectionItem_givenValidId() {
             runTest {
-                val expectedId = com.kyrillosg.rijksstudio.core.data.model.CollectionItem.Id("2")
+                val expectedId = CollectionItem.Id("2")
                 val actual = repository.getDetailedCollectionItem(expectedId)
 
                 assert(actual?.itemId == expectedId)
@@ -58,7 +45,7 @@ class DefaultCollectionRepositoryTest {
         @DisplayName("No item is returned")
         fun getDetailedCollectionItem_givenNonExistentId() {
             runTest {
-                val nonExistentId = com.kyrillosg.rijksstudio.core.data.model.CollectionItem.Id(UUID.randomUUID().toString())
+                val nonExistentId = CollectionItem.Id(UUID.randomUUID().toString())
                 val actual = repository.getDetailedCollectionItem(nonExistentId)
 
                 assert(actual == null)
