@@ -18,13 +18,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="16dp"
-        tools:text="An error occured"/>
+        tools:text="An error occurred" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/collectionListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
+        android:splitMotionEvents="false"
         tools:itemCount="5"
         tools:listitem="@layout/item_image_with_label" />
 
