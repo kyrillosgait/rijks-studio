@@ -80,7 +80,7 @@ class CollectionListFragment : ViewBindingFragment<FragmentCollectionListBinding
             state.refresh as? LoadState.Error,
             state.prepend as? LoadState.Error,
             state.append as? LoadState.Error,
-        )
+        ).distinct()
 
         errorsStates.forEach { errorState ->
             errorState.error.message?.let { toast(it) }
