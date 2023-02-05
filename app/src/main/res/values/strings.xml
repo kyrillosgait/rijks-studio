@@ -1,9 +1,4 @@
 <resources>
     <string name="app_name">Rijksstudio</string>
     <string name="action_settings">Settings</string>
-    <string name="color_palette">Color palette</string>
-    <string name="color_palette_normalized">Color palette (normalized)</string>
-    <string name="menu_item_no_group">Don\'t group</string>
-    <string name="menu_item_group_artist_asc">Group by artist (↑)</string>
-    <string name="menu_item_group_artist_desc">Group by artist (↓)</string>
 </resources>

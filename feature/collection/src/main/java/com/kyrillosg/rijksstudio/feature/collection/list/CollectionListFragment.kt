@@ -91,6 +91,7 @@ class CollectionListFragment : ViewBindingFragment<FragmentCollectionListBinding
         }
 
         binding.errorText.text = errorsStates.joinToString("\n\n")
+        binding.errorText.isVisible = errorsStates.isNotEmpty()
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {

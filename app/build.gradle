@@ -51,6 +51,7 @@ junitPlatform {
 dependencies {
 
     implementation(project(":core:di"))
+    implementation(project(":core:ui"))
     implementation(project(":feature:collection"))
 
     implementation(libs.bundles.kotlinx.coroutines)
