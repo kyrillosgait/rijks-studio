@@ -31,11 +31,15 @@ class CollectionListFragment : ViewBindingFragment<FragmentCollectionListBinding
     private val viewModel: CollectionListViewModel by viewModel()
     private val collectionListAdapter = CollectionListAdapter(
         onCollectionItemClicked = { id ->
-            findNavController().navigate(
-                directions = CollectionListFragmentDirections.actionListToDetail(
-                    collectionItemId = CollectionItem.Id(id)
+            try {
+                findNavController().navigate(
+                    directions = CollectionListFragmentDirections.actionListToDetail(
+                        collectionItemId = CollectionItem.Id(id)
+                    )
                 )
-            )
+            } catch (ignored: IllegalArgumentException) {
+                // Already navigating or navigated
+            }
         }
     ).apply {
         stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
