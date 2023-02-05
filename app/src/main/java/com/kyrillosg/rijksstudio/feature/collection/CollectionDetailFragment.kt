@@ -42,6 +42,8 @@ class CollectionDetailFragment : ViewBindingFragment<FragmentCollectionDetailBin
         when (uiState) {
             is UiState.Error -> {
                 toast(uiState.message)
+                binding.progressBar.isVisible = false
+                binding.scrollView.isVisible = false
             }
             UiState.Loading -> {
                 binding.progressBar.isVisible = true
