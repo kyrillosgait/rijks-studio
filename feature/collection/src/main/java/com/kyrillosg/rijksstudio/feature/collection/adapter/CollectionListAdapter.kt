@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemHeaderBinding
 import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemImageWithLabelBinding
 
-typealias OnCollectionItemClicked = (id: String) -> Unit
+internal typealias OnCollectionItemClicked = (id: String) -> Unit
 
-class CollectionListAdapter(
+internal class CollectionListAdapter(
     private val onCollectionItemClicked: OnCollectionItemClicked,
 ) : PagingDataAdapter<CollectionListViewData, CollectionListViewHolder>(DiffCallback()) {
 

@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.feature.collection
+package com.kyrillosg.rijksstudio.feature.collection.di
 
 import com.kyrillosg.rijksstudio.feature.collection.detail.CollectionDetailViewModel
 import com.kyrillosg.rijksstudio.feature.collection.list.CollectionListViewModel

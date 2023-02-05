@@ -8,7 +8,7 @@ import com.kyrillosg.rijksstudio.feature.collection.R
 import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemHeaderBinding
 import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemImageWithLabelBinding
 
-sealed class CollectionListViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
+internal sealed class CollectionListViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
     class Header(
         private val binding: ItemHeaderBinding,

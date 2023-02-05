@@ -15,17 +15,17 @@ class CollectionDetailViewModel(
 
     private val _detailedCollectionItem = MutableStateFlow<DetailedCollectionItem?>(null)
 
-    val detailedCollectionItem: Flow<com.kyrillosg.rijksstudio.core.ui.UiState<DetailedCollectionItem>>
+    val detailedCollectionItem: Flow<UiState<DetailedCollectionItem>>
         get() = _detailedCollectionItem
             .filterNotNull()
-            .map<DetailedCollectionItem, com.kyrillosg.rijksstudio.core.ui.UiState<DetailedCollectionItem>> {
+            .map<DetailedCollectionItem, UiState<DetailedCollectionItem>> {
                 com.kyrillosg.rijksstudio.core.ui.UiState.Success(it)
             }
             .catch { throwable ->
-                throwable.message?.let { emit(com.kyrillosg.rijksstudio.core.ui.UiState.Error(it)) }
+                throwable.message?.let { emit(UiState.Error(it)) }
             }
             .onStart {
-                emit(com.kyrillosg.rijksstudio.core.ui.UiState.Loading)
+                emit(UiState.Loading)
             }
 
     fun getDetails(id: CollectionItem.Id) {

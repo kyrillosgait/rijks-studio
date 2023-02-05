@@ -1,10 +1,8 @@
 package com.kyrillosg.rijksstudio
 
 import android.app.Application
-import com.kyrillosg.rijksstudio.core.data.di.coreModule
-import com.kyrillosg.rijksstudio.core.domain.di.domainModule
-import com.kyrillosg.rijksstudio.feature.collection.collectionFeatureModule
-import com.kyrillosg.rijksstudio.core.network.di.networkModule
+import com.kyrillosg.rijksstudio.core.di.coreDiModule
+import com.kyrillosg.rijksstudio.feature.collection.di.collectionFeatureModule
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import org.koin.android.ext.koin.androidContext
@@ -14,9 +12,7 @@ import org.koin.dsl.module
 
 val rijksStudioModule = module {
     includes(
-        coreModule,
-        networkModule,
-        domainModule,
+        coreDiModule,
         collectionFeatureModule,
     )
 }
