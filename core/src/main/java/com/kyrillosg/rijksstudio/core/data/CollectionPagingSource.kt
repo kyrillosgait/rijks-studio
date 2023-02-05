@@ -3,12 +3,12 @@ package com.kyrillosg.rijksstudio.core.data
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.kyrillosg.rijksstudio.core.cache.Cache
-import com.kyrillosg.rijksstudio.core.data.DefaultCollectionRepository.Companion.PAGE_SIZE
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
 
 internal class CollectionPagingSource(
     private val service: RijksGateway,
     private val cache: Cache<CollectionFilter, PaginatedData<List<CollectionItem>>>,
+    private val pageSize: Int,
 ) : PagingSource<Int, CollectionItem>() {
 
     override val jumpingSupported: Boolean = true
@@ -23,7 +23,7 @@ internal class CollectionPagingSource(
                 ?: service.getCollection(filter).also { cache.put(filter, it) }
 
             val total = paginatedData.total
-            val itemsBefore = page * PAGE_SIZE
+            val itemsBefore = page * pageSize
             val itemsAfter = total - (itemsBefore + paginatedData.items.size)
 
             val willReachApiLimit = (page + 1) * params.loadSize >= 10_000
@@ -42,7 +42,7 @@ internal class CollectionPagingSource(
 
     override fun getRefreshKey(state: PagingState<Int, CollectionItem>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
-            anchorPosition / PAGE_SIZE
+            anchorPosition / pageSize
         }
     }
 }

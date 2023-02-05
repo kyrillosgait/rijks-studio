@@ -19,12 +19,13 @@ internal class DefaultCollectionRepository(
         return Pager(
             config = PagingConfig(
                 pageSize = PAGE_SIZE,
-                initialLoadSize = 3 * PAGE_SIZE,
+                // FIXME: Initial page size not equal to the default, returns incorrect LoadResult
+                initialLoadSize = PAGE_SIZE,
                 enablePlaceholders = true,
                 jumpThreshold = 2 * PAGE_SIZE,
             ),
             pagingSourceFactory = {
-                CollectionPagingSource(rijksGateway, itemCache)
+                CollectionPagingSource(rijksGateway, itemCache, PAGE_SIZE)
             }
         ).flow
     }
