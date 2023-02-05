@@ -6,6 +6,7 @@ import com.kyrillosg.rijksstudio.core.data.PaginatedData
 import com.kyrillosg.rijksstudio.core.data.RijksGateway
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
+import com.kyrillosg.rijksstudio.core.model.GroupBy
 import com.kyrillosg.rijksstudio.network.di.NetworkConfiguration
 import com.kyrillosg.rijksstudio.network.model.CollectionDetailsResponse
 import com.kyrillosg.rijksstudio.network.model.CollectionResponse
@@ -24,9 +25,20 @@ internal class DefaultRijksGateway(
                 parameters.append("key", config.apiKey)
                 parameters.append("p", filter.page.toString())
                 parameters.append("ps", filter.pageSize.toString())
-                parameters.append("s", "artist")
                 parameters.append("imgonly", "True")
                 parameters.append("toppieces", "True")
+
+                when (filter.groupBy) {
+                    GroupBy.NONE -> {
+                        // Nothing to do
+                    }
+                    GroupBy.ARTIST_ASCENDING -> {
+                        parameters.append("s", "artist")
+                    }
+                    GroupBy.ARTIST_DESCENDING -> {
+                        parameters.append("s", "artistdesc")
+                    }
+                }
             }
         }
 

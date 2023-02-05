@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.kyrillosg.rijksstudio.MainActivity">
+    <group
+        android:id="@+id/groupBy"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/menu_group_by_none"
+            android:title="@string/menu_item_no_group" />
+        <item
+            android:id="@+id/menu_sort_by_artist_ascending"
+            android:title="@string/menu_item_group_artist_asc" />
+        <item
+            android:id="@+id/menu_sort_by_artist_descending"
+            android:title="@string/menu_item_group_artist_desc" />
+
+    </group>
+</menu>

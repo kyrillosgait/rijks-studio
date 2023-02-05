@@ -40,7 +40,7 @@ private fun provideHttpClient(context: Context): HttpClient {
     return HttpClient(OkHttp) {
         expectSuccess = true
         install(Logging) {
-            level = LogLevel.ALL
+            level = LogLevel.INFO
             logger = object : Logger {
                 override fun log(message: String) {
                     Napier.v { message }

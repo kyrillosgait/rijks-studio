@@ -4,11 +4,13 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.kyrillosg.rijksstudio.core.cache.Cache
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.model.GroupBy
 
 internal class CollectionPagingSource(
     private val service: RijksGateway,
     private val cache: Cache<CollectionFilter, PaginatedData<List<CollectionItem>>>,
     private val pageSize: Int,
+    private val groupBy: GroupBy,
 ) : PagingSource<Int, CollectionItem>() {
 
     override val jumpingSupported: Boolean = true
@@ -17,7 +19,11 @@ internal class CollectionPagingSource(
         val page = params.key ?: 0
 
         return try {
-            val filter = CollectionFilter(page, params.loadSize)
+            val filter = CollectionFilter(
+                page = page,
+                pageSize = params.loadSize,
+                groupBy = groupBy,
+            )
 
             val paginatedData = cache.get(filter)
                 ?: service.getCollection(filter).also { cache.put(filter, it) }
@@ -35,6 +41,7 @@ internal class CollectionPagingSource(
                 itemsBefore = itemsBefore,
                 itemsAfter = itemsAfter,
             )
+
         } catch (exception: Exception) {
             return LoadResult.Error(exception)
         }

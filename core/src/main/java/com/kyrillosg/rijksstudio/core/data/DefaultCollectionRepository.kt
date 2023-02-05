@@ -3,9 +3,11 @@ package com.kyrillosg.rijksstudio.core.data
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.PagingSource.LoadResult.Page.Companion.COUNT_UNDEFINED
 import com.kyrillosg.rijksstudio.core.cache.cacheOf
 import com.kyrillosg.rijksstudio.core.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.model.DetailedCollectionItem
+import com.kyrillosg.rijksstudio.core.model.GroupBy
 import kotlinx.coroutines.flow.Flow
 
 internal class DefaultCollectionRepository(
@@ -15,16 +17,18 @@ internal class DefaultCollectionRepository(
     private val itemCache = cacheOf<CollectionFilter, PaginatedData<List<CollectionItem>>>()
     private val detailCache = cacheOf<CollectionDetailsFilter, DetailedCollectionItem>()
 
-    override fun getCollectionItemsPaginated(): Flow<PagingData<CollectionItem>> {
+    override fun getCollectionItemsPaginated(groupBy: GroupBy): Flow<PagingData<CollectionItem>> {
+        val pageSize = PAGE_SIZE
+        val supportsPlaceholders = groupBy == GroupBy.NONE
         return Pager(
             config = PagingConfig(
-                pageSize = PAGE_SIZE,
-                initialLoadSize = PAGE_SIZE,
-                enablePlaceholders = true,
-                jumpThreshold = 3 * PAGE_SIZE,
+                pageSize = pageSize,
+                initialLoadSize = pageSize,
+                enablePlaceholders = supportsPlaceholders,
+                jumpThreshold = if (supportsPlaceholders) 3 * pageSize else COUNT_UNDEFINED
             ),
             pagingSourceFactory = {
-                CollectionPagingSource(rijksGateway, itemCache, PAGE_SIZE)
+                CollectionPagingSource(rijksGateway, itemCache, pageSize, groupBy)
             }
         ).flow
     }
@@ -47,6 +51,7 @@ data class CollectionFilter(
     val page: Int = 0,
     val pageSize: Int = DefaultCollectionRepository.PAGE_SIZE,
     val language: String = "en",
+    val groupBy: GroupBy = GroupBy.ARTIST_ASCENDING,
 )
 
 data class CollectionDetailsFilter(
