@@ -3,7 +3,7 @@ package com.kyrillosg.rijksstudio.core.network.di
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.kyrillosg.rijksstudio.core.data.RijksGateway
-import com.kyrillosg.rijksstudio.network.BuildConfig
+import com.kyrillosg.rijksstudio.core.network.BuildConfig
 import com.kyrillosg.rijksstudio.core.network.DefaultRijksGateway
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
