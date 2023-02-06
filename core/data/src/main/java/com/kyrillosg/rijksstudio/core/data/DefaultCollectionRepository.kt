@@ -25,7 +25,7 @@ internal class DefaultCollectionRepository(
         return Pager(
             config = PagingConfig(
                 pageSize = pageSize,
-                initialLoadSize = pageSize,
+                initialLoadSize = if (supportsPlaceholders) pageSize else 3 * pageSize,
                 enablePlaceholders = supportsPlaceholders,
                 jumpThreshold = if (supportsPlaceholders) 3 * pageSize else COUNT_UNDEFINED
             ),
