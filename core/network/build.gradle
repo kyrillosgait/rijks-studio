@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.kyrillosg.rijksstudio.network'
+    namespace 'com.kyrillosg.rijksstudio.core.network'
 
     buildTypes {
         def properties = new Properties()

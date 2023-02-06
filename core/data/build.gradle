@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace 'com.kyrillosg.rijksstudio.core'
+    namespace 'com.kyrillosg.rijksstudio.core.data'
 }
 
 dependencies {
