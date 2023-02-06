@@ -1,0 +1,7 @@
+plugins {
+    id 'de.mannodermaus.android-junit5'
+}
+
+junitPlatform {
+    configurationParameter("junit.jupiter.testinstance.lifecycle.default", "per_class")
+}

@@ -1,21 +1,13 @@
 plugins {
     id 'rijksstudio-library-convention'
+    id 'rijksstudio-test-convention'
     id 'org.jetbrains.kotlin.kapt'
     id 'org.jetbrains.kotlin.plugin.serialization'
     id 'org.jetbrains.kotlin.plugin.parcelize'
-    id 'de.mannodermaus.android-junit5'
 }
 
 android {
     namespace 'com.kyrillosg.rijksstudio.core'
-
-    testOptions {
-        unitTests.all { useJUnitPlatform() }
-    }
-}
-
-junitPlatform {
-    configurationParameter("junit.jupiter.testinstance.lifecycle.default", "per_class")
 }
 
 dependencies {

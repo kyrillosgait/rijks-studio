@@ -5,7 +5,7 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.serialization'
     id 'org.jetbrains.kotlin.plugin.parcelize'
     id 'androidx.navigation.safeargs.kotlin'
-    id 'de.mannodermaus.android-junit5'
+    id 'rijksstudio-test-convention'
 }
 
 android {
@@ -39,13 +39,6 @@ android {
     buildFeatures {
         viewBinding true
     }
-    testOptions {
-        unitTests.all { useJUnitPlatform() }
-    }
-}
-
-junitPlatform {
-    configurationParameter("junit.jupiter.testinstance.lifecycle.default", "per_class")
 }
 
 dependencies {

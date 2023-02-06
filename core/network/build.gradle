@@ -1,8 +1,8 @@
 plugins {
     id 'rijksstudio-library-convention'
+    id 'rijksstudio-test-convention'
     id 'org.jetbrains.kotlin.kapt'
     id 'org.jetbrains.kotlin.plugin.serialization'
-    id 'de.mannodermaus.android-junit5'
 }
 
 android {
@@ -28,10 +28,6 @@ android {
             resources.srcDirs += ['src/test/resources']
         }
     }
-}
-
-junitPlatform {
-    configurationParameter("junit.jupiter.testinstance.lifecycle.default", "per_class")
 }
 
 dependencies {
