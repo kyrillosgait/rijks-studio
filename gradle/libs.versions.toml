@@ -11,6 +11,10 @@ minSdk = "26"
 compileSdk = "33"
 targetSdk = "33"
 
+versionMajor = "1"
+versionMinor = "0"
+versionPatch = "0"
+
 androidxActivity = "1.6.1"
 androidxAppcompat = "1.6.0"
 androidxConstraintLayout = "2.1.4"

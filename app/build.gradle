@@ -16,8 +16,13 @@ android {
         applicationId "com.kyrillosg.rijksstudio"
         minSdk libs.versions.minSdk.get().toInteger()
         targetSdk libs.versions.targetSdk.get().toInteger()
-        versionCode 1
-        versionName "1.0"
+
+        int versionMajor = libs.versions.versionMajor.get().toInteger()
+        int versionMinor = libs.versions.versionMinor.get().toInteger()
+        int versionPatch = libs.versions.versionPatch.get().toInteger()
+
+        versionName "$versionMajor.$versionMinor.$versionPatch"
+        versionCode versionMajor * 1_000 + versionMinor * 100 + versionPatch
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
