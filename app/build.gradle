@@ -53,7 +53,7 @@ dependencies {
     implementation(project(":feature:collection"))
 
     implementation(libs.bundles.kotlinx.coroutines)
-    implementation(libs.bundles.koin)
+    implementation(libs.koin.android)
 
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
@@ -65,6 +65,7 @@ dependencies {
     testImplementation(libs.junit5.api)
     testRuntimeOnly(libs.junit5.engine)
     testImplementation(libs.bundles.ktor)
+    testImplementation(libs.koin.test.junit5)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }

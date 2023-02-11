@@ -21,7 +21,7 @@ dependencies {
     implementation(project(":core:domain"))
 
     implementation(libs.bundles.kotlinx.coroutines)
-    implementation(libs.bundles.koin)
+    implementation(libs.koin.android)
 
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)

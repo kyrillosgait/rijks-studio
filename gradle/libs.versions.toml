@@ -1,8 +1,8 @@
 [versions]
 kotlin = "1.7.21"
 coroutines = "1.6.4"
-koin = "3.3.2"
-koinAndroid = "3.3.2"
+koin = "3.3.3"
+koinAndroid = "3.3.3"
 ktor = "2.2.2"
 serialization = "1.4.1"
 androidGradlePlugin = "7.4.0"
@@ -53,8 +53,9 @@ junit4 = { module = "junit:junit", version.ref = "junit4" }
 junit5-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit5" }
 junit5-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit5" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
+koin-androidx-navigation = { module = "io.insert-koin:koin-androidx-navigation", version.ref = "koinAndroid" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
-koin-test = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
+koin-test-junit5 = { module = "io.insert-koin:koin-test-junit5", version.ref = "koin" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
@@ -69,7 +70,6 @@ ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", vers
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
 [bundles]
-koin = ["koin-android", "koin-core", "koin-test"]
 kotlinx-coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-core", "kotlinx-coroutines-test"]
 ktor = ["ktor-client-android", "ktor-client-core", "ktor-client-logging", "ktor-client-okhttp", "ktor-client-serialization", "ktor-serialization-kotlinx-json", "ktor-client-content-negotiation", "ktor-client-mock"]
 

@@ -34,7 +34,7 @@ dependencies {
     implementation(project(":core:data"))
 
     implementation(libs.bundles.kotlinx.coroutines)
-    implementation(libs.bundles.koin)
+    implementation(libs.koin.core)
     implementation(libs.bundles.ktor)
     implementation(libs.kotlinx.serialization.json)
 
