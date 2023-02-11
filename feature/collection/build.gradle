@@ -21,21 +21,8 @@ dependencies {
     implementation(project(":core:domain"))
 
     implementation(libs.bundles.kotlinx.coroutines)
-    implementation(libs.koin.android)
 
-    implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    kapt(libs.androidx.lifecycle.compiler)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.paging.runtime)
-
-    implementation(libs.coil)
-    implementation(libs.material)
-    implementation(libs.napier)
 
     testImplementation(libs.junit5.api)
     testRuntimeOnly(libs.junit5.engine)

@@ -18,12 +18,19 @@ dependencies {
     implementation(project(":core:data"))
 
     implementation(libs.bundles.kotlinx.coroutines)
+    api(libs.koin.android)
 
-    implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.napier)
+    api(libs.androidx.activity.ktx)
+    api(libs.androidx.appcompat)
+    api(libs.androidx.constraintlayout)
+    api(libs.androidx.core.ktx)
+    api(libs.androidx.lifecycle.viewmodel.ktx)
+    api(libs.androidx.navigation.fragment.ktx)
+    api(libs.androidx.navigation.ui.ktx)
+
+    api(libs.napier)
+    api(libs.coil)
+    api(libs.material)
 
     testImplementation(libs.junit5.api)
     testRuntimeOnly(libs.junit5.engine)
