@@ -5,7 +5,10 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.core.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.core.view.forEach
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -29,6 +32,7 @@ class CollectionListFragment : ViewBindingFragment<FragmentCollectionListBinding
 ), MenuProvider {
 
     private val viewModel: CollectionListViewModel by viewModel()
+
     private val collectionListAdapter = CollectionListAdapter(
         onCollectionItemClicked = { id ->
             try {
@@ -51,24 +55,25 @@ class CollectionListFragment : ViewBindingFragment<FragmentCollectionListBinding
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
+        binding.progressBar.isVisible = true
+
         binding.collectionListRecyclerView.apply {
             adapter = collectionListAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.collectionPagingData.collect { items ->
-                    collectionListAdapter.submitData(items)
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                launch {
+                    viewModel.collectionPagingData.collect { items ->
+                        collectionListAdapter.submitData(items)
+                    }
                 }
-            }
-        }
 
-        binding.progressBar.isVisible = true
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                collectionListAdapter.loadStateFlow.collect {
-                    showLoadingOrErrorState(it)
+                launch {
+                    collectionListAdapter.loadStateFlow.collect {
+                        showLoadingOrErrorState(it)
+                    }
                 }
             }
         }
