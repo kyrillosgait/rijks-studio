@@ -1,7 +1,7 @@
 # Rijks-studio
 Displays a paginated list of art objects and additional details when clicked.
 
-![list screen](https://github.com/kyrillosgait/rijks-studio/blob/master/images/list-screen.png "List") ![detail screen](https://github.com/kyrillosgait/rijks-studio/blob/master/images/detail-screen.png "Detail")
+![list detail screens](https://github.com/kyrillosgait/rijks-studio/blob/master/images/list-detail-screens.png)
 
 ## Tooling
 - Kotlin, coroutines for asynchronous operations and flow for observable data streams
