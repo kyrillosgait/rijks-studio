@@ -1,6 +1,9 @@
 # Rijks-studio
 Displays a paginated list of art objects and additional details when clicked.
 
+![list screen](https://github.com/kyrillosgait/rijks-studio/blob/master/images/list-screen.png)
+![detail screen](https://github.com/kyrillosgait/rijks-studio/blob/master/images/detail-screen.png)
+
 ## Tooling
 - Kotlin, coroutines for asynchronous operations and flow for observable data streams
 - Koin for dependency injection
