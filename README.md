@@ -23,3 +23,12 @@ Presentation-domain-data layering, with MVVM in the presentation layer, split in
 - `:core:network` -> The api gateway along with network models, and unit tests.
 - `:core:di` -> Gathers domain and data layer DI modules and exposes them to :app.
 - `:build-logic` -> Reusable gradle precompiled scripts for the gradle modules.
+
+## Using the app
+
+To see actual data from API you'll need an [API key](https://data.rijksmuseum.nl/object-metadata/api/), which can be defined in `local.properties` like:
+```
+API_KEY="your_api_key"
+```
+
+Alternatively, you can configure the app via DI to use the `FakeRijksGateway` as a data source, instead of the default implementation.
