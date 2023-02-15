@@ -15,9 +15,9 @@ Presentation-domain-data layering, with MVVM in the presentation layer, split in
 
 - `:app` -> Application class, single activity, test for dependency injection declarations.
 - `:feature:collection` -> Collection list and detail fragments along with their corresponding view models.
-- `:core:ui` -> Common extensions and reusable views that feature models can tap into.
+- `:core:ui` -> Common extensions and reusable views that feature modules can tap into.
 - `:core:domain` -> Use cases and models, encapsulating reusable business logic and behavior.
 - `:core:data` -> Data models, a repository consuming the api gateway (plus a fake implementation of it), in-memory caching, and unit tests.
 - `:core:network` -> The api gateway along with network models, and unit tests.
-- `:core:di` -> Gathers domain and data layer DI modules and exposes it to :app.
+- `:core:di` -> Gathers domain and data layer DI modules and exposes them to :app.
 - `:build-logic` -> Reusable gradle precompiled scripts for the gradle modules.
