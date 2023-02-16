@@ -16,8 +16,8 @@ jobs:
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
 
-      - name: Copy CI gradle.properties
-        run: ls ; touch local.properties
+      - name: Create empty local.properties file
+        run: touch local.properties
 
       - name: Set up JDK 11
         uses: actions/setup-java@v3
