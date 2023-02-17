@@ -3,6 +3,7 @@ package com.kyrillosg.rijksstudio.core.data
 import com.kyrillosg.rijksstudio.core.data.fake.FakeDetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.data.fake.FakeRijksGateway
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
@@ -22,6 +23,7 @@ class DefaultCollectionRepositoryTest {
         ),
     )
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Nested
     @DisplayName("Given valid CollectionItem.ID")
     inner class ValidCollectionItemId {

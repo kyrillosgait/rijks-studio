@@ -4,8 +4,10 @@ import android.content.Context
 import io.ktor.client.*
 import io.ktor.client.engine.*
 import org.junit.jupiter.api.Test
+import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.test.verify.verify
 
+@OptIn(KoinExperimentalAPI::class)
 class RijksStudioAppModuleCheck {
 
     @Test
