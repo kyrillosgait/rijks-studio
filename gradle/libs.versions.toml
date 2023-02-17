@@ -24,6 +24,7 @@ androidxNavigation = "2.5.3"
 androidxPaging = "3.2.0-alpha03"
 androidxTestEspresso = "3.5.0"
 androidxTestExtJunit = "1.1.4"
+appcenter="4.4.5"
 chucker = "3.5.2"
 coil = "2.2.2"
 junit4 = "4.13.2"
@@ -44,6 +45,8 @@ androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx",
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidxPaging" }
 androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidxTestEspresso" }
 androidx-test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidxTestExtJunit" }
+appcenter-analytics = { module = "com.microsoft.appcenter:appcenter-analytics", version.ref = "appcenter" }
+appcenter-crashes = { module = "com.microsoft.appcenter:appcenter-crashes", version.ref = "appcenter" }
 chucker-debug = { module = "com.github.chuckerteam.chucker:library", version.ref = "chucker" }
 chucker-release = { module = "com.github.chuckerteam.chucker:library-no-op", version.ref = "chucker" }
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }

@@ -28,10 +28,18 @@ android {
     }
 
     buildTypes {
+        def properties = new Properties()
+        rootProject.file("local.properties").withInputStream { properties.load(it) }
+
+        debug {
+            buildConfigField "String", "APP_CENTER_SECRET", properties.getProperty("APP_CENTER_SECRET_DEBUG") ?: ""
+        }
 
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "APP_CENTER_SECRET", properties.getProperty("APP_CENTER_SECRET_RELEASE") ?: ""
         }
     }
     compileOptions {
@@ -59,6 +67,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
+    implementation(libs.appcenter.analytics)
+    implementation(libs.appcenter.crashes)
     implementation(libs.material)
     implementation(libs.napier)
 
