@@ -36,12 +36,3 @@ jobs:
 
       - name: Run unit tests
         run: ./gradlew testDebugUnitTest
-
-      - name: Test Report
-        uses: dorny/test-reporter@v1
-        if: always()
-        with:
-          name: JUnit Tests
-          path: '**/build/test-results/testDebugUnitTest/TEST-*.xml'
-          reporter: java-junit
-          fail-on-error: false
