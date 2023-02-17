@@ -4,9 +4,9 @@ import androidx.paging.PagingSource
 import com.kyrillosg.rijksstudio.core.data.cache.cacheOf
 import com.kyrillosg.rijksstudio.core.data.fake.FakeDetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.data.fake.FakeRijksGateway
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
-import com.kyrillosg.rijksstudio.core.data.model.GroupBy
 import com.kyrillosg.rijksstudio.core.data.paging.CollectionPagingSource
+import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.domain.collection.model.GroupBy
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

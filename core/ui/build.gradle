@@ -14,7 +14,7 @@ android {
 
 dependencies {
 
-    implementation(project(":core:data"))
+    implementation(project(":core:domain"))
 
     implementation(libs.bundles.kotlinx.coroutines)
     api(libs.koin.android)

@@ -5,16 +5,16 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.PagingSource.LoadResult.Page.Companion.COUNT_UNDEFINED
 import com.kyrillosg.rijksstudio.core.data.cache.cacheOf
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
-import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
-import com.kyrillosg.rijksstudio.core.data.model.GroupBy
 import com.kyrillosg.rijksstudio.core.data.paging.CollectionPagingSource
 import com.kyrillosg.rijksstudio.core.data.paging.PaginatedData
+import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.domain.collection.model.DetailedCollectionItem
+import com.kyrillosg.rijksstudio.core.domain.collection.model.GroupBy
 import kotlinx.coroutines.flow.Flow
 
 internal class DefaultCollectionRepository(
     private val rijksGateway: RijksGateway,
-) : CollectionRepository {
+) : com.kyrillosg.rijksstudio.core.domain.collection.CollectionRepository {
 
     private val itemCache = cacheOf<CollectionFilter, PaginatedData<List<CollectionItem>>>()
     private val detailCache = cacheOf<CollectionDetailsFilter, DetailedCollectionItem>()

@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.core.data.model
+package com.kyrillosg.rijksstudio.core.domain.collection.model
 
 interface DetailedCollectionItem : CollectionItem {
     val description: String

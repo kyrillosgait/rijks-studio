@@ -8,8 +8,8 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
 import androidx.paging.map
-import com.kyrillosg.rijksstudio.core.data.model.GroupBy
-import com.kyrillosg.rijksstudio.core.domain.GetPaginatedCollectionItems
+import com.kyrillosg.rijksstudio.core.domain.collection.model.GroupBy
+import com.kyrillosg.rijksstudio.core.domain.collection.usecases.GetPaginatedCollectionItems
 import com.kyrillosg.rijksstudio.feature.collection.adapter.CollectionListViewData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

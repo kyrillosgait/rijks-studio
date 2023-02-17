@@ -5,13 +5,14 @@ import androidx.paging.PagingState
 import com.kyrillosg.rijksstudio.core.data.CollectionFilter
 import com.kyrillosg.rijksstudio.core.data.RijksGateway
 import com.kyrillosg.rijksstudio.core.data.cache.Cache
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.domain.collection.model.GroupBy
 
 internal class CollectionPagingSource(
     private val service: RijksGateway,
     private val cache: Cache<CollectionFilter, PaginatedData<List<CollectionItem>>>,
     private val pageSize: Int,
-    private val groupBy: com.kyrillosg.rijksstudio.core.data.model.GroupBy,
+    private val groupBy: GroupBy,
 ) : PagingSource<Int, CollectionItem>() {
 
     override val jumpingSupported: Boolean = true

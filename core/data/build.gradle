@@ -12,6 +12,8 @@ android {
 
 dependencies {
 
+    implementation(project(":core:domain"))
+
     implementation(libs.bundles.kotlinx.coroutines)
     implementation(libs.koin.core)
     implementation(libs.kotlinx.serialization.json)

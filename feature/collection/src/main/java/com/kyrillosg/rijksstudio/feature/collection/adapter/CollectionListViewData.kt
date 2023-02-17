@@ -1,6 +1,6 @@
 package com.kyrillosg.rijksstudio.feature.collection.adapter
 
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 
 sealed interface CollectionListViewData {
     val uniqueId: String

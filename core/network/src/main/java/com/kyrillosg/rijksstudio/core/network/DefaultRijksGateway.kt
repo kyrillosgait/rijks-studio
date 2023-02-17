@@ -3,10 +3,10 @@ package com.kyrillosg.rijksstudio.core.network
 import com.kyrillosg.rijksstudio.core.data.CollectionDetailsFilter
 import com.kyrillosg.rijksstudio.core.data.CollectionFilter
 import com.kyrillosg.rijksstudio.core.data.RijksGateway
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
-import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
-import com.kyrillosg.rijksstudio.core.data.model.GroupBy
 import com.kyrillosg.rijksstudio.core.data.paging.PaginatedData
+import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.domain.collection.model.DetailedCollectionItem
+import com.kyrillosg.rijksstudio.core.domain.collection.model.GroupBy
 import com.kyrillosg.rijksstudio.core.network.di.NetworkConfiguration
 import com.kyrillosg.rijksstudio.core.network.model.CollectionDetailsResponse
 import com.kyrillosg.rijksstudio.core.network.model.CollectionResponse

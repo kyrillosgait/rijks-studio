@@ -1,9 +1,9 @@
-package com.kyrillosg.rijksstudio.core.domain
+package com.kyrillosg.rijksstudio.core.domain.collection.usecases
 
 import androidx.paging.PagingData
-import com.kyrillosg.rijksstudio.core.data.CollectionRepository
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
-import com.kyrillosg.rijksstudio.core.data.model.GroupBy
+import com.kyrillosg.rijksstudio.core.domain.collection.CollectionRepository
+import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.domain.collection.model.GroupBy
 import kotlinx.coroutines.flow.Flow
 
 internal class DefaultGetPaginatedCollectionItemsUseCase(

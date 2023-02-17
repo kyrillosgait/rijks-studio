@@ -9,7 +9,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItemColor
+import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItemColor
 import com.kyrillosg.rijksstudio.core.ui.databinding.ViewColorPaletteBinding
 
 class ColorPaletteView @JvmOverloads constructor(

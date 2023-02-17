@@ -17,8 +17,8 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
-import com.kyrillosg.rijksstudio.core.data.model.GroupBy
+import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
+import com.kyrillosg.rijksstudio.core.domain.collection.model.GroupBy
 import com.kyrillosg.rijksstudio.core.ui.ViewBindingFragment
 import com.kyrillosg.rijksstudio.core.ui.toast
 import com.kyrillosg.rijksstudio.feature.collection.R
