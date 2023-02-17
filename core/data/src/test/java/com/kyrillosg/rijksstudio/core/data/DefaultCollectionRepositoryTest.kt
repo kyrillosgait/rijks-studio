@@ -4,6 +4,7 @@ import com.kyrillosg.rijksstudio.core.data.fake.FakeDetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.data.fake.FakeRijksGateway
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -32,7 +33,7 @@ class DefaultCollectionRepositoryTest {
                 val expectedId = CollectionItem.Id("2")
                 val actual = repository.getDetailedCollectionItem(expectedId)
 
-                assert(actual?.itemId == expectedId)
+                assertEquals(expectedId, actual?.itemId)
             }
         }
     }
@@ -48,7 +49,7 @@ class DefaultCollectionRepositoryTest {
                 val nonExistentId = CollectionItem.Id(UUID.randomUUID().toString())
                 val actual = repository.getDetailedCollectionItem(nonExistentId)
 
-                assert(actual == null)
+                assertEquals(null, actual)
             }
         }
     }

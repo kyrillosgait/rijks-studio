@@ -8,6 +8,7 @@ import com.kyrillosg.rijksstudio.core.data.paging.CollectionPagingSource
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.model.GroupBy
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -52,10 +53,7 @@ class CollectionPagingSourceTest {
             ),
         )
 
-        println(expected)
-        println(actual)
-
-        assert(expected == actual)
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -77,10 +75,7 @@ class CollectionPagingSourceTest {
             ),
         )
 
-        println(expected)
-        println(actual)
-
-        assert(expected == actual)
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -103,10 +98,7 @@ class CollectionPagingSourceTest {
             ),
         )
 
-        println(expected)
-        println(actual)
-
-        assert(expected == actual)
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -129,9 +121,6 @@ class CollectionPagingSourceTest {
             ),
         )
 
-        println(expected)
-        println(actual)
-
-        assert(expected == actual)
+        assertEquals(expected, actual)
     }
 }

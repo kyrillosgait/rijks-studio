@@ -2,6 +2,7 @@ package com.kyrillosg.rijksstudio.core.network
 
 import com.kyrillosg.rijksstudio.core.data.CollectionDetailsFilter
 import com.kyrillosg.rijksstudio.core.data.CollectionFilter
+import com.kyrillosg.rijksstudio.core.network.di.NetworkConfiguration
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -10,6 +11,7 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -62,7 +64,7 @@ class DefaultRijksGatewayTest {
                 )
             }
         },
-        config = com.kyrillosg.rijksstudio.core.network.di.NetworkConfiguration(
+        config = NetworkConfiguration(
             baseUrl = "https://test.com/api",
             apiKey = "myKey",
         ),
@@ -76,16 +78,11 @@ class DefaultRijksGatewayTest {
         @DisplayName("Items are deserialized successfully")
         fun collectionItems_deserializationSuccess() {
             runTest {
-                println("Mock collection item response: $collectionItemsSuccessJson")
                 val filter = CollectionFilter(page = 0, pageSize = 20)
                 val data = gateway.getCollection(filter)
                 val collectionItems = data.items
 
-                collectionItems.forEach {
-                    println("Deserialized: $it")
-                }
-
-                assert(collectionItems.size == filter.pageSize)
+                assertEquals(collectionItems.size, filter.pageSize)
             }
         }
 
@@ -93,13 +90,10 @@ class DefaultRijksGatewayTest {
         @DisplayName("Detail item is deserialized successfully")
         fun collectionItemDetails_deserializationSuccess() {
             runTest {
-                println("Mock collection item detail response: $collectionItemDetailSuccessJson")
-
                 val filter = CollectionDetailsFilter(id = "NG-MC-807")
                 val collectionDetailsItem = gateway.getCollectionDetails(filter)
-                println("Deserialized: $collectionDetailsItem")
 
-                assert(collectionDetailsItem?.itemId?.value == filter.id)
+                assertEquals(collectionDetailsItem?.itemId?.value, filter.id)
             }
         }
     }
