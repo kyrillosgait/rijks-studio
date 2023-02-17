@@ -37,8 +37,11 @@ jobs:
       - name: Run unit tests
         run: ./gradlew testDebugUnitTest
 
-      - name: Upload build reports
-        uses: actions/upload-artifact@v3
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: always()
         with:
-          name: build-reports
-          path: app/build/reports
+          name: JUnit Tests
+          path: '**/build/test-results/testDebugUnitTest/TEST-*.xml'
+          reporter: java-junit
+          fail-on-error: false
