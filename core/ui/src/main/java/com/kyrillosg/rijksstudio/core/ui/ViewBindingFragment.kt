@@ -11,7 +11,7 @@ import androidx.viewbinding.ViewBinding
 typealias BindingProvider<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
 open class ViewBindingFragment<T : ViewBinding>(
-    private val bindingProvider: BindingProvider<T>
+    private val bindingProvider: BindingProvider<T>,
 ) : Fragment() {
 
     private var _binding: T? = null
@@ -22,7 +22,7 @@ open class ViewBindingFragment<T : ViewBinding>(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         _binding = bindingProvider(inflater, container, false)
         return binding.root

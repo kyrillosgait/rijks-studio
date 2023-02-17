@@ -19,7 +19,7 @@ class RijksStudioAppModuleCheck {
                 List::class,
                 HttpClientEngine::class,
                 HttpClientConfig::class,
-            )
+            ),
         )
     }
 }

@@ -2,10 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.kapt'
-    id 'org.jetbrains.kotlin.plugin.serialization'
-    id 'org.jetbrains.kotlin.plugin.parcelize'
-    id 'androidx.navigation.safeargs.kotlin'
     id 'rijksstudio-test-convention'
+    id 'rijksstudio-spotless-convention'
 }
 
 android {
@@ -57,7 +55,6 @@ android {
 dependencies {
 
     implementation(project(":core:di"))
-    implementation(project(":core:ui"))
     implementation(project(":feature:collection"))
 
     implementation(libs.bundles.kotlinx.coroutines)

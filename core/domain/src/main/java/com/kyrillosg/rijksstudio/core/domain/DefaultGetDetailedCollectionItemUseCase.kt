@@ -1,7 +1,7 @@
 package com.kyrillosg.rijksstudio.core.domain
 
-import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.data.CollectionRepository
+import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
 
 internal class DefaultGetDetailedCollectionItemUseCase(

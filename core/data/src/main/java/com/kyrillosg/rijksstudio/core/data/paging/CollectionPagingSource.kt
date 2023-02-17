@@ -42,7 +42,6 @@ internal class CollectionPagingSource(
                 itemsBefore = itemsBefore,
                 itemsAfter = itemsAfter,
             )
-
         } catch (exception: Exception) {
             return LoadResult.Error(exception)
         }

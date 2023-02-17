@@ -28,7 +28,8 @@ class RijksStudioApplication : Application() {
         AppCenter.start(
             this,
             BuildConfig.APP_CENTER_SECRET,
-            Analytics::class.java, Crashes::class.java
+            Analytics::class.java,
+            Crashes::class.java,
         )
 
         startKoin {

@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CollectionDetailFragment : ViewBindingFragment<FragmentCollectionDetailBinding>(
-    bindingProvider = FragmentCollectionDetailBinding::inflate
+    bindingProvider = FragmentCollectionDetailBinding::inflate,
 ) {
 
     private val viewModel: CollectionDetailViewModel by viewModel()
@@ -68,13 +68,13 @@ class CollectionDetailFragment : ViewBindingFragment<FragmentCollectionDetailBin
                 binding.colorView.init(
                     colorModels = uiState.data.colors.sortedByDescending { it.percentage }.map {
                         ColorPaletteView.ColorModel.from(it)
-                    }
+                    },
                 )
                 binding.colorPaletteHeader.isVisible = uiState.data.colors.isNotEmpty()
                 binding.normalizedColorView.init(
                     colorModels = uiState.data.normalizedColors.sortedByDescending { it.percentage }.map {
                         ColorPaletteView.ColorModel.from(it)
-                    }
+                    },
                 )
                 binding.colorPaletteNormalizedHeader.isVisible = uiState.data.normalizedColors.isNotEmpty()
 

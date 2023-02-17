@@ -45,7 +45,7 @@ class CollectionListViewModel(
                                 before?.header != after?.header && after?.header != null -> {
                                     CollectionListViewData.Header(
                                         label = after.header,
-                                        uniqueId = after.header + after.label + after.image
+                                        uniqueId = after.header + after.label + after.image,
                                     )
                                 }
                                 else -> null

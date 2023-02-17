@@ -53,17 +53,19 @@ class DefaultRijksGatewayTest {
                 }
             }
             install(ContentNegotiation) {
-                json(Json {
-                    ignoreUnknownKeys = true
-                    prettyPrint = true
-                    coerceInputValues = true
-                })
+                json(
+                    Json {
+                        ignoreUnknownKeys = true
+                        prettyPrint = true
+                        coerceInputValues = true
+                    },
+                )
             }
         },
         config = com.kyrillosg.rijksstudio.core.network.di.NetworkConfiguration(
             baseUrl = "https://test.com/api",
-            apiKey = "myKey"
-        )
+            apiKey = "myKey",
+        ),
     )
 
     @Nested
@@ -101,7 +103,6 @@ class DefaultRijksGatewayTest {
             }
         }
     }
-
 
     private fun readFile(name: String): String {
         return object {}.javaClass.getResourceAsStream("/$name")

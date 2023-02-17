@@ -22,13 +22,13 @@ internal class CollectionListAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): CollectionListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             CollectionListViewHolder.Header.LAYOUT_ID -> {
                 CollectionListViewHolder.Header(
-                    binding = ItemHeaderBinding.inflate(inflater, parent, false)
+                    binding = ItemHeaderBinding.inflate(inflater, parent, false),
                 )
             }
             CollectionListViewHolder.ImageWithLabel.LAYOUT_ID -> {
@@ -57,12 +57,12 @@ internal class CollectionListAdapter(
     private class DiffCallback : DiffUtil.ItemCallback<CollectionListViewData>() {
         override fun areItemsTheSame(
             oldItem: CollectionListViewData,
-            newItem: CollectionListViewData
+            newItem: CollectionListViewData,
         ): Boolean = oldItem.uniqueId == newItem.uniqueId
 
         override fun areContentsTheSame(
             oldItem: CollectionListViewData,
-            newItem: CollectionListViewData
+            newItem: CollectionListViewData,
         ): Boolean = oldItem == newItem
     }
 }

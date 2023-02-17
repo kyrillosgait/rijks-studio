@@ -1,0 +1,11 @@
+plugins {
+    id 'com.diffplug.spotless'
+}
+
+spotless {
+    kotlin {
+        target("**/*.kt")
+        targetExclude("**/build/**/*.kt")
+        ktlint(libs.versions.ktlint.get()).userData(["android": "true"])
+    }
+}

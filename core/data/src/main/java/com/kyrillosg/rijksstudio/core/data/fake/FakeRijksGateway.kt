@@ -3,10 +3,10 @@ package com.kyrillosg.rijksstudio.core.data.fake
 import com.kyrillosg.rijksstudio.core.data.CollectionDetailsFilter
 import com.kyrillosg.rijksstudio.core.data.CollectionFilter
 import com.kyrillosg.rijksstudio.core.data.DefaultCollectionRepository.Companion.PAGE_SIZE
-import com.kyrillosg.rijksstudio.core.data.paging.PaginatedData
 import com.kyrillosg.rijksstudio.core.data.RijksGateway
 import com.kyrillosg.rijksstudio.core.data.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.data.model.DetailedCollectionItem
+import com.kyrillosg.rijksstudio.core.data.paging.PaginatedData
 import kotlinx.coroutines.delay
 
 internal class FakeRijksGateway(
@@ -22,7 +22,7 @@ internal class FakeRijksGateway(
                 else -> "Vincent van Gogh"
             },
             imageWidth = setOf(144, 192, 256).random(),
-            imageHeight = setOf(144, 192, 256).random()
+            imageHeight = setOf(144, 192, 256).random(),
         )
     },
     private val pageSize: Int = PAGE_SIZE,

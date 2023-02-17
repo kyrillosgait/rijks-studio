@@ -1,0 +1,7 @@
+root = true
+
+[*]
+max_line_length = 120
+
+[*.{kt,kts}]
+ktlint_standard_no-wildcard-imports = disabled

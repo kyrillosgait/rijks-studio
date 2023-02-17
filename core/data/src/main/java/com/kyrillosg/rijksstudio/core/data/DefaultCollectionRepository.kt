@@ -27,11 +27,11 @@ internal class DefaultCollectionRepository(
                 pageSize = pageSize,
                 initialLoadSize = if (supportsPlaceholders) pageSize else 3 * pageSize,
                 enablePlaceholders = supportsPlaceholders,
-                jumpThreshold = if (supportsPlaceholders) 3 * pageSize else COUNT_UNDEFINED
+                jumpThreshold = if (supportsPlaceholders) 3 * pageSize else COUNT_UNDEFINED,
             ),
             pagingSourceFactory = {
                 CollectionPagingSource(rijksGateway, itemCache, pageSize, groupBy)
-            }
+            },
         ).flow
     }
 

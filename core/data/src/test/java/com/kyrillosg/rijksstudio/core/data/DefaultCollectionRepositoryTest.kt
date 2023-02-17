@@ -17,7 +17,7 @@ class DefaultCollectionRepositoryTest {
                 FakeDetailedCollectionItem.create(id = CollectionItem.Id("1")),
                 FakeDetailedCollectionItem.create(id = CollectionItem.Id("2")),
                 FakeDetailedCollectionItem.create(id = CollectionItem.Id("100")),
-            )
+            ),
         ),
     )
 

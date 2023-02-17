@@ -19,14 +19,14 @@ class CollectionPagingSourceTest {
         FakeDetailedCollectionItem.create(
             author = "Vincent van Gogh",
             imageWidth = setOf(144, 192, 256).random(),
-            imageHeight = setOf(144, 192, 256).random()
+            imageHeight = setOf(144, 192, 256).random(),
         )
     }
 
     private val pagingSource = CollectionPagingSource(
         service = FakeRijksGateway(
             collectionItems = fakeItems,
-            pageSize = pageSize
+            pageSize = pageSize,
         ),
         cache = cacheOf(),
         pageSize = pageSize,
@@ -49,7 +49,7 @@ class CollectionPagingSourceTest {
                 key = null,
                 loadSize = pageSize,
                 placeholdersEnabled = false,
-            )
+            ),
         )
 
         println(expected)
@@ -74,7 +74,7 @@ class CollectionPagingSourceTest {
                 key = null,
                 loadSize = 3 * pageSize,
                 placeholdersEnabled = false,
-            )
+            ),
         )
 
         println(expected)
@@ -100,7 +100,7 @@ class CollectionPagingSourceTest {
                 key = 20,
                 loadSize = pageSize,
                 placeholdersEnabled = false,
-            )
+            ),
         )
 
         println(expected)
@@ -126,7 +126,7 @@ class CollectionPagingSourceTest {
                 key = 20,
                 loadSize = 3 * pageSize,
                 placeholdersEnabled = false,
-            )
+            ),
         )
 
         println(expected)

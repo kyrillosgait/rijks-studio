@@ -48,11 +48,13 @@ private fun provideHttpClient(context: Context): HttpClient {
             }
         }
         install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-                prettyPrint = true
-                coerceInputValues = true
-            })
+            json(
+                Json {
+                    ignoreUnknownKeys = true
+                    prettyPrint = true
+                    coerceInputValues = true
+                },
+            )
         }
         engine {
             addInterceptor(ChuckerInterceptor.Builder(context).build())

@@ -27,9 +27,11 @@ import com.kyrillosg.rijksstudio.feature.collection.databinding.FragmentCollecti
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CollectionListFragment : ViewBindingFragment<FragmentCollectionListBinding>(
-    bindingProvider = FragmentCollectionListBinding::inflate
-), MenuProvider {
+class CollectionListFragment :
+    ViewBindingFragment<FragmentCollectionListBinding>(
+        bindingProvider = FragmentCollectionListBinding::inflate,
+    ),
+    MenuProvider {
 
     private val viewModel: CollectionListViewModel by viewModel()
 
@@ -38,13 +40,13 @@ class CollectionListFragment : ViewBindingFragment<FragmentCollectionListBinding
             try {
                 findNavController().navigate(
                     directions = CollectionListFragmentDirections.actionListToDetail(
-                        collectionItemId = CollectionItem.Id(id)
-                    )
+                        collectionItemId = CollectionItem.Id(id),
+                    ),
                 )
             } catch (ignored: IllegalArgumentException) {
                 // Already navigating or navigated
             }
-        }
+        },
     ).apply {
         stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     }

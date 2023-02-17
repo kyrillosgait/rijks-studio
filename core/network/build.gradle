@@ -1,7 +1,7 @@
 plugins {
     id 'rijksstudio-library-convention'
     id 'rijksstudio-test-convention'
-    id 'org.jetbrains.kotlin.kapt'
+    id 'rijksstudio-spotless-convention'
     id 'org.jetbrains.kotlin.plugin.serialization'
 }
 

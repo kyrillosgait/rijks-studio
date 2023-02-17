@@ -28,7 +28,7 @@ internal data class FakeDetailedCollectionItem(
             imageFormat: String = "png",
             colors: List<CollectionItemColor> = emptyList(),
         ): DetailedCollectionItem {
-            val imageUrl = "https://via.placeholder.com/${imageWidth}x${imageHeight}.${imageFormat}?text=$imageText"
+            val imageUrl = "https://via.placeholder.com/${imageWidth}x$imageHeight.$imageFormat?text=$imageText"
             return FakeDetailedCollectionItem(
                 itemId = id,
                 title = title,
