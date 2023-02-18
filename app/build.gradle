@@ -6,6 +6,10 @@ plugins {
     id 'rijksstudio-spotless-convention'
 }
 
+def versionPropertiesFile = project.file('version.properties')
+def versionProperties = new Properties()
+versionPropertiesFile.withInputStream { versionProperties.load(it) }
+
 android {
     namespace 'com.kyrillosg.rijksstudio'
     compileSdk libs.versions.compileSdk.get().toInteger()
@@ -15,12 +19,9 @@ android {
         minSdk libs.versions.minSdk.get().toInteger()
         targetSdk libs.versions.targetSdk.get().toInteger()
 
-        int versionMajor = libs.versions.versionMajor.get().toInteger()
-        int versionMinor = libs.versions.versionMinor.get().toInteger()
-        int versionPatch = libs.versions.versionPatch.get().toInteger()
-
-        versionName "$versionMajor.$versionMinor.$versionPatch"
-        versionCode versionMajor * 1_000 + versionMinor * 100 + versionPatch
+        def appVersionCode = versionProperties['versionCode'].toInteger()
+        versionName getAppVersionName(appVersionCode)
+        versionCode appVersionCode
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -74,4 +75,22 @@ dependencies {
     testImplementation(libs.koin.test.junit5)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
+}
+
+private static String getAppVersionName(Integer versionCode) {
+    def yearAndMonth = new Date().format("yyyy.MM", TimeZone.getTimeZone('UTC'))
+    def versionName = "$yearAndMonth.$versionCode"
+    println("Version name: $versionName")
+    return versionName
+}
+
+task incrementVersionCode {
+    doLast {
+        def currentVersionCode = versionProperties['versionCode'].toInteger()
+        def nextVersionCode = currentVersionCode + 1
+        versionProperties.setProperty('versionCode', nextVersionCode.toString())
+        versionPropertiesFile.withWriter { versionProperties.store(it, null) }
+
+        println("Version code bumped from $currentVersionCode to $nextVersionCode")
+    }
 }
