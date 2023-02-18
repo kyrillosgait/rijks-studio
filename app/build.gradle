@@ -26,19 +26,17 @@ android {
     }
 
     buildTypes {
-        def properties = new Properties()
-        rootProject.file("local.properties").withInputStream { properties.load(it) }
-        def fallback = "\"APP_CENTER_SECRET_NOT_DEFINED\""
+        def fallback = '"APP_CENTER_SECRET_NOT_DEFINED"'
 
         debug {
-            buildConfigField "String", "APP_CENTER_SECRET", properties.getProperty("APP_CENTER_SECRET_DEBUG") ?: fallback
+            buildConfigField "String", "APP_CENTER_SECRET", localProperties['APP_CENTER_SECRET_DEBUG'] ?: fallback
         }
 
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            buildConfigField "String", "APP_CENTER_SECRET", properties.getProperty("APP_CENTER_SECRET_RELEASE") ?: fallback
+            buildConfigField "String", "APP_CENTER_SECRET", localProperties['APP_CENTER_SECRET_RELEASE'] ?: fallback
         }
     }
     compileOptions {

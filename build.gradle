@@ -8,3 +8,8 @@ plugins {
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.spotless) apply false
 }
+
+ext {
+    localProperties = new Properties()
+    rootProject.file("local.properties").withInputStream { localProperties.load(it) }
+}
