@@ -1,7 +1,7 @@
 # Rijks-studio
 Displays a paginated list of art objects and additional details when clicked.
 
-![list detail screens](https://github.com/kyrillosgait/rijks-studio/blob/master/images/list-detail-screens.png)
+![list detail screens](/images/list-detail-screens.png)
 
 ## Tooling
 - Kotlin, coroutines for asynchronous operations and flow for observable data streams
@@ -13,7 +13,7 @@ Displays a paginated list of art objects and additional details when clicked.
 ## Software design
 Presentation-domain-data layering, with MVVM in the presentation layer, split into several gradle modules.
 
-![gradle modules](https://github.com/kyrillosgait/rijks-studio/blob/master/images/modules.png)
+![gradle modules](/images/modules.png)
 
 - `:app` -> Application class, single activity, test for dependency injection declarations.
 - `:feature:collection` -> Collection list and detail fragments along with their corresponding view models.
