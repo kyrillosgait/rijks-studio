@@ -37,3 +37,9 @@ jobs:
 
       - name: Run unit tests
         run: ./gradlew testDebugUnitTest
+
+      - name: Build release variant
+        run: ./gradlew assembleRelease
+
+      - name: Run unit tests
+        run: ./gradlew testReleaseUnitTest
