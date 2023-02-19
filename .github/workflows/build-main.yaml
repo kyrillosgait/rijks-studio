@@ -40,16 +40,9 @@ jobs:
           versionName=$(./gradlew printVersionName --quiet | tail -n 1)
           git commit -m "Release $versionName"
           git tag -a v$versionName -m "Release $versionName"
-          git push
-
-      - name: Checkout develop branch
-        uses: actions/checkout@v3
-        with:
-          ref: develop
-
-      - name: Update version code
-        run: |
-          git merge main --no-edit
+          git push origin main
+          git checkout develop
+          git merge main
           git push origin develop
 
       - name: Run spotless
