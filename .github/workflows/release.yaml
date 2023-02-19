@@ -16,9 +16,9 @@ jobs:
 
       - name: Configure build
         env:
-          API_KEY: "${{ secrets.TEST_API_KEY }}"
-          APP_CENTER_SECRET_DEBUG: "${{ secrets.TEST_APP_CENTER_SECRET_DEBUG }}"
-          APP_CENTER_SECRET_RELEASE: "${{ secrets.TEST_APP_CENTER_SECRET_RELEASE }}"
+          API_KEY: ${{ secrets.TEST_API_KEY }}
+          APP_CENTER_SECRET_DEBUG: ${{ secrets.TEST_APP_CENTER_SECRET_DEBUG }}
+          APP_CENTER_SECRET_RELEASE: ${{ secrets.TEST_APP_CENTER_SECRET_RELEASE }}
         run: |
           touch local.properties
           echo API_KEY="$API_KEY" >> local.properties
