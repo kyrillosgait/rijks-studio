@@ -1,4 +1,5 @@
 # Rijks-studio
+[![Build](https://github.com/kyrillosgait/rijks-studio/actions/workflows/build.yaml/badge.svg)](https://github.com/kyrillosgait/rijks-studio/actions/workflows/build.yaml) [![Release](https://github.com/kyrillosgait/rijks-studio/actions/workflows/release.yaml/badge.svg?branch=develop)](https://github.com/kyrillosgait/rijks-studio/actions/workflows/release.yaml)
 Displays a paginated list of art objects and additional details when clicked.
 
 ![list detail screens](/images/list-detail-screens.png)
