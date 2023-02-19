@@ -57,5 +57,14 @@ jobs:
           npm install -g appcenter-cli
           echo "version_code=$(tail -n 1 "app/version.properties" | awk -F'=' ' { print $NF } ')" >> $GITHUB_ENV
 
-      - name: Deploy debug to AppCenter
+      - name: Deploy debug variant to AppCenter
         run: appcenter distribute release --app kyrillosg/Rijksstudio --group "Collaborators" --file "app/build/outputs/apk/debug/rijksstudio-debug-${{ env.version_code }}.apk" --token ${{ secrets.APP_CENTER_TOKEN }}
+
+      - name: Build release variant
+        run: ./gradlew assembleRelease
+
+      - name: Run unit tests
+        run: ./gradlew testReleaseUnitTest
+
+      - name: Deploy release variant to AppCenter
+        run: appcenter distribute release --app kyrillosg/Rijksstudio-1 --group "Collaborators" --file "app/build/outputs/apk/release/rijksstudio-release-${{ env.version_code }}.apk" --token ${{ secrets.APP_CENTER_TOKEN }}
