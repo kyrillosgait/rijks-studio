@@ -55,10 +55,7 @@ jobs:
           cache: 'npm'
 
       - name: Setup AppCenter CLI
-          env:
-            APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}
-            VERSION_CODE: $(tail -n 1 "app/version.properties" | awk -F'=' ' { print $NF } ')
-          run: npm install -g appcenter-cli
+        run: npm install -g appcenter-cli
 
       - name: Deploy debug to AppCenter
         env:
