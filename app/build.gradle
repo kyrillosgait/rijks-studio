@@ -40,6 +40,12 @@ android {
             buildConfigField "String", "APP_CENTER_SECRET", localProperties['APP_CENTER_SECRET_RELEASE'] ?: fallback
         }
     }
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "rijksstudio-${variant.baseName}-${variant.versionCode}.apk"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
