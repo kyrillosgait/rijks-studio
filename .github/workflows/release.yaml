@@ -56,6 +56,7 @@ jobs:
         run: npm install -g appcenter-cli
 
       - name: Deploy debug to AppCenter
-        run: |
-          versionCode=$(tail -n 1 "app/version.properties" | awk -F'=' ' { print $NF } ')
-          appcenter distribute release --app kyrillosg/Rijksstudio --group "Collaborators" --file "app/build/outputs/apk/debug/rijksstudio-debug-$versionCode.apk"
+        env:
+          APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}
+          VERSION_CODE: $(tail -n 1 "app/version.properties" | awk -F'=' ' { print $NF } ')
+        run: appcenter distribute release --app kyrillosg/Rijksstudio --group "Collaborators" --file "app/build/outputs/apk/debug/rijksstudio-debug-$VERSION_CODE.apk" --token "$APP_CENTER_TOKEN"
