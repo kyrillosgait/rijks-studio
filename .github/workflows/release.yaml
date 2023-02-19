@@ -14,12 +14,16 @@ jobs:
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
 
-      - name: Create empty local.properties file
+      - name: Configure build
         run: |
           touch local.properties
-          echo API_KEY=${{ secrets.API_KEY }} >> local.properties
-          echo APP_CENTER_SECRET_DEBUG=${{ secrets.APP_CENTER_SECRET_DEBUG }} >> local.properties
-          echo APP_CENTER_SECRET_RELEASE=${{ secrets.APP_CENTER_SECRET_RELEASE }} >> local.properties
+          echo API_KEY="$API_KEY" >> local.properties
+          echo APP_CENTER_SECRET_DEBUG="$APP_CENTER_SECRET_DEBUG" >> local.properties
+          echo APP_CENTER_SECRET_RELEASE="$APP_CENTER_SECRET_RELEASE" >> local.properties
+        env:
+          API_KEY=${{ secrets.TEST_API_KEY }}
+          APP_CENTER_SECRET_DEBUG=${{ secrets.TEST_APP_CENTER_SECRET_DEBUG }}
+          APP_CENTER_SECRET_RELEASE=${{ secrets.TEST_APP_CENTER_SECRET_RELEASE }}
 
       - name: Set up JDK 11
         uses: actions/setup-java@v3
