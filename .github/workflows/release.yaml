@@ -21,9 +21,9 @@ jobs:
           APP_CENTER_SECRET_RELEASE: ${{ secrets.APP_CENTER_SECRET_RELEASE }}
         run: |
           touch local.properties
-          echo API_KEY='"$API_KEY"' >> local.properties
-          echo APP_CENTER_SECRET_DEBUG='"$APP_CENTER_SECRET_DEBUG"' >> local.properties
-          echo APP_CENTER_SECRET_RELEASE='"$APP_CENTER_SECRET_RELEASE"' >> local.properties
+          echo API_KEY='"${API_KEY}"' >> local.properties
+          echo APP_CENTER_SECRET_DEBUG='"${APP_CENTER_SECRET_DEBUG}"' >> local.properties
+          echo APP_CENTER_SECRET_RELEASE='"${APP_CENTER_SECRET_RELEASE}"' >> local.properties
 
       - name: Set up JDK 11
         uses: actions/setup-java@v3
