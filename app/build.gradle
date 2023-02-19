@@ -94,3 +94,9 @@ task incrementVersionCode {
         println("Version code bumped from $currentVersionCode to $nextVersionCode")
     }
 }
+
+task printVersionName {
+    doLast {
+        print android.defaultConfig.versionName
+    }
+}
