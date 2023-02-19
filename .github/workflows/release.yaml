@@ -49,8 +49,13 @@ jobs:
       - name: Run unit tests
         run: ./gradlew testDebugUnitTest
 
-      - name: Deploy to AppCenter
-        uses: avocaddo/AppCenter-Github-Action@v1.0.2
-        with:
-          command: appcenter distribute release --app kyrillosg/Rijksstudio --group "Collaborators" --file "app/build/outputs/apk/debug/rijksstudio-debug-$(tail -n 1 "app/version.properties" | awk -F'=' ' { print $NF } ').apk"
-          token: ${{secrets.APP_CENTER_TOKEN}}
+      - name: Setup AppCenter CLI
+        uses: actions/setup-node@v3
+          with:
+            cache: 'npm'
+        run: npm install -g appcenter-cli
+
+      - name: Deploy debug to AppCenter
+        run: |
+          versionCode=$(tail -n 1 "app/version.properties" | awk -F'=' ' { print $NF } ')
+          appcenter distribute release --app kyrillosg/Rijksstudio --group "Collaborators" --file "app/build/outputs/apk/debug/rijksstudio-debug-$versionCode.apk"
