@@ -51,8 +51,8 @@ jobs:
 
       - name: Setup AppCenter CLI
         uses: actions/setup-node@v3
-          with:
-            cache: 'npm'
+        with:
+          cache: 'npm'
         run: npm install -g appcenter-cli
 
       - name: Deploy debug to AppCenter
