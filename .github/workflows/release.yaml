@@ -49,11 +49,16 @@ jobs:
       - name: Run unit tests
         run: ./gradlew testDebugUnitTest
 
-      - name: Setup AppCenter CLI
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           cache: 'npm'
-        run: npm install -g appcenter-cli
+
+      - name: Setup AppCenter CLI
+          env:
+            APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}
+            VERSION_CODE: $(tail -n 1 "app/version.properties" | awk -F'=' ' { print $NF } ')
+          run: npm install -g appcenter-cli
 
       - name: Deploy debug to AppCenter
         env:
