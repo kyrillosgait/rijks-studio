@@ -26,19 +26,19 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-#      - name: Increment version code
-#        run: ./gradlew incrementVersionCode
-#
-#      - name: Commit and tag version
-#        run: |
-#          git config user.email 'github-actions[bot]'
-#          git config user.name 'github-actions[bot]@users.noreply.github.com'
-#          git config push.followTags true
-#          git add app/version.properties
-#          versionName=$(./gradlew printVersionName --quiet | tail -n 1)
-#          git commit -m "Release $versionName"
-#          git tag -a v$versionName -m "Release $versionName"
-#          git push
+      - name: Increment version code
+        run: ./gradlew incrementVersionCode
+
+      - name: Commit and tag version
+        run: |
+          git config user.email 'github-actions[bot]'
+          git config user.name 'github-actions[bot]@users.noreply.github.com'
+          git config push.followTags true
+          git add app/version.properties
+          versionName=$(./gradlew printVersionName --quiet | tail -n 1)
+          git commit -m "Release $versionName"
+          git tag -a v$versionName -m "Release $versionName"
+          git push
 
       - name: Run spotless
         run: ./gradlew spotlessCheck
