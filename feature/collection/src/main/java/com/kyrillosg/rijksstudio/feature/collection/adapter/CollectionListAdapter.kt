@@ -2,8 +2,8 @@ package com.kyrillosg.rijksstudio.feature.collection.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemHeaderBinding
 import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemImageWithLabelBinding
 
@@ -11,7 +11,7 @@ internal typealias OnCollectionItemClicked = (id: String) -> Unit
 
 internal class CollectionListAdapter(
     private val onCollectionItemClicked: OnCollectionItemClicked,
-) : PagingDataAdapter<CollectionListViewData, CollectionListViewHolder>(DiffCallback()) {
+) : ListAdapter<CollectionListViewData, CollectionListViewHolder>(DiffCallback()) {
 
     override fun getItemViewType(position: Int): Int = when (getItem(position)) {
         is CollectionListViewData.Header -> CollectionListViewHolder.Header.LAYOUT_ID

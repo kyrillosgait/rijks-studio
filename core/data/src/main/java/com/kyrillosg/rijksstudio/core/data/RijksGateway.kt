@@ -1,6 +1,6 @@
 package com.kyrillosg.rijksstudio.core.data
 
-import com.kyrillosg.rijksstudio.core.data.paging.PaginatedData
+import com.kyrillosg.rijksstudio.core.data.common.PaginatedData
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.model.DetailedCollectionItem
 

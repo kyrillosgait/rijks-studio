@@ -1,47 +1,64 @@
 package com.kyrillosg.rijksstudio.core.data
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.PagingSource.LoadResult.Page.Companion.COUNT_UNDEFINED
-import com.kyrillosg.rijksstudio.core.data.cache.cacheOf
-import com.kyrillosg.rijksstudio.core.data.paging.CollectionPagingSource
-import com.kyrillosg.rijksstudio.core.data.paging.PaginatedData
+import com.kyrillosg.rijksstudio.core.domain.collection.CollectionRepository
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.model.DetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.model.GroupBy
-import kotlinx.coroutines.flow.Flow
+import io.github.aakira.napier.Napier
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.withContext
 
 internal class DefaultCollectionRepository(
     private val rijksGateway: RijksGateway,
-) : com.kyrillosg.rijksstudio.core.domain.collection.CollectionRepository {
+) : CollectionRepository {
 
-    private val itemCache = cacheOf<CollectionFilter, PaginatedData<List<CollectionItem>>>()
-    private val detailCache = cacheOf<CollectionDetailsFilter, DetailedCollectionItem>()
+    private val _itemsUnsorted = MutableStateFlow<List<CollectionItem>>(emptyList())
+    private val _itemsByArtist = MutableStateFlow<List<CollectionItem>>(emptyList())
+    private val _itemsByArtistDescending = MutableStateFlow<List<CollectionItem>>(emptyList())
 
-    override fun getCollectionItemsPaginated(groupBy: GroupBy): Flow<PagingData<CollectionItem>> {
-        val pageSize = PAGE_SIZE
-        val supportsPlaceholders = groupBy == GroupBy.NONE
-        return Pager(
-            config = PagingConfig(
-                pageSize = pageSize,
-                initialLoadSize = if (supportsPlaceholders) pageSize else 3 * pageSize,
-                enablePlaceholders = supportsPlaceholders,
-                jumpThreshold = if (supportsPlaceholders) 3 * pageSize else COUNT_UNDEFINED,
-            ),
-            pagingSourceFactory = {
-                CollectionPagingSource(rijksGateway, itemCache, pageSize, groupBy)
-            },
-        ).flow
+    override fun getCollectionItemsStream(groupBy: GroupBy): Flow<List<CollectionItem>> {
+        return when (groupBy) {
+            GroupBy.NONE -> _itemsUnsorted
+            GroupBy.ARTIST_ASCENDING -> _itemsByArtist
+            GroupBy.ARTIST_DESCENDING -> _itemsByArtistDescending
+        }
+    }
+
+    override suspend fun requestMoreCollectionItems(groupBy: GroupBy) {
+        withContext(Dispatchers.IO) {
+            val currentItems = when (groupBy) {
+                GroupBy.NONE -> _itemsUnsorted.value
+                GroupBy.ARTIST_ASCENDING -> _itemsByArtist.value
+                GroupBy.ARTIST_DESCENDING -> _itemsByArtistDescending.value
+            }
+
+            val filter = CollectionFilter(
+                page = currentItems.size.div(PAGE_SIZE),
+                pageSize = PAGE_SIZE,
+                groupBy = groupBy,
+            )
+
+            Napier.v { "Requesting collection items with - filter: $filter" }
+
+            val newItems = currentItems + rijksGateway.getCollection(filter).items
+
+            when (groupBy) {
+                GroupBy.NONE -> _itemsUnsorted.value = newItems
+                GroupBy.ARTIST_ASCENDING -> _itemsByArtist.value = newItems
+                GroupBy.ARTIST_DESCENDING -> _itemsByArtistDescending.value = newItems
+            }
+        }
     }
 
     override suspend fun getDetailedCollectionItem(
         id: CollectionItem.Id,
     ): DetailedCollectionItem? {
         val filter = CollectionDetailsFilter(id.value)
-        return detailCache.get(filter)
-            ?: rijksGateway.getCollectionDetails(filter)
-                ?.also { detailCache.put(filter, it) }
+
+        Napier.v { "Requesting collection item with - filter: $filter" }
+
+        return rijksGateway.getCollectionDetails(filter)
     }
 
     companion object {

@@ -13,14 +13,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.paging.CombinedLoadStates
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.model.GroupBy
 import com.kyrillosg.rijksstudio.core.ui.ViewBindingFragment
-import com.kyrillosg.rijksstudio.core.ui.toast
 import com.kyrillosg.rijksstudio.feature.collection.R
 import com.kyrillosg.rijksstudio.feature.collection.adapter.CollectionListAdapter
 import com.kyrillosg.rijksstudio.feature.collection.databinding.FragmentCollectionListBinding
@@ -47,9 +44,7 @@ class CollectionListFragment :
                 // Already navigating or navigated
             }
         },
-    ).apply {
-        stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-    }
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,43 +57,29 @@ class CollectionListFragment :
         binding.collectionListRecyclerView.apply {
             adapter = collectionListAdapter
             layoutManager = LinearLayoutManager(requireContext())
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (!recyclerView.canScrollVertically(1) && dy > 0) {
+                        viewModel.requestCollectionItems()
+                    }
+                }
+            })
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 launch {
-                    viewModel.collectionPagingData.collect { items ->
-                        collectionListAdapter.submitData(items)
-                    }
-                }
+                    viewModel.collectionItems.collect { items ->
+                        binding.progressBar.isVisible = items.isEmpty()
 
-                launch {
-                    collectionListAdapter.loadStateFlow.collect {
-                        showLoadingOrErrorState(it)
+                        collectionListAdapter.submitList(items)
                     }
                 }
             }
         }
-    }
 
-    private fun showLoadingOrErrorState(state: CombinedLoadStates) {
-        binding.progressBar.isVisible = state.refresh is LoadState.Loading
-
-        val errorsStates = listOfNotNull(
-            state.source.refresh as? LoadState.Error,
-            state.source.prepend as? LoadState.Error,
-            state.source.append as? LoadState.Error,
-            state.refresh as? LoadState.Error,
-            state.prepend as? LoadState.Error,
-            state.append as? LoadState.Error,
-        ).distinct()
-
-        errorsStates.forEach { errorState ->
-            errorState.error.message?.let { toast(it) }
-        }
-
-        binding.errorText.text = errorsStates.joinToString("\n\n")
-        binding.errorText.isVisible = errorsStates.isNotEmpty()
+        viewModel.requestCollectionItems()
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -121,19 +102,19 @@ class CollectionListFragment :
             R.id.menu_group_by_none -> {
                 menuItem.isChecked = true
                 viewModel.setGroupBy(GroupBy.NONE)
-                collectionListAdapter.refresh()
+                viewModel.requestCollectionItems()
                 true
             }
             R.id.menu_sort_by_artist_ascending -> {
                 menuItem.isChecked = true
                 viewModel.setGroupBy(GroupBy.ARTIST_ASCENDING)
-                collectionListAdapter.refresh()
+                viewModel.requestCollectionItems()
                 true
             }
             R.id.menu_sort_by_artist_descending -> {
                 menuItem.isChecked = true
                 viewModel.setGroupBy(GroupBy.ARTIST_DESCENDING)
-                collectionListAdapter.refresh()
+                viewModel.requestCollectionItems()
                 true
             }
             else -> false

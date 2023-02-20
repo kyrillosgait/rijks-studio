@@ -21,8 +21,6 @@ dependencies {
 
     implementation(libs.bundles.kotlinx.coroutines)
 
-    implementation(libs.androidx.paging.runtime)
-
     testImplementation(libs.junit5.api)
     testRuntimeOnly(libs.junit5.engine)
     androidTestImplementation(libs.androidx.test.ext.junit)

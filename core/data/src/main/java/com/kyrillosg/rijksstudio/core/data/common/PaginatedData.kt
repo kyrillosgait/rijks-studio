@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.core.data.paging
+package com.kyrillosg.rijksstudio.core.data.common
 
 data class PaginatedData<T>(
     val items: T,

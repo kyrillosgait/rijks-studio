@@ -10,8 +10,4 @@ val dataModule = module {
     singleOf(::DefaultCollectionRepository) {
         bind<CollectionRepository>()
     }
-
-//    single<RijksGateway> {
-//        FakeRijksGateway()
-//    }
 }

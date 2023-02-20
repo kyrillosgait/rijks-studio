@@ -33,4 +33,4 @@ Presentation-domain-data layering, with MVVM in the presentation layer, split in
 - Koin for dependency injection
 - Ktor and kotlinx-serialization for networking
 - JUnit5 for unit testing
-- Androidx lifecycle, navigation and paging3 components
+- Androidx lifecycle and navigation components

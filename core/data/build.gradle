@@ -17,7 +17,6 @@ dependencies {
     implementation(libs.bundles.kotlinx.coroutines)
     implementation(libs.koin.core)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.androidx.paging.runtime)
     implementation(libs.napier)
 
     testImplementation(libs.junit5.api)
