@@ -5,6 +5,8 @@ import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 sealed interface CollectionListViewData {
     val uniqueId: String
 
+    data class Loading(override val uniqueId: String = "Loading") : CollectionListViewData
+
     data class Header(
         val label: String,
         override val uniqueId: String,

@@ -7,8 +7,17 @@ import coil.load
 import com.kyrillosg.rijksstudio.feature.collection.R
 import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemHeaderBinding
 import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemImageWithLabelBinding
+import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemLoadingBinding
 
 internal sealed class CollectionListViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    class Loading(binding: ItemLoadingBinding) : CollectionListViewHolder(binding) {
+
+        companion object {
+            @LayoutRes
+            val LAYOUT_ID = R.layout.item_loading
+        }
+    }
 
     class Header(
         private val binding: ItemHeaderBinding,

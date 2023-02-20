@@ -19,37 +19,48 @@ class CollectionListViewModel(
 ) : ViewModel() {
 
     private val _groupBy = MutableStateFlow(GroupBy.ARTIST_ASCENDING)
+    private val _isLoading = MutableStateFlow(false)
 
     val groupBy: GroupBy
         get() = _groupBy.value
 
     val collectionItems: Flow<List<CollectionListViewData>>
-        get() = _groupBy.flatMapLatest { groupBy ->
-            getCollectionItemStreamUseCase(groupBy)
-                .distinctUntilChanged()
-                .map { groupedCollectionItemList ->
+        get() = _groupBy
+            .combine(_isLoading) { groupBy, isLoading -> Pair(groupBy, isLoading) }
+            .flatMapLatest { pair ->
+                val groupBy = pair.first
+                val isLoading = pair.second
 
-                    groupedCollectionItemList
-                        .flatMap { groupedCollectionItems ->
-                            val items = groupedCollectionItems.items.map {
-                                CollectionListViewData.ImageWithLabel.from(it)
-                            }
-                            val header = groupedCollectionItems.label?.let { label ->
-                                CollectionListViewData.Header(
-                                    label = label,
-                                    uniqueId = groupedCollectionItems.label + items.map { it.uniqueId },
-                                )
-                            }
+                getCollectionItemStreamUseCase(groupBy)
+                    .distinctUntilChanged()
+                    .map { groupedCollectionItemList ->
 
-                            listOfNotNull(header) + items
-                        }
-                }
-                .flowOn(Dispatchers.Default)
-        }
+                        groupedCollectionItemList
+                            .flatMap { groupedCollectionItems ->
+                                val items = groupedCollectionItems.items.map {
+                                    CollectionListViewData.ImageWithLabel.from(it)
+                                }
+                                val header = groupedCollectionItems.label?.let { label ->
+                                    CollectionListViewData.Header(
+                                        label = label,
+                                        uniqueId = groupedCollectionItems.label + items.map { it.uniqueId },
+                                    )
+                                }
+
+                                listOfNotNull(header) + items
+                            }
+                    }
+                    .map { items -> if (isLoading) items + CollectionListViewData.Loading() else items }
+                    .flowOn(Dispatchers.Default)
+            }
 
     fun requestCollectionItems() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
+            _isLoading.value = true
+
             requestMoreCollectionItemsUseCase(groupBy)
+
+            _isLoading.value = false
         }
     }
 
