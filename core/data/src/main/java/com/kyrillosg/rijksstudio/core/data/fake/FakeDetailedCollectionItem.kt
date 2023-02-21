@@ -12,6 +12,7 @@ internal data class FakeDetailedCollectionItem(
     override val author: String,
     override val image: CollectionItemImage?,
     override val description: String,
+    override val plaqueDescription: String?,
     override val colors: List<CollectionItemColor>,
     override val normalizedColors: List<CollectionItemColor>,
 ) : DetailedCollectionItem {
@@ -39,6 +40,7 @@ internal data class FakeDetailedCollectionItem(
                 },
                 author = author,
                 description = description,
+                plaqueDescription = description,
                 colors = colors,
                 normalizedColors = colors,
             )

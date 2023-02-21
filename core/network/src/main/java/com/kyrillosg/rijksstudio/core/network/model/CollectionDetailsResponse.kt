@@ -15,6 +15,7 @@ internal data class CollectionDetailsResponse(
 internal data class NetworkCollectionDetailsItem(
     val objectNumber: String,
     val principalOrFirstMaker: String,
+    val plaqueDescriptionEnglish: String? = null,
     @SerialName("webImage") override val image: NetworkCollectionImage? = null,
     override val title: String,
     override val description: String = "",
@@ -27,6 +28,9 @@ internal data class NetworkCollectionDetailsItem(
 
     override val author: String
         get() = principalOrFirstMaker
+
+    override val plaqueDescription: String?
+        get() = plaqueDescriptionEnglish
 }
 
 @Serializable

@@ -64,7 +64,7 @@ class CollectionDetailFragment : ViewBindingFragment<FragmentCollectionDetailBin
                     }
                 }
 
-                binding.description.text = uiState.data.description
+                binding.description.text = uiState.data.plaqueDescription ?: uiState.data.description
                 binding.colorView.init(
                     colorModels = uiState.data.colors.sortedByDescending { it.percentage }.map {
                         ColorPaletteView.ColorModel.from(it)
