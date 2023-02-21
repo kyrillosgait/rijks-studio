@@ -55,6 +55,8 @@ class CollectionListViewModel(
             }
 
     fun requestCollectionItems() {
+        if (_isLoading.value) return
+
         viewModelScope.launch {
             _isLoading.value = true
 
