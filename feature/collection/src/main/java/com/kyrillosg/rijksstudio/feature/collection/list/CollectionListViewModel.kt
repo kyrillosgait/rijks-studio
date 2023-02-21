@@ -54,6 +54,10 @@ class CollectionListViewModel(
                     .flowOn(Dispatchers.Default)
             }
 
+    init {
+        requestCollectionItems()
+    }
+
     fun requestCollectionItems() {
         if (_isLoading.value) return
 

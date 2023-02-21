@@ -78,8 +78,6 @@ class CollectionListFragment :
                 }
             }
         }
-
-        viewModel.requestCollectionItems()
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
