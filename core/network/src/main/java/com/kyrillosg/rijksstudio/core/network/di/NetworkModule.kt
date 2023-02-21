@@ -16,6 +16,7 @@ import kotlinx.serialization.json.Json
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
+import java.net.UnknownHostException
 
 val networkModule = module {
     singleOf(::provideHttpClient)
@@ -61,8 +62,11 @@ private fun provideHttpClient(context: Context): HttpClient {
             addInterceptor(ChuckerInterceptor.Builder(context).build())
         }
         HttpResponseValidator {
-            handleResponseExceptionWithRequest { exception, request ->
+            handleResponseExceptionWithRequest { exception, _ ->
                 when (exception) {
+                    is UnknownHostException -> {
+                        error("No internet connection")
+                    }
                     is ClientRequestException -> {
                         error("Client error: ${exception.response.status.value}")
                     }

@@ -9,10 +9,10 @@
             android:id="@+id/menu_group_by_none"
             android:title="@string/menu_item_no_group" />
         <item
-            android:id="@+id/menu_sort_by_artist_ascending"
+            android:id="@+id/menu_group_by_artist_asc"
             android:title="@string/menu_item_group_artist_asc" />
         <item
-            android:id="@+id/menu_sort_by_artist_descending"
+            android:id="@+id/menu_group_by_artist_desc"
             android:title="@string/menu_item_group_artist_desc" />
 
     </group>

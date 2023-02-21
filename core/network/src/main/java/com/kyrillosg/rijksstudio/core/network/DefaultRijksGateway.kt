@@ -6,7 +6,7 @@ import com.kyrillosg.rijksstudio.core.data.RijksGateway
 import com.kyrillosg.rijksstudio.core.data.common.PaginatedData
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.model.DetailedCollectionItem
-import com.kyrillosg.rijksstudio.core.domain.collection.model.GroupBy
+import com.kyrillosg.rijksstudio.core.domain.collection.usecases.GroupField
 import com.kyrillosg.rijksstudio.core.network.di.NetworkConfiguration
 import com.kyrillosg.rijksstudio.core.network.model.CollectionDetailsResponse
 import com.kyrillosg.rijksstudio.core.network.model.CollectionResponse
@@ -29,13 +29,13 @@ internal class DefaultRijksGateway(
                 parameters.append("toppieces", "True")
 
                 when (filter.groupBy) {
-                    GroupBy.NONE -> {
+                    GroupField.NONE -> {
                         // Nothing to do
                     }
-                    GroupBy.ARTIST_ASCENDING -> {
+                    GroupField.ARTIST_ASCENDING -> {
                         parameters.append("s", "artist")
                     }
-                    GroupBy.ARTIST_DESCENDING -> {
+                    GroupField.ARTIST_DESCENDING -> {
                         parameters.append("s", "artistdesc")
                     }
                 }

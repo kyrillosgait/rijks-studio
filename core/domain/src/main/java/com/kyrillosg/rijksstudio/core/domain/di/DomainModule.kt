@@ -6,7 +6,7 @@ import org.koin.dsl.module
 
 val domainModule = module {
 
-    factoryOf(::GetCollectionItemStreamUseCase)
+    factoryOf(::GetGroupedCollectionStreamUseCase)
     factoryOf(::RequestMoreCollectionItemsUseCase)
     factoryOf(::GetDetailedCollectionItemUseCase)
 }
