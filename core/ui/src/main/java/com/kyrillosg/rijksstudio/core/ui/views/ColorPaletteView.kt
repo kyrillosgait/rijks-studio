@@ -20,7 +20,9 @@ class ColorPaletteView @JvmOverloads constructor(
     private val binding = ViewColorPaletteBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
-        binding.root.isVisible = false
+        if (!isInEditMode) {
+            binding.root.isVisible = false
+        }
     }
 
     fun init(colorModels: List<ColorModel>) {

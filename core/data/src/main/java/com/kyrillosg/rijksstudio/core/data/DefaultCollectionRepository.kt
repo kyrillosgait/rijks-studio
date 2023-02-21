@@ -53,7 +53,7 @@ internal class DefaultCollectionRepository(
 
     override suspend fun getDetailedCollectionItem(
         id: CollectionItem.Id,
-    ): DetailedCollectionItem? {
+    ): DetailedCollectionItem {
         val filter = CollectionDetailsFilter(id.value)
 
         Napier.v { "Requesting collection item with - filter: $filter" }

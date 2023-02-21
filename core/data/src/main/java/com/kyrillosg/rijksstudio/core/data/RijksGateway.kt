@@ -8,5 +8,5 @@ interface RijksGateway {
 
     suspend fun getCollection(filter: CollectionFilter): PaginatedData<List<CollectionItem>>
 
-    suspend fun getCollectionDetails(filter: CollectionDetailsFilter): DetailedCollectionItem?
+    suspend fun getCollectionDetails(filter: CollectionDetailsFilter): DetailedCollectionItem
 }

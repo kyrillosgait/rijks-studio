@@ -8,6 +8,7 @@ import com.kyrillosg.rijksstudio.core.network.DefaultRijksGateway
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
+import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.serialization.kotlinx.json.*
@@ -58,6 +59,19 @@ private fun provideHttpClient(context: Context): HttpClient {
         }
         engine {
             addInterceptor(ChuckerInterceptor.Builder(context).build())
+        }
+        HttpResponseValidator {
+            handleResponseExceptionWithRequest { exception, request ->
+                when (exception) {
+                    is ClientRequestException -> {
+                        error("Client error: ${exception.response.status.value}")
+                    }
+                    is ServerResponseException -> {
+                        error("Server error: ${exception.response.status.value}")
+                    }
+                    else -> throw exception
+                }
+            }
         }
     }
 }

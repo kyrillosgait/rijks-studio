@@ -39,7 +39,7 @@ internal class FakeRijksGateway(
         )
     }
 
-    override suspend fun getCollectionDetails(filter: CollectionDetailsFilter): DetailedCollectionItem? {
-        return collectionItems.find { it.itemId.value == filter.id }
+    override suspend fun getCollectionDetails(filter: CollectionDetailsFilter): DetailedCollectionItem {
+        return collectionItems.find { it.itemId.value == filter.id } ?: error("Item with id: ${filter.id} not found")
     }
 }

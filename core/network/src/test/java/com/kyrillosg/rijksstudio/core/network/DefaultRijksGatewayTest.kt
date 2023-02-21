@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalCoroutinesApi::class)
+
 package com.kyrillosg.rijksstudio.core.network
 
 import com.kyrillosg.rijksstudio.core.data.CollectionDetailsFilter
@@ -9,6 +11,7 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -93,7 +96,7 @@ class DefaultRijksGatewayTest {
                 val filter = CollectionDetailsFilter(id = "NG-MC-807")
                 val collectionDetailsItem = gateway.getCollectionDetails(filter)
 
-                assertEquals(collectionDetailsItem?.itemId?.value, filter.id)
+                assertEquals(collectionDetailsItem.itemId.value, filter.id)
             }
         }
     }

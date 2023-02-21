@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface CollectionRepository {
 
-    suspend fun getDetailedCollectionItem(id: CollectionItem.Id): DetailedCollectionItem?
+    suspend fun getDetailedCollectionItem(id: CollectionItem.Id): DetailedCollectionItem
 
     fun getCollectionItemsStream(groupBy: GroupBy): Flow<List<CollectionItem>>
 

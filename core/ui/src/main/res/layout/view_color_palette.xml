@@ -15,6 +15,7 @@
         app:layout_constraintEnd_toStartOf="@id/secondColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/purple_700"
         tools:text="54%" />
 
     <TextView
@@ -27,6 +28,7 @@
         app:layout_constraintEnd_toStartOf="@id/thirdColor"
         app:layout_constraintStart_toEndOf="@id/firstColor"
         app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/purple_500"
         tools:text="54%" />
 
     <TextView
@@ -39,6 +41,7 @@
         app:layout_constraintEnd_toStartOf="@id/fourthColor"
         app:layout_constraintStart_toEndOf="@id/secondColor"
         app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/purple_200"
         tools:text="54%" />
 
     <TextView

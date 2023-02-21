@@ -17,7 +17,7 @@ androidxConstraintLayout = "2.1.4"
 androidxCore = "1.9.0"
 androidxLifecycle = "2.5.1"
 androidxNavigation = "2.5.3"
-androidxPaging = "3.2.0-alpha03"
+androidxSwipeRefreshLayout = "1.1.0"
 androidxTestEspresso = "3.5.0"
 androidxTestExtJunit = "1.1.4"
 appcenter = "4.4.5"
@@ -40,7 +40,7 @@ androidx-lifecycle-compiler = { module = "androidx.lifecycle:lifecycle-compiler"
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidxNavigation" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidxNavigation" }
-androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidxPaging" }
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "androidxSwipeRefreshLayout" }
 androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidxTestEspresso" }
 androidx-test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidxTestExtJunit" }
 appcenter-analytics = { module = "com.microsoft.appcenter:appcenter-analytics", version.ref = "appcenter" }

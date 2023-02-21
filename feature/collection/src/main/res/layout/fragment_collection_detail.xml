@@ -1,98 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pullToRefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="invisible"
-        tools:visibility="visible" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:fillViewport="true"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:context=".feature.collection.CollectionDetailFragment">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:background="@color/black"
-                tools:layout_constraintDimensionRatio="16:9" />
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                tools:visibility="visible" />
 
             <TextView
-                android:id="@+id/description"
-                android:layout_width="0dp"
+                android:id="@+id/errorMessage"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:padding="16dp"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image"
-                tools:text="Some description" />
+                android:visibility="invisible"
+                tools:text="An error occurred"
+                tools:visibility="visible" />
 
-            <TextView
-                android:id="@+id/colorPaletteHeader"
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="@string/color_palette"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/description" />
+                android:visibility="gone"
+                tools:context=".feature.collection.CollectionDetailFragment"
+                tools:visibility="visible">
 
-            <com.kyrillosg.rijksstudio.core.ui.views.ColorPaletteView
-                android:id="@+id/colorView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/colorPaletteHeader" />
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:background="@color/black"
+                    tools:layout_constraintDimensionRatio="16:9" />
 
-            <TextView
-                android:id="@+id/colorPaletteNormalizedHeader"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="@string/color_palette_normalized"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/colorView" />
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/image"
+                    tools:text="Some description" />
 
-            <com.kyrillosg.rijksstudio.core.ui.views.ColorPaletteView
-                android:id="@+id/normalizedColorView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingBottom="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/colorPaletteNormalizedHeader" />
+                <TextView
+                    android:id="@+id/colorHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="@string/color_palette"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/description" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.kyrillosg.rijksstudio.core.ui.views.ColorPaletteView
+                    android:id="@+id/colorView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/colorHeader"
+                    tools:minHeight="64dp" />
+
+                <TextView
+                    android:id="@+id/normalizedColorHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="@string/color_palette_normalized"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/colorView" />
+
+                <com.kyrillosg.rijksstudio.core.ui.views.ColorPaletteView
+                    android:id="@+id/normalizedColorView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/normalizedColorHeader"
+                    tools:minHeight="64dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
     </androidx.core.widget.NestedScrollView>
-</FrameLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

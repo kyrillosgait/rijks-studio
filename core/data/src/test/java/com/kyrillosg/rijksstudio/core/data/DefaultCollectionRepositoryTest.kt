@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalCoroutinesApi::class)
+
 package com.kyrillosg.rijksstudio.core.data
 
 import com.kyrillosg.rijksstudio.core.data.fake.FakeDetailedCollectionItem
@@ -23,7 +25,6 @@ class DefaultCollectionRepositoryTest {
         ),
     )
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Nested
     @DisplayName("Given valid CollectionItem.ID")
     inner class ValidCollectionItemId {
@@ -35,7 +36,7 @@ class DefaultCollectionRepositoryTest {
                 val expectedId = CollectionItem.Id("2")
                 val actual = repository.getDetailedCollectionItem(expectedId)
 
-                assertEquals(expectedId, actual?.itemId)
+                assertEquals(expectedId, actual.itemId)
             }
         }
     }
@@ -49,7 +50,9 @@ class DefaultCollectionRepositoryTest {
         fun getDetailedCollectionItem_givenNonExistentId() {
             runTest {
                 val nonExistentId = CollectionItem.Id(UUID.randomUUID().toString())
-                val actual = repository.getDetailedCollectionItem(nonExistentId)
+                val actual = runCatching {
+                    repository.getDetailedCollectionItem(nonExistentId)
+                }.getOrNull()
 
                 assertEquals(null, actual)
             }

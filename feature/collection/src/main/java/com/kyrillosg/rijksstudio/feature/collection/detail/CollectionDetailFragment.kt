@@ -12,7 +12,6 @@ import coil.load
 import com.kyrillosg.rijksstudio.core.domain.collection.model.DetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.ui.UiState
 import com.kyrillosg.rijksstudio.core.ui.ViewBindingFragment
-import com.kyrillosg.rijksstudio.core.ui.toast
 import com.kyrillosg.rijksstudio.core.ui.views.ColorPaletteView
 import com.kyrillosg.rijksstudio.feature.collection.databinding.FragmentCollectionDetailBinding
 import kotlinx.coroutines.launch
@@ -28,6 +27,10 @@ class CollectionDetailFragment : ViewBindingFragment<FragmentCollectionDetailBin
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.pullToRefresh.setOnRefreshListener {
+            viewModel.getDetails(args.collectionItemId)
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.detailedCollectionItem.collect { uiState ->
@@ -42,45 +45,56 @@ class CollectionDetailFragment : ViewBindingFragment<FragmentCollectionDetailBin
     private fun renderState(uiState: UiState<DetailedCollectionItem>) {
         when (uiState) {
             is UiState.Error -> {
-                toast(uiState.message)
+                binding.errorMessage.isVisible = true
                 binding.progressBar.isVisible = false
-                binding.scrollView.isVisible = false
+                binding.content.isVisible = false
+                binding.pullToRefresh.isRefreshing = false
+
+                binding.errorMessage.text = uiState.message
             }
             UiState.Loading -> {
+                binding.errorMessage.isVisible = false
                 binding.progressBar.isVisible = true
-                binding.scrollView.isVisible = false
+                binding.content.isVisible = false
             }
             is UiState.Success -> {
-                uiState.data.image?.let { image ->
-                    val ratio = "${image.width}:${image.height}"
-                    ConstraintSet().apply {
-                        clone(binding.constraintLayout)
-                        setDimensionRatio(binding.image.id, ratio)
-                        applyTo(binding.constraintLayout)
-                    }
-
-                    binding.image.load(image.url) {
-                        crossfade(true)
-                    }
-                }
-
-                binding.description.text = uiState.data.plaqueDescription ?: uiState.data.description
-                binding.colorView.init(
-                    colorModels = uiState.data.colors.sortedByDescending { it.percentage }.map {
-                        ColorPaletteView.ColorModel.from(it)
-                    },
-                )
-                binding.colorPaletteHeader.isVisible = uiState.data.colors.isNotEmpty()
-                binding.normalizedColorView.init(
-                    colorModels = uiState.data.normalizedColors.sortedByDescending { it.percentage }.map {
-                        ColorPaletteView.ColorModel.from(it)
-                    },
-                )
-                binding.colorPaletteNormalizedHeader.isVisible = uiState.data.normalizedColors.isNotEmpty()
-
+                binding.errorMessage.isVisible = false
                 binding.progressBar.isVisible = false
-                binding.scrollView.isVisible = true
+                binding.content.isVisible = true
+                binding.pullToRefresh.isRefreshing = false
+
+                renderItem(uiState.data)
             }
         }
+    }
+
+    private fun renderItem(item: DetailedCollectionItem) {
+        item.image?.let { image ->
+            val ratio = "${image.width}:${image.height}"
+            ConstraintSet().apply {
+                clone(binding.content)
+                setDimensionRatio(binding.image.id, ratio)
+                applyTo(binding.content)
+            }
+
+            binding.image.load(image.url) {
+                crossfade(true)
+            }
+        }
+
+        binding.description.text = item.plaqueDescription ?: item.description
+        binding.colorHeader.isVisible = item.colors.isNotEmpty()
+        binding.colorView.init(
+            colorModels = item.colors.sortedByDescending { it.percentage }.map {
+                ColorPaletteView.ColorModel.from(it)
+            },
+        )
+
+        binding.normalizedColorHeader.isVisible = item.normalizedColors.isNotEmpty()
+        binding.normalizedColorView.init(
+            colorModels = item.normalizedColors.sortedByDescending { it.percentage }.map {
+                ColorPaletteView.ColorModel.from(it)
+            },
+        )
     }
 }

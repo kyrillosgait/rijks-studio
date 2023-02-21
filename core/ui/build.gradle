@@ -26,6 +26,7 @@ dependencies {
     api(libs.androidx.lifecycle.viewmodel.ktx)
     api(libs.androidx.navigation.fragment.ktx)
     api(libs.androidx.navigation.ui.ktx)
+    api(libs.androidx.swiperefreshlayout)
 
     api(libs.napier)
     api(libs.coil)

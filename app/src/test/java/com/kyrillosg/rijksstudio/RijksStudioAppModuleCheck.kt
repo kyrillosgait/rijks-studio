@@ -1,3 +1,5 @@
+@file:OptIn(KoinExperimentalAPI::class)
+
 package com.kyrillosg.rijksstudio
 
 import android.content.Context
@@ -7,7 +9,6 @@ import org.junit.jupiter.api.Test
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.test.verify.verify
 
-@OptIn(KoinExperimentalAPI::class)
 class RijksStudioAppModuleCheck {
 
     @Test
