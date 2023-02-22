@@ -9,10 +9,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import coil.load
-import com.kyrillosg.rijksstudio.core.domain.collection.model.DetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.ui.UiState
 import com.kyrillosg.rijksstudio.core.ui.ViewBindingFragment
-import com.kyrillosg.rijksstudio.core.ui.views.ColorPaletteView
 import com.kyrillosg.rijksstudio.feature.collection.databinding.FragmentCollectionDetailBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,7 +31,7 @@ class CollectionDetailFragment : ViewBindingFragment<FragmentCollectionDetailBin
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.detailedCollectionItem.collect { uiState ->
+                viewModel.screenState.collect { uiState ->
                     renderState(uiState)
                 }
             }
@@ -42,7 +40,7 @@ class CollectionDetailFragment : ViewBindingFragment<FragmentCollectionDetailBin
         viewModel.getDetails(args.collectionItemId)
     }
 
-    private fun renderState(uiState: UiState<DetailedCollectionItem>) {
+    private fun renderState(uiState: UiState<DetailScreenModel>) {
         when (uiState) {
             is UiState.Error -> {
                 binding.errorMessage.isVisible = true
@@ -63,38 +61,28 @@ class CollectionDetailFragment : ViewBindingFragment<FragmentCollectionDetailBin
                 binding.content.isVisible = true
                 binding.pullToRefresh.isRefreshing = false
 
-                renderItem(uiState.data)
+                renderModel(uiState.data)
             }
         }
     }
 
-    private fun renderItem(item: DetailedCollectionItem) {
-        item.image?.let { image ->
-            val ratio = "${image.width}:${image.height}"
+    private fun renderModel(model: DetailScreenModel) {
+        model.imageRatio?.let { ratio ->
             ConstraintSet().apply {
                 clone(binding.content)
                 setDimensionRatio(binding.image.id, ratio)
                 applyTo(binding.content)
             }
+        }
 
-            binding.image.load(image.url) {
+        model.imageUrl?.let { url ->
+            binding.image.load(url) {
                 crossfade(true)
             }
         }
 
-        binding.description.text = item.plaqueDescription ?: item.description
-        binding.colorHeader.isVisible = item.colors.isNotEmpty()
-        binding.colorView.init(
-            colorModels = item.colors.sortedByDescending { it.percentage }.map {
-                ColorPaletteView.ColorModel.from(it)
-            },
-        )
-
-        binding.normalizedColorHeader.isVisible = item.normalizedColors.isNotEmpty()
-        binding.normalizedColorView.init(
-            colorModels = item.normalizedColors.sortedByDescending { it.percentage }.map {
-                ColorPaletteView.ColorModel.from(it)
-            },
-        )
+        binding.description.text = model.description
+        binding.colorView.init(model.colors)
+        binding.normalizedColorView.init(model.normalizedColors)
     }
 }

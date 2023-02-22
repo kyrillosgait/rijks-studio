@@ -1,7 +1,6 @@
 package com.kyrillosg.rijksstudio.core.ui.views
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -9,7 +8,6 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
-import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItemColor
 import com.kyrillosg.rijksstudio.core.ui.databinding.ViewColorPaletteBinding
 
 class ColorPaletteView @JvmOverloads constructor(
@@ -25,8 +23,11 @@ class ColorPaletteView @JvmOverloads constructor(
         }
     }
 
-    fun init(colorModels: List<ColorModel>) {
-        if (colorModels.isNotEmpty()) binding.root.isVisible = true
+    fun init(model: Model) {
+        binding.root.isVisible = model.colors.isNotEmpty()
+
+        binding.header.text = model.label
+        binding.header.isVisible = model.label.isNotEmpty()
 
         val views = listOf(
             binding.firstColor,
@@ -41,27 +42,22 @@ class ColorPaletteView @JvmOverloads constructor(
             it.visibility = View.INVISIBLE
         }
 
-        colorModels.take(6).forEachIndexed { index, model ->
+        model.colors.take(6).forEachIndexed { index, color ->
             with(views[index]) {
-                background = ColorDrawable(model.color)
-                text = model.percentage
+                background = ColorDrawable(color.colorInt)
+                text = color.percentage
                 visibility = View.VISIBLE
             }
         }
     }
 
-    data class ColorModel(
-        @ColorInt val color: Int,
-        val percentage: String,
+    data class Model(
+        val label: String,
+        val colors: List<Color>,
     ) {
-
-        companion object {
-            fun from(collectionItemColor: CollectionItemColor): ColorModel {
-                return ColorModel(
-                    color = Color.parseColor(collectionItemColor.hex.trim()),
-                    percentage = "${collectionItemColor.percentage}%",
-                )
-            }
-        }
+        data class Color(
+            @ColorInt val colorInt: Int,
+            val percentage: String,
+        )
     }
 }

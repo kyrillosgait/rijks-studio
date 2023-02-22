@@ -14,8 +14,6 @@ android {
 
 dependencies {
 
-    implementation(project(":core:domain"))
-
     implementation(libs.bundles.kotlinx.coroutines)
     api(libs.koin.android)
 
@@ -34,6 +32,4 @@ dependencies {
 
     testImplementation(libs.junit5.api)
     testRuntimeOnly(libs.junit5.engine)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.test.espresso.core)
 }
