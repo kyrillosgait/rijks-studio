@@ -58,7 +58,7 @@ class CollectionListFragment :
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val isScrolledToBottom = !recyclerView.canScrollVertically(1) && dy > 0
                     if (isScrolledToBottom) {
-                        viewModel.requestCollectionItems()
+                        viewModel.requestCollectionItems(refreshData = false)
                     }
                 }
             })
@@ -71,14 +71,7 @@ class CollectionListFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 launch {
-                    viewModel.collectionItems.collect { items ->
-                        binding.pullToRefresh.isRefreshing = items.isEmpty()
-                        collectionListAdapter.submitList(items)
-                    }
-                }
-
-                launch {
-                    viewModel.requestCollectionItemsState.collect { uiState ->
+                    viewModel.screenState.collect { uiState ->
                         renderState(uiState)
                     }
                 }
@@ -86,7 +79,7 @@ class CollectionListFragment :
         }
     }
 
-    private fun renderState(uiState: UiState<Unit>) {
+    private fun renderState(uiState: UiState<CollectionScreenModel>) {
         when (uiState) {
             is UiState.Error -> {
                 binding.errorMessage.text = uiState.message
@@ -98,7 +91,9 @@ class CollectionListFragment :
             }
             is UiState.Success -> {
                 binding.errorMessage.isVisible = false
-                binding.pullToRefresh.isRefreshing = false
+                binding.pullToRefresh.isRefreshing = uiState.data.items.isEmpty()
+
+                collectionListAdapter.submitList(uiState.data.items)
             }
         }
     }
@@ -123,19 +118,19 @@ class CollectionListFragment :
             R.id.menu_group_by_none -> {
                 menuItem.isChecked = true
                 viewModel.setGroupBy(GroupField.NONE)
-                viewModel.requestCollectionItems()
+                viewModel.requestCollectionItems(refreshData = true)
                 true
             }
             R.id.menu_group_by_artist_asc -> {
                 menuItem.isChecked = true
                 viewModel.setGroupBy(GroupField.ARTIST_ASCENDING)
-                viewModel.requestCollectionItems()
+                viewModel.requestCollectionItems(refreshData = true)
                 true
             }
             R.id.menu_group_by_artist_desc -> {
                 menuItem.isChecked = true
                 viewModel.setGroupBy(GroupField.ARTIST_DESCENDING)
-                viewModel.requestCollectionItems()
+                viewModel.requestCollectionItems(refreshData = true)
                 true
             }
             else -> false

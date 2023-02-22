@@ -23,7 +23,7 @@ internal sealed class CollectionListViewHolder(binding: ViewBinding) : RecyclerV
         private val binding: ItemHeaderBinding,
     ) : CollectionListViewHolder(binding) {
 
-        fun bind(item: CollectionListViewData.Header) {
+        fun bind(item: CollectionListModel.Header) {
             binding.label.text = item.label
         }
 
@@ -38,7 +38,7 @@ internal sealed class CollectionListViewHolder(binding: ViewBinding) : RecyclerV
         private val onCollectionItemClicked: OnCollectionItemClicked,
     ) : CollectionListViewHolder(binding) {
 
-        fun bind(item: CollectionListViewData.ImageWithLabel?) {
+        fun bind(item: CollectionListModel.ImageWithLabel?) {
             binding.label.text = item?.label ?: "placeholder"
             binding.image.load(item?.image) {
                 crossfade(true)

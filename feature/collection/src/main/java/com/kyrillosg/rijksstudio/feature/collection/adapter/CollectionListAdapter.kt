@@ -12,12 +12,12 @@ internal typealias OnCollectionItemClicked = (id: String) -> Unit
 
 internal class CollectionListAdapter(
     private val onCollectionItemClicked: OnCollectionItemClicked,
-) : ListAdapter<CollectionListViewData, CollectionListViewHolder>(DiffCallback()) {
+) : ListAdapter<CollectionListModel, CollectionListViewHolder>(DiffCallback()) {
 
     override fun getItemViewType(position: Int): Int = when (getItem(position)) {
-        is CollectionListViewData.Loading -> CollectionListViewHolder.Loading.LAYOUT_ID
-        is CollectionListViewData.Header -> CollectionListViewHolder.Header.LAYOUT_ID
-        is CollectionListViewData.ImageWithLabel -> CollectionListViewHolder.ImageWithLabel.LAYOUT_ID
+        is CollectionListModel.Loading -> CollectionListViewHolder.Loading.LAYOUT_ID
+        is CollectionListModel.Header -> CollectionListViewHolder.Header.LAYOUT_ID
+        is CollectionListModel.ImageWithLabel -> CollectionListViewHolder.ImageWithLabel.LAYOUT_ID
     }
 
     override fun onCreateViewHolder(
@@ -54,23 +54,23 @@ internal class CollectionListAdapter(
                 // Nothing to bind
             }
             is CollectionListViewHolder.Header -> {
-                holder.bind(item as CollectionListViewData.Header)
+                holder.bind(item as CollectionListModel.Header)
             }
             is CollectionListViewHolder.ImageWithLabel -> {
-                holder.bind(item as CollectionListViewData.ImageWithLabel?)
+                holder.bind(item as CollectionListModel.ImageWithLabel?)
             }
         }
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<CollectionListViewData>() {
+    private class DiffCallback : DiffUtil.ItemCallback<CollectionListModel>() {
         override fun areItemsTheSame(
-            oldItem: CollectionListViewData,
-            newItem: CollectionListViewData,
+            oldItem: CollectionListModel,
+            newItem: CollectionListModel,
         ): Boolean = oldItem.uniqueId == newItem.uniqueId
 
         override fun areContentsTheSame(
-            oldItem: CollectionListViewData,
-            newItem: CollectionListViewData,
+            oldItem: CollectionListModel,
+            newItem: CollectionListModel,
         ): Boolean = oldItem == newItem
     }
 }
