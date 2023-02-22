@@ -23,7 +23,7 @@ internal class DefaultRijksGateway(
         val response = client.get("${config.baseUrl}/${filter.language}/collection") {
             url {
                 parameters.append("key", config.apiKey)
-                parameters.append("p", filter.page.toString())
+                parameters.append("p", (filter.page + 1).toString())
                 parameters.append("ps", filter.pageSize.toString())
                 parameters.append("imgonly", "True")
                 parameters.append("toppieces", "True")
