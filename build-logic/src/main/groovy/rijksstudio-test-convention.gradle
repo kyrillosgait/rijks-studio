@@ -5,3 +5,8 @@ plugins {
 junitPlatform {
     configurationParameter("junit.jupiter.testinstance.lifecycle.default", "per_class")
 }
+
+dependencies {
+    testImplementation(libs.junit5.api)
+    testRuntimeOnly(libs.junit5.engine)
+}

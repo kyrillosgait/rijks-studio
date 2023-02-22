@@ -28,3 +28,9 @@ android {
         jvmTarget = JavaVersion.VERSION_11
     }
 }
+
+dependencies {
+    implementation(libs.bundles.kotlinx.coroutines)
+    implementation(libs.koin.core)
+    implementation(libs.napier)
+}

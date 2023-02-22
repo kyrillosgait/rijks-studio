@@ -29,19 +29,12 @@ android {
 }
 
 dependencies {
-
-    implementation(project(":core:domain"))
     implementation(project(":core:data"))
+    implementation(project(":core:domain"))
 
-    implementation(libs.bundles.kotlinx.coroutines)
-    implementation(libs.koin.core)
     implementation(libs.bundles.ktor)
     implementation(libs.kotlinx.serialization.json)
 
     debugImplementation(libs.chucker.debug)
     releaseImplementation(libs.chucker.release)
-    implementation(libs.napier)
-
-    testImplementation(libs.junit5.api)
-    testRuntimeOnly(libs.junit5.engine)
 }

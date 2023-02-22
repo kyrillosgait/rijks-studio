@@ -11,14 +11,7 @@ android {
 }
 
 dependencies {
-
     implementation(project(":core:domain"))
 
-    implementation(libs.bundles.kotlinx.coroutines)
-    implementation(libs.koin.core)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.napier)
-
-    testImplementation(libs.junit5.api)
-    testRuntimeOnly(libs.junit5.engine)
 }

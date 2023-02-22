@@ -1,6 +1,5 @@
 plugins {
     id 'rijksstudio-library-convention'
-    id 'rijksstudio-test-convention'
     id 'rijksstudio-spotless-convention'
     id 'androidx.navigation.safeargs.kotlin'
 }
@@ -14,15 +13,6 @@ android {
 }
 
 dependencies {
-
     implementation(project(":core:ui"))
-    implementation(project(":core:data"))
     implementation(project(":core:domain"))
-
-    implementation(libs.bundles.kotlinx.coroutines)
-
-    testImplementation(libs.junit5.api)
-    testRuntimeOnly(libs.junit5.engine)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.test.espresso.core)
 }
