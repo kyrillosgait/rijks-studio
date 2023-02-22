@@ -23,7 +23,8 @@ android {
         versionName getAppVersionName(appVersionCode)
         versionCode appVersionCode
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.kyrillosg.rijksstudio.InstrumentationTestRunner"
+        testInstrumentationRunnerArguments["runnerBuilder"] = "de.mannodermaus.junit5.AndroidJUnit5Builder"
     }
 
     buildTypes {
@@ -56,10 +57,22 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    testOptions {
+        managedDevices {
+            devices {
+                // Run instrumentation tests on this device with ./gradlew pixel2api30DebugAndroidTest
+                pixel2api30(com.android.build.api.dsl.ManagedVirtualDevice) {
+                    device = "Pixel 2"
+                    apiLevel = 30
+                    systemImageSource = "aosp"
+                }
+            }
+        }
+    }
 }
 
 dependencies {
-
     implementation(project(":core:di"))
     implementation(project(":feature:collection"))
 
@@ -75,12 +88,13 @@ dependencies {
     implementation(libs.material)
     implementation(libs.napier)
 
-    testImplementation(libs.junit5.api)
-    testRuntimeOnly(libs.junit5.engine)
     testImplementation(libs.bundles.ktor)
     testImplementation(libs.koin.test.junit5)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.test.espresso.core)
+
+    androidTestImplementation(project(":core:ui"))
+    androidTestImplementation(libs.bundles.instrumentation.testing)
+    androidTestRuntimeOnly(libs.junit5.android.test.runner)
+    debugImplementation(libs.androidx.fragment.testing.manifest)
 }
 
 private static String getAppVersionName(Integer versionCode) {
