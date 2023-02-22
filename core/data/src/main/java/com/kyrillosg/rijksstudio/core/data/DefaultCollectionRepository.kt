@@ -21,6 +21,10 @@ internal class DefaultCollectionRepository(
     private val _itemsByArtistDescending = MutableStateFlow<List<CollectionItem>>(emptyList())
 
     override fun getCollectionItemsStream(groupBy: GroupField): Flow<List<CollectionItem>> {
+        return collectionFlowFor(groupBy)
+    }
+
+    private fun collectionFlowFor(groupBy: GroupField): MutableStateFlow<List<CollectionItem>> {
         return when (groupBy) {
             GroupField.NONE -> _itemsUnsorted
             GroupField.ARTIST_ASCENDING -> _itemsByArtist
@@ -30,38 +34,25 @@ internal class DefaultCollectionRepository(
 
     override suspend fun requestMoreCollectionItems(groupBy: GroupField) {
         withContext(dispatcher) {
-            val currentItems = when (groupBy) {
-                GroupField.NONE -> _itemsUnsorted.value
-                GroupField.ARTIST_ASCENDING -> _itemsByArtist.value
-                GroupField.ARTIST_DESCENDING -> _itemsByArtistDescending.value
-            }
+            val currentItems = collectionFlowFor(groupBy).value
 
+            val nextPage = currentItems.size.div(PAGE_SIZE)
             val filter = CollectionFilter(
-                page = currentItems.size.div(PAGE_SIZE),
+                page = nextPage,
                 pageSize = PAGE_SIZE,
                 groupBy = groupBy,
             )
 
             Napier.v { "Requesting collection items with - filter: $filter" }
 
-            val newItems = currentItems + rijksGateway.getCollection(filter).items
+            val newItems = rijksGateway.getCollection(filter).items
 
-            when (groupBy) {
-                GroupField.NONE -> _itemsUnsorted.value = newItems
-                GroupField.ARTIST_ASCENDING -> _itemsByArtist.value = newItems
-                GroupField.ARTIST_DESCENDING -> _itemsByArtistDescending.value = newItems
-            }
+            collectionFlowFor(groupBy).value = currentItems + newItems
         }
     }
 
     override suspend fun invalidateCollectionItems(groupBy: GroupField) {
-        withContext(dispatcher) {
-            when (groupBy) {
-                GroupField.NONE -> _itemsUnsorted.value = emptyList()
-                GroupField.ARTIST_ASCENDING -> _itemsByArtist.value = emptyList()
-                GroupField.ARTIST_DESCENDING -> _itemsByArtistDescending.value = emptyList()
-            }
-        }
+        collectionFlowFor(groupBy).value = emptyList()
     }
 
     override suspend fun getDetailedCollectionItem(
@@ -84,8 +75,8 @@ internal class DefaultCollectionRepository(
 data class CollectionFilter(
     val page: Int = 0,
     val pageSize: Int = DefaultCollectionRepository.PAGE_SIZE,
-    val language: String = "en",
     val groupBy: GroupField = GroupField.ARTIST_ASCENDING,
+    val language: String = "en",
 )
 
 data class CollectionDetailsFilter(
