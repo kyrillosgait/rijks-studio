@@ -2,8 +2,8 @@
 
 package com.kyrillosg.rijksstudio.core.data
 
-import com.kyrillosg.rijksstudio.core.data.fake.FakeDetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.data.fake.FakeRijksGateway
+import com.kyrillosg.rijksstudio.core.domain.collection.fakes.FakeDetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.usecases.GroupField
 import kotlinx.coroutines.ExperimentalCoroutinesApi

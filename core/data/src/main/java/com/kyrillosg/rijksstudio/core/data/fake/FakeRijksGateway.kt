@@ -5,26 +5,13 @@ import com.kyrillosg.rijksstudio.core.data.CollectionFilter
 import com.kyrillosg.rijksstudio.core.data.RijksGateway
 import com.kyrillosg.rijksstudio.core.data.common.PaginatedData
 import com.kyrillosg.rijksstudio.core.domain.collection.CollectionRepository
+import com.kyrillosg.rijksstudio.core.domain.collection.fakes.fakeItems
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.model.DetailedCollectionItem
 import kotlinx.coroutines.delay
 
 internal class FakeRijksGateway(
-    private val collectionItems: List<DetailedCollectionItem> = (0..2250).map { index ->
-        FakeDetailedCollectionItem.create(
-            id = CollectionItem.Id(index.toString()),
-            title = index.toString(),
-            author = when (index) {
-                in 0 until 105 -> "Leonardo da Vinci"
-                in 105 until 237 -> "Pablo Picasso"
-                in 237 until 843 -> "Salvador Dalí"
-                in 843 until 2057 -> "Unknown"
-                else -> "Vincent van Gogh"
-            },
-            imageWidth = setOf(144, 192, 256).random(),
-            imageHeight = setOf(144, 192, 256).random(),
-        )
-    },
+    private val collectionItems: List<DetailedCollectionItem> = fakeItems,
     private val pageSize: Int = CollectionRepository.DEFAULT_ITEM_COUNT,
 ) : RijksGateway {
 

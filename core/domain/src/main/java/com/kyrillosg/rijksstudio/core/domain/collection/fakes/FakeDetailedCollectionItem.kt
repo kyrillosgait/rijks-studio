@@ -1,4 +1,4 @@
-package com.kyrillosg.rijksstudio.core.data.fake
+package com.kyrillosg.rijksstudio.core.domain.collection.fakes
 
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItemColor
@@ -6,7 +6,7 @@ import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItemImag
 import com.kyrillosg.rijksstudio.core.domain.collection.model.DetailedCollectionItem
 import java.util.*
 
-internal data class FakeDetailedCollectionItem(
+data class FakeDetailedCollectionItem(
     override val itemId: CollectionItem.Id,
     override val title: String,
     override val author: String,
