@@ -32,5 +32,6 @@ android {
 dependencies {
     implementation(libs.bundles.kotlinx.coroutines)
     implementation(libs.koin.core)
+    implementation(libs.koin.test.junit5)
     implementation(libs.napier)
 }

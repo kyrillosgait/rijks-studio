@@ -2,9 +2,9 @@ package com.kyrillosg.rijksstudio.core.data.fake
 
 import com.kyrillosg.rijksstudio.core.data.CollectionDetailsFilter
 import com.kyrillosg.rijksstudio.core.data.CollectionFilter
-import com.kyrillosg.rijksstudio.core.data.DefaultCollectionRepository.Companion.PAGE_SIZE
 import com.kyrillosg.rijksstudio.core.data.RijksGateway
 import com.kyrillosg.rijksstudio.core.data.common.PaginatedData
+import com.kyrillosg.rijksstudio.core.domain.collection.CollectionRepository
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.model.DetailedCollectionItem
 import kotlinx.coroutines.delay
@@ -25,14 +25,16 @@ internal class FakeRijksGateway(
             imageHeight = setOf(144, 192, 256).random(),
         )
     },
-    private val pageSize: Int = PAGE_SIZE,
+    private val pageSize: Int = CollectionRepository.DEFAULT_ITEM_COUNT,
 ) : RijksGateway {
 
     override suspend fun getCollection(filter: CollectionFilter): PaginatedData<List<CollectionItem>> {
         delay(1_000)
 
         val start = filter.page * pageSize
-        val items = (start until start + filter.pageSize).map { collectionItems[it] }.toList()
+        val items = (start until start + filter.pageSize).mapNotNull {
+            runCatching { collectionItems[it] }.getOrNull()
+        }.toList()
         return PaginatedData(
             items = items,
             total = collectionItems.count(),

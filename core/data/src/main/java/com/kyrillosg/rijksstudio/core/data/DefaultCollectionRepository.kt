@@ -32,14 +32,14 @@ internal class DefaultCollectionRepository(
         }
     }
 
-    override suspend fun requestMoreCollectionItems(groupBy: GroupField) {
+    override suspend fun requestMoreCollectionItems(groupBy: GroupField, count: Int) {
         withContext(dispatcher) {
             val currentItems = collectionFlowFor(groupBy).value
 
-            val nextPage = currentItems.size.div(PAGE_SIZE)
+            val nextPage = currentItems.size.div(count)
             val filter = CollectionFilter(
                 page = nextPage,
-                pageSize = PAGE_SIZE,
+                pageSize = count,
                 groupBy = groupBy,
             )
 
@@ -66,15 +66,11 @@ internal class DefaultCollectionRepository(
             rijksGateway.getCollectionDetails(filter)
         }
     }
-
-    companion object {
-        const val PAGE_SIZE = 20
-    }
 }
 
 data class CollectionFilter(
     val page: Int = 0,
-    val pageSize: Int = DefaultCollectionRepository.PAGE_SIZE,
+    val pageSize: Int = CollectionRepository.DEFAULT_ITEM_COUNT,
     val groupBy: GroupField = GroupField.ARTIST_ASCENDING,
     val language: String = "en",
 )
