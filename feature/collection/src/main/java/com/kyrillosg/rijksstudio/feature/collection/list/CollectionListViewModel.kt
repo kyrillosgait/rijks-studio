@@ -20,7 +20,7 @@ class CollectionListViewModel(
     private val requestMoreCollectionItemsUseCase: RequestMoreCollectionItemsUseCase,
 ) : ViewModel() {
 
-    private val _groupBy = MutableStateFlow(GroupField.ARTIST_ASCENDING)
+    private val _groupBy = MutableStateFlow(GroupField.NONE)
     private val _requestCollectionItemsState = MutableStateFlow<RequestState>(RequestState.None)
 
     val groupBy: GroupField
