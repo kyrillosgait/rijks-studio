@@ -5,7 +5,7 @@ koin = "3.3.3"
 koinAndroid = "3.3.3"
 ktor = "2.2.2"
 serialization = "1.4.1"
-androidGradlePlugin = "7.4.0"
+androidGradlePlugin = "7.4.1"
 
 minSdk = "26"
 compileSdk = "33"
