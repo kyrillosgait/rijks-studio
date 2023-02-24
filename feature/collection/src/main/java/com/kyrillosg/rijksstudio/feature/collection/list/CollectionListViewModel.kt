@@ -10,6 +10,7 @@ import com.kyrillosg.rijksstudio.core.domain.collection.usecases.GroupField
 import com.kyrillosg.rijksstudio.core.domain.collection.usecases.RequestMoreCollectionItemsUseCase
 import com.kyrillosg.rijksstudio.core.ui.UiState
 import com.kyrillosg.rijksstudio.feature.collection.adapter.CollectionListModel
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -58,6 +59,12 @@ class CollectionListViewModel(
         if (_requestCollectionItemsState.value == RequestState.LoadingMore ||
             _requestCollectionItemsState.value == RequestState.Refreshing
         ) {
+            Napier.v { "Requested more items but another request is already in progress" }
+            return
+        }
+
+        if (_requestCollectionItemsState.value == RequestState.AllItemsLoaded && !refreshData) {
+            Napier.v { "Requested more items but all available items have already been loaded" }
             return
         }
 
@@ -69,15 +76,19 @@ class CollectionListViewModel(
             }
 
             runCatching {
-                requestMoreCollectionItemsUseCase(
+                val hasMoreItems = requestMoreCollectionItemsUseCase(
                     input = RequestMoreCollectionItemsUseCase.Params(
                         groupBy = groupBy,
                         refreshData = refreshData,
                         searchTerm = searchQuery,
                     ),
                 )
-            }.onSuccess {
-                _requestCollectionItemsState.value = RequestState.Success
+
+                if (hasMoreItems) {
+                    _requestCollectionItemsState.value = RequestState.Success
+                } else {
+                    _requestCollectionItemsState.value = RequestState.AllItemsLoaded
+                }
             }.onFailure {
                 _requestCollectionItemsState.value = RequestState.Error(it.message.toString())
             }
@@ -95,6 +106,7 @@ class CollectionListViewModel(
             RequestState.Success,
             RequestState.Refreshing,
             RequestState.None,
+            RequestState.AllItemsLoaded,
             -> {
                 UiState.Success(CollectionScreenModel.from(this, isLoadingMore = false))
             }
@@ -104,6 +116,7 @@ class CollectionListViewModel(
     private sealed interface RequestState {
         data class Error(val message: String) : RequestState
         object Success : RequestState
+        object AllItemsLoaded : RequestState
         object LoadingMore : RequestState
         object Refreshing : RequestState
         object None : RequestState

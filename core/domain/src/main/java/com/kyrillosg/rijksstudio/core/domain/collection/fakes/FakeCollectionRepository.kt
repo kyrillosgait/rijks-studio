@@ -4,6 +4,7 @@ import com.kyrillosg.rijksstudio.core.domain.collection.CollectionRepository
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.model.DetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.usecases.GroupField
+import com.kyrillosg.rijksstudio.core.domain.collection.usecases.HasMoreItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
@@ -19,10 +20,16 @@ internal class FakeCollectionRepository : CollectionRepository {
         return flowOf(collection)
     }
 
-    override suspend fun requestMoreCollectionItems(groupBy: GroupField, count: Int, searchTerm: String?) {
+    override suspend fun requestMoreCollectionItems(
+        groupBy: GroupField,
+        count: Int,
+        searchTerm: String?,
+    ): HasMoreItems {
         (collection.size until collection.size + count).map {
             collection.add(fakeItems[it])
         }
+
+        return collection.size + count < fakeItems.size
     }
 
     override suspend fun invalidateCollectionItems(groupBy: GroupField) {

@@ -4,6 +4,7 @@ import com.kyrillosg.rijksstudio.core.domain.collection.CollectionRepository
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.model.DetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.usecases.GroupField
+import com.kyrillosg.rijksstudio.core.domain.collection.usecases.HasMoreItems
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -32,8 +33,12 @@ internal class DefaultCollectionRepository(
         }
     }
 
-    override suspend fun requestMoreCollectionItems(groupBy: GroupField, count: Int, searchTerm: String?) {
-        withContext(dispatcher) {
+    override suspend fun requestMoreCollectionItems(
+        groupBy: GroupField,
+        count: Int,
+        searchTerm: String?,
+    ): HasMoreItems {
+        return withContext(dispatcher) {
             val currentItems = collectionFlowFor(groupBy).value
 
             val nextPage = currentItems.size.div(count)
@@ -46,9 +51,11 @@ internal class DefaultCollectionRepository(
 
             Napier.v { "Requesting collection items with - filter: $filter" }
 
-            val newItems = rijksGateway.getCollection(filter).items
+            val response = rijksGateway.getCollection(filter)
 
-            collectionFlowFor(groupBy).value = currentItems + newItems
+            collectionFlowFor(groupBy).value = currentItems + response.items
+
+            collectionFlowFor(groupBy).value.size < response.total
         }
     }
 

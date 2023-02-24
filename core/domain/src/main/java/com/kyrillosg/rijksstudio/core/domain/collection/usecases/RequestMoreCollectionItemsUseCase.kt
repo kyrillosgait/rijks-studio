@@ -4,16 +4,18 @@ import com.kyrillosg.rijksstudio.core.domain.collection.CollectionRepository
 import com.kyrillosg.rijksstudio.core.domain.collection.CollectionRepository.Companion.DEFAULT_ITEM_COUNT
 import com.kyrillosg.rijksstudio.core.domain.common.UseCase
 
+typealias HasMoreItems = Boolean
+
 class RequestMoreCollectionItemsUseCase(
     private val repository: CollectionRepository,
-) : UseCase<RequestMoreCollectionItemsUseCase.Params, Unit> {
+) : UseCase<RequestMoreCollectionItemsUseCase.Params, HasMoreItems> {
 
-    override suspend fun invoke(input: Params) {
+    override suspend fun invoke(input: Params): HasMoreItems {
         if (input.refreshData) {
             repository.invalidateCollectionItems(input.groupBy)
         }
 
-        repository.requestMoreCollectionItems(input.groupBy, input.count, input.searchTerm)
+        return repository.requestMoreCollectionItems(input.groupBy, input.count, input.searchTerm)
     }
 
     data class Params(

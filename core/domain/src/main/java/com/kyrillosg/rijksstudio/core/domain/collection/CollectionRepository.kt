@@ -3,6 +3,7 @@ package com.kyrillosg.rijksstudio.core.domain.collection
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.model.DetailedCollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.usecases.GroupField
+import com.kyrillosg.rijksstudio.core.domain.collection.usecases.HasMoreItems
 import kotlinx.coroutines.flow.Flow
 
 interface CollectionRepository {
@@ -15,7 +16,7 @@ interface CollectionRepository {
         groupBy: GroupField,
         count: Int = DEFAULT_ITEM_COUNT,
         searchTerm: String? = null,
-    )
+    ): HasMoreItems
 
     suspend fun invalidateCollectionItems(groupBy: GroupField)
 
