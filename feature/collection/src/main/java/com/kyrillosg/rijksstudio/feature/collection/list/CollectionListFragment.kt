@@ -46,6 +46,8 @@ class CollectionListFragment :
         },
     )
 
+    lateinit var searchView: SearchView
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -115,13 +117,15 @@ class CollectionListFragment :
             }
         }
 
-        val searchView = menu.findItem(R.id.menu_search).actionView as? SearchView ?: return
+        searchView = menu.findItem(R.id.menu_search).actionView as? SearchView ?: return
         searchView.setOnQueryTextListener(this@CollectionListFragment)
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         viewModel.setSearchQuery(query)
         viewModel.requestCollectionItems(refreshData = true)
+
+        searchView.clearFocus()
 
         return true
     }
