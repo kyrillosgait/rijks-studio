@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemHeaderBinding
 import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemImageWithLabelBinding
-import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemLoadingBinding
+import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemLabelBinding
+import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemProgressBarBinding
 
 internal typealias OnCollectionItemClicked = (id: String) -> Unit
 
@@ -15,9 +15,9 @@ internal class CollectionListAdapter(
 ) : ListAdapter<CollectionListModel, CollectionListViewHolder>(DiffCallback()) {
 
     override fun getItemViewType(position: Int): Int = when (getItem(position)) {
-        is CollectionListModel.Loading -> CollectionListViewHolder.Loading.LAYOUT_ID
-        is CollectionListModel.Header -> CollectionListViewHolder.Header.LAYOUT_ID
+        is CollectionListModel.ProgressBar -> CollectionListViewHolder.Loading.LAYOUT_ID
         is CollectionListModel.ImageWithLabel -> CollectionListViewHolder.ImageWithLabel.LAYOUT_ID
+        is CollectionListModel.Label -> CollectionListViewHolder.Label.LAYOUT_ID
     }
 
     override fun onCreateViewHolder(
@@ -28,12 +28,12 @@ internal class CollectionListAdapter(
         return when (viewType) {
             CollectionListViewHolder.Loading.LAYOUT_ID -> {
                 CollectionListViewHolder.Loading(
-                    binding = ItemLoadingBinding.inflate(inflater, parent, false),
+                    binding = ItemProgressBarBinding.inflate(inflater, parent, false),
                 )
             }
-            CollectionListViewHolder.Header.LAYOUT_ID -> {
-                CollectionListViewHolder.Header(
-                    binding = ItemHeaderBinding.inflate(inflater, parent, false),
+            CollectionListViewHolder.Label.LAYOUT_ID -> {
+                CollectionListViewHolder.Label(
+                    binding = ItemLabelBinding.inflate(inflater, parent, false),
                 )
             }
             CollectionListViewHolder.ImageWithLabel.LAYOUT_ID -> {
@@ -53,8 +53,8 @@ internal class CollectionListAdapter(
             is CollectionListViewHolder.Loading -> {
                 // Nothing to bind
             }
-            is CollectionListViewHolder.Header -> {
-                holder.bind(item as CollectionListModel.Header)
+            is CollectionListViewHolder.Label -> {
+                holder.bind(item as CollectionListModel.Label)
             }
             is CollectionListViewHolder.ImageWithLabel -> {
                 holder.bind(item as CollectionListModel.ImageWithLabel?)

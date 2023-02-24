@@ -1,35 +1,47 @@
 package com.kyrillosg.rijksstudio.feature.collection.adapter
 
+import android.graphics.Typeface
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import coil.load
 import com.kyrillosg.rijksstudio.feature.collection.R
-import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemHeaderBinding
 import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemImageWithLabelBinding
-import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemLoadingBinding
+import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemLabelBinding
+import com.kyrillosg.rijksstudio.feature.collection.databinding.ItemProgressBarBinding
 
 internal sealed class CollectionListViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    class Loading(binding: ItemLoadingBinding) : CollectionListViewHolder(binding) {
+    class Loading(binding: ItemProgressBarBinding) : CollectionListViewHolder(binding) {
 
         companion object {
             @LayoutRes
-            val LAYOUT_ID = R.layout.item_loading
+            val LAYOUT_ID = R.layout.item_progress_bar
         }
     }
 
-    class Header(
-        private val binding: ItemHeaderBinding,
+    class Label(
+        private val binding: ItemLabelBinding,
     ) : CollectionListViewHolder(binding) {
 
-        fun bind(item: CollectionListModel.Header) {
+        fun bind(item: CollectionListModel.Label) {
             binding.label.text = item.label
+
+            when (item.style) {
+                CollectionListModel.Label.Style.BOLD -> {
+                    binding.label.setTypeface(null, Typeface.BOLD)
+                    binding.label.textSize = 20f
+                }
+                CollectionListModel.Label.Style.ITALIC -> {
+                    binding.label.setTypeface(null, Typeface.ITALIC)
+                    binding.label.textSize = 16f
+                }
+            }
         }
 
         companion object {
             @LayoutRes
-            val LAYOUT_ID = R.layout.item_header
+            val LAYOUT_ID = R.layout.item_label
         }
     }
 

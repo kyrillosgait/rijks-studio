@@ -101,14 +101,26 @@ class CollectionListViewModel(
                 UiState.Error(message = requestState.message)
             }
             RequestState.LoadingMore -> {
-                UiState.Success(CollectionScreenModel.from(this, isLoadingMore = true))
+                UiState.Success(
+                    CollectionScreenModel.from(
+                        collection = this,
+                        footer = CollectionScreenModel.Companion.Footer.ProgressBar,
+                    ),
+                )
+            }
+            RequestState.AllItemsLoaded -> {
+                UiState.Success(
+                    CollectionScreenModel.from(
+                        collection = this,
+                        footer = CollectionScreenModel.Companion.Footer.EndOfList(searchQuery),
+                    ),
+                )
             }
             RequestState.Success,
             RequestState.Refreshing,
             RequestState.None,
-            RequestState.AllItemsLoaded,
             -> {
-                UiState.Success(CollectionScreenModel.from(this, isLoadingMore = false))
+                UiState.Success(CollectionScreenModel.from(this))
             }
         }
     }
@@ -128,29 +140,61 @@ data class CollectionScreenModel(
 ) {
 
     companion object {
-        fun from(collection: List<GroupedCollection>, isLoadingMore: Boolean): CollectionScreenModel {
+        fun from(
+            collection: List<GroupedCollection>,
+            footer: Footer = Footer.None,
+        ): CollectionScreenModel {
             return CollectionScreenModel(
                 items = collection
                     .flatMap { items -> items.toViewModel() }
-                    .appendLoadingItem { isLoadingMore && collection.isNotEmpty() },
+                    .appendFooter(footer),
             )
         }
 
         private fun GroupedCollection.toViewModel(): List<CollectionListModel> {
             val items = items.map { CollectionListModel.ImageWithLabel.from(it) }
 
-            val header = label?.let { label ->
-                CollectionListModel.Header(
+            val label = label?.let { label ->
+                CollectionListModel.Label(
                     label = label,
                     uniqueId = label + items.map { it.uniqueId },
                 )
             }
 
-            return listOfNotNull(header) + items
+            return listOfNotNull(label) + items
         }
 
-        private fun List<CollectionListModel>.appendLoadingItem(predicate: () -> Boolean): List<CollectionListModel> {
-            return if (predicate()) this + CollectionListModel.Loading() else this
+        private fun List<CollectionListModel>.appendFooter(footer: Footer): List<CollectionListModel> {
+            return when (footer) {
+                is Footer.EndOfList -> {
+                    val label = buildString {
+                        append("No ")
+
+                        if (this@appendFooter.isNotEmpty()) {
+                            append("more ")
+                        }
+
+                        append("results ")
+
+                        footer.query?.let {
+                            append("for \"$it\"")
+                        }
+                    }
+                    this + CollectionListModel.Label(
+                        label = label,
+                        style = CollectionListModel.Label.Style.ITALIC,
+                        uniqueId = label,
+                    )
+                }
+                Footer.ProgressBar -> this + CollectionListModel.ProgressBar()
+                Footer.None -> this
+            }
+        }
+
+        sealed interface Footer {
+            object None : Footer
+            object ProgressBar : Footer
+            data class EndOfList(val query: String?) : Footer
         }
     }
 }

@@ -5,12 +5,16 @@ import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 sealed interface CollectionListModel {
     val uniqueId: String
 
-    data class Loading(override val uniqueId: String = "Loading") : CollectionListModel
+    data class ProgressBar(override val uniqueId: String = "Loading") : CollectionListModel
 
-    data class Header(
+    data class Label(
         val label: String,
         override val uniqueId: String,
-    ) : CollectionListModel
+        val style: Style = Style.BOLD,
+    ) : CollectionListModel {
+
+        enum class Style { BOLD, ITALIC }
+    }
 
     data class ImageWithLabel(
         override val uniqueId: String,
