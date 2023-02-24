@@ -13,12 +13,13 @@ class RequestMoreCollectionItemsUseCase(
             repository.invalidateCollectionItems(input.groupBy)
         }
 
-        repository.requestMoreCollectionItems(input.groupBy, input.count)
+        repository.requestMoreCollectionItems(input.groupBy, input.count, input.searchTerm)
     }
 
     data class Params(
         val groupBy: GroupField,
         val refreshData: Boolean,
         val count: Int = DEFAULT_ITEM_COUNT,
+        val searchTerm: String? = null,
     )
 }

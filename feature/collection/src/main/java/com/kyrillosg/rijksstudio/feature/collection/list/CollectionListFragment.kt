@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.*
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -26,7 +27,8 @@ class CollectionListFragment :
     ViewBindingFragment<FragmentCollectionListBinding>(
         bindingProvider = FragmentCollectionListBinding::inflate,
     ),
-    MenuProvider {
+    MenuProvider,
+    SearchView.OnQueryTextListener {
 
     private val viewModel: CollectionListViewModel by viewModel()
 
@@ -65,6 +67,7 @@ class CollectionListFragment :
         }
 
         binding.pullToRefresh.setOnRefreshListener {
+            viewModel.setSearchQuery(null)
             viewModel.requestCollectionItems(refreshData = true)
         }
 
@@ -111,7 +114,19 @@ class CollectionListFragment :
                 menuItem.isChecked = true
             }
         }
+
+        val searchView = menu.findItem(R.id.menu_search).actionView as? SearchView ?: return
+        searchView.setOnQueryTextListener(this@CollectionListFragment)
     }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        viewModel.setSearchQuery(query)
+        viewModel.requestCollectionItems(refreshData = true)
+
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean = false
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {

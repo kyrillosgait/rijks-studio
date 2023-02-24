@@ -11,7 +11,11 @@ interface CollectionRepository {
 
     fun getCollectionItemsStream(groupBy: GroupField): Flow<List<CollectionItem>>
 
-    suspend fun requestMoreCollectionItems(groupBy: GroupField, count: Int = DEFAULT_ITEM_COUNT)
+    suspend fun requestMoreCollectionItems(
+        groupBy: GroupField,
+        count: Int = DEFAULT_ITEM_COUNT,
+        searchTerm: String? = null,
+    )
 
     suspend fun invalidateCollectionItems(groupBy: GroupField)
 

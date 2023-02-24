@@ -4,7 +4,7 @@
     tools:context="com.kyrillosg.rijksstudio.MainActivity">
 
     <item
-        android:id="@+id/search"
+        android:id="@+id/menu_search"
         android:icon="@drawable/ic_search"
         android:title="@string/menu_search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"

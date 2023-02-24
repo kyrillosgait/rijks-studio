@@ -19,7 +19,7 @@ internal class FakeCollectionRepository : CollectionRepository {
         return flowOf(collection)
     }
 
-    override suspend fun requestMoreCollectionItems(groupBy: GroupField, count: Int) {
+    override suspend fun requestMoreCollectionItems(groupBy: GroupField, count: Int, searchTerm: String?) {
         (collection.size until collection.size + count).map {
             collection.add(fakeItems[it])
         }

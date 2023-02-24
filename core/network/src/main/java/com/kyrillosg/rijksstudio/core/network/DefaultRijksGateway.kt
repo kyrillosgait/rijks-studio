@@ -27,6 +27,9 @@ internal class DefaultRijksGateway(
                 parameters.append("ps", filter.pageSize.toString())
                 parameters.append("imgonly", "True")
                 parameters.append("toppieces", "True")
+                filter.searchTerm?.let { searchTerm ->
+                    parameters.append("q", searchTerm)
+                }
 
                 when (filter.groupBy) {
                     GroupField.NONE -> {

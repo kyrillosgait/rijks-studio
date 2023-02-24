@@ -40,12 +40,18 @@ class CollectionListViewModel(
                     .flowOn(Dispatchers.Default)
             }
 
+    private var searchQuery: String? = null
+
     init {
         requestCollectionItems(refreshData = true)
     }
 
     fun setGroupBy(groupBy: GroupField) {
         _groupBy.value = groupBy
+    }
+
+    fun setSearchQuery(query: String?) {
+        searchQuery = query
     }
 
     fun requestCollectionItems(refreshData: Boolean = false) {
@@ -64,7 +70,11 @@ class CollectionListViewModel(
 
             runCatching {
                 requestMoreCollectionItemsUseCase(
-                    input = RequestMoreCollectionItemsUseCase.Params(groupBy, refreshData),
+                    input = RequestMoreCollectionItemsUseCase.Params(
+                        groupBy = groupBy,
+                        refreshData = refreshData,
+                        searchTerm = searchQuery,
+                    ),
                 )
             }.onSuccess {
                 _requestCollectionItemsState.value = RequestState.Success

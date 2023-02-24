@@ -32,7 +32,7 @@ internal class DefaultCollectionRepository(
         }
     }
 
-    override suspend fun requestMoreCollectionItems(groupBy: GroupField, count: Int) {
+    override suspend fun requestMoreCollectionItems(groupBy: GroupField, count: Int, searchTerm: String?) {
         withContext(dispatcher) {
             val currentItems = collectionFlowFor(groupBy).value
 
@@ -41,6 +41,7 @@ internal class DefaultCollectionRepository(
                 page = nextPage,
                 pageSize = count,
                 groupBy = groupBy,
+                searchTerm = searchTerm,
             )
 
             Napier.v { "Requesting collection items with - filter: $filter" }
@@ -73,6 +74,7 @@ data class CollectionFilter(
     val pageSize: Int = CollectionRepository.DEFAULT_ITEM_COUNT,
     val groupBy: GroupField = GroupField.ARTIST_ASCENDING,
     val language: String = "en",
+    val searchTerm: String? = null,
 )
 
 data class CollectionDetailsFilter(
