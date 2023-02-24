@@ -14,7 +14,7 @@ API_KEY="your_api_key"
 
 Alternatively, you can configure the app via DI to use the `FakeRijksGateway` as a data source, instead of the default implementation.
 
-## Software design and architecture
+## Layering and modularization
 Presentation-domain-data layering, with MVVM in the presentation layer, split into several gradle modules.
 
 ![gradle modules](/images/modules.png)
@@ -22,11 +22,11 @@ Presentation-domain-data layering, with MVVM in the presentation layer, split in
 - `:app` -> Application class, single activity, test for dependency injection declarations.
 - `:feature:collection` -> Collection list and detail fragments along with their corresponding view models.
 - `:core:ui` -> Common extensions and reusable views that feature modules can tap into.
-- `:core:domain` -> Use cases and models, encapsulating reusable business logic and behavior.
-- `:core:data` -> Data models, a repository consuming the api gateway (plus a fake implementation of it), in-memory caching, and unit tests.
-- `:core:network` -> The api gateway along with network models, and unit tests.
-- `:core:di` -> Gathers domain and data layer DI modules and exposes them to :app.
-- `:build-logic` -> Reusable gradle precompiled scripts for the gradle modules.
+- `:core:domain` -> Core models of the app, the repository interface, and use cases encapsulating reusable business logic, unit tested.
+- `:core:data` -> Repository implementation consuming the API gateway, unit tested.
+- `:core:network` -> API gateway implementation along with the network models, unit tested.
+- `:core:di` -> Glues domain and data layer modules. Provides them to `:app`.
+- `:build-logic` -> Reusable gradle precompiled script plugins.
 
 ## Tooling
 - Kotlin, coroutines for asynchronous operations and flow for observable data streams
