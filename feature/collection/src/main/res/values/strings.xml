@@ -5,4 +5,5 @@
     <string name="menu_item_no_group">Don\'t group</string>
     <string name="menu_item_group_artist_asc">Group by artist (↑)</string>
     <string name="menu_item_group_artist_desc">Group by artist (↓)</string>
+    <string name="menu_search">Search</string>
 </resources>
