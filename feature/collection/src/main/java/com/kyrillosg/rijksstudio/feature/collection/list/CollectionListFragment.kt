@@ -118,6 +118,11 @@ class CollectionListFragment :
         }
 
         searchView = menu.findItem(R.id.menu_search).actionView as? SearchView ?: return
+
+        viewModel.searchQuery?.let { query ->
+            searchView.setQuery(query, false)
+        }
+
         searchView.setOnQueryTextListener(this@CollectionListFragment)
     }
 

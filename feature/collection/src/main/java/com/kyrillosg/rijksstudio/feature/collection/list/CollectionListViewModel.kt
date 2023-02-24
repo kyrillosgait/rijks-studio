@@ -22,10 +22,14 @@ class CollectionListViewModel(
 ) : ViewModel() {
 
     private val _groupBy = MutableStateFlow(GroupField.NONE)
+    private val _searchQuery = MutableStateFlow<String?>(null)
     private val _requestCollectionItemsState = MutableStateFlow<RequestState>(RequestState.None)
 
     val groupBy: GroupField
         get() = _groupBy.value
+
+    val searchQuery: String?
+        get() = _searchQuery.value
 
     val screenState: Flow<UiState<CollectionScreenModel>>
         get() = _groupBy
@@ -41,8 +45,6 @@ class CollectionListViewModel(
                     .flowOn(Dispatchers.Default)
             }
 
-    private var searchQuery: String? = null
-
     init {
         requestCollectionItems(refreshData = true)
     }
@@ -52,7 +54,7 @@ class CollectionListViewModel(
     }
 
     fun setSearchQuery(query: String?) {
-        searchQuery = query
+        _searchQuery.value = query
     }
 
     fun requestCollectionItems(refreshData: Boolean = false) {
