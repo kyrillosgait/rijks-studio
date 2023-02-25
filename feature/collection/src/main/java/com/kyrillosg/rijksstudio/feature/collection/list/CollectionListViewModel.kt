@@ -31,6 +31,14 @@ class CollectionListViewModel(
     val searchQuery: String?
         get() = _searchQuery.value
 
+    val canLoadMore: Boolean
+        get() {
+            val isLoading = _requestCollectionItemsState.value == RequestState.LoadingMore
+            val isRefreshing = _requestCollectionItemsState.value == RequestState.Refreshing
+            val hasLoadedAllItems = _requestCollectionItemsState.value == RequestState.AllItemsLoaded
+            return !isLoading && !isRefreshing && !hasLoadedAllItems
+        }
+
     val screenState: Flow<UiState<CollectionScreenModel>>
         get() = _groupBy
             .combine(_requestCollectionItemsState) { groupBy, requestState ->

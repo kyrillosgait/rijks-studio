@@ -12,11 +12,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.usecases.GroupField
 import com.kyrillosg.rijksstudio.core.ui.UiState
 import com.kyrillosg.rijksstudio.core.ui.ViewBindingFragment
+import com.kyrillosg.rijksstudio.core.ui.addOnEndlessScrollListener
 import com.kyrillosg.rijksstudio.feature.collection.R
 import com.kyrillosg.rijksstudio.feature.collection.adapter.CollectionListAdapter
 import com.kyrillosg.rijksstudio.feature.collection.databinding.FragmentCollectionListBinding
@@ -46,7 +46,7 @@ class CollectionListFragment :
         },
     )
 
-    lateinit var searchView: SearchView
+    private lateinit var searchView: SearchView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,28 +58,10 @@ class CollectionListFragment :
             adapter = collectionListAdapter
             layoutManager = LinearLayoutManager(requireContext())
 
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    val isScrollingDown = dy > 0
-
-                    if (isScrollingDown) {
-                        val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
-
-                        val totalItemCount = layoutManager.itemCount
-                        val scrolledItemCount = layoutManager.findFirstVisibleItemPosition()
-                        val visibleItemCount = layoutManager.childCount
-                        val accessedItemCount = scrolledItemCount + visibleItemCount
-
-                        val prefetchDistance = visibleItemCount * 2
-
-                        val shouldFetchMore = totalItemCount <= accessedItemCount + prefetchDistance
-
-                        if (shouldFetchMore) {
-                            viewModel.requestCollectionItems(refreshData = false)
-                        }
-                    }
-                }
-            })
+            addOnEndlessScrollListener(
+                predicate = { viewModel.canLoadMore },
+                onTrigger = { viewModel.requestCollectionItems(refreshData = false) },
+            )
         }
 
         binding.pullToRefresh.setOnRefreshListener {
