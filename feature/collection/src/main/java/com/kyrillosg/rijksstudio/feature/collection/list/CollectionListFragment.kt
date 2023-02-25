@@ -65,9 +65,10 @@ class CollectionListFragment :
         }
 
         binding.pullToRefresh.setOnRefreshListener {
-            searchView.setQuery(null, false)
-            searchView.onActionViewCollapsed()
-            viewModel.setSearchQuery(null)
+            viewModel.setSearchQuery(null).also {
+                searchView.setQuery(null, false)
+                searchView.onActionViewCollapsed()
+            }
             viewModel.requestCollectionItems(refreshData = true)
         }
 
