@@ -60,9 +60,23 @@ class CollectionListFragment :
 
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    val isScrolledToBottom = !recyclerView.canScrollVertically(1) && dy > 0
-                    if (isScrolledToBottom) {
-                        viewModel.requestCollectionItems(refreshData = false)
+                    val isScrollingDown = dy > 0
+
+                    if (isScrollingDown) {
+                        val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
+
+                        val totalItemCount = layoutManager.itemCount
+                        val scrolledItemCount = layoutManager.findFirstVisibleItemPosition()
+                        val visibleItemCount = layoutManager.childCount
+                        val accessedItemCount = scrolledItemCount + visibleItemCount
+
+                        val prefetchDistance = visibleItemCount * 2
+
+                        val shouldFetchMore = totalItemCount <= accessedItemCount + prefetchDistance
+
+                        if (shouldFetchMore) {
+                            viewModel.requestCollectionItems(refreshData = false)
+                        }
                     }
                 }
             })
