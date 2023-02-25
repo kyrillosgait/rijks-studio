@@ -24,9 +24,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CollectionListFragment :
-    ViewBindingFragment<FragmentCollectionListBinding>(
-        bindingProvider = FragmentCollectionListBinding::inflate,
-    ),
+    ViewBindingFragment<FragmentCollectionListBinding>(FragmentCollectionListBinding::inflate),
     MenuProvider,
     SearchView.OnQueryTextListener {
 

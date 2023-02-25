@@ -5,10 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Adds an on scroll listener to [RecyclerView], which triggers based on the [prefetchDistance].
- * Requires a [LinearLayoutManager] to have been set.
  *
  * @param prefetchDistance how far from the edge of loaded content an access must be to trigger the listener.
- *  Defaults to the number of visible items on screen.
  * @param predicate additional condition(s) to trigger the listener.
  * @param onTrigger what happens when the listener is triggered.
  */
