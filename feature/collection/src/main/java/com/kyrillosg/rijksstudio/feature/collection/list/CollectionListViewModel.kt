@@ -11,10 +11,8 @@ import com.kyrillosg.rijksstudio.core.domain.collection.usecases.RequestMoreColl
 import com.kyrillosg.rijksstudio.core.ui.UiState
 import com.kyrillosg.rijksstudio.feature.collection.adapter.CollectionListModel
 import io.github.aakira.napier.Napier
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 
 class CollectionListViewModel(
     private val getGroupedCollectionStreamUseCase: GetGroupedCollectionStreamUseCase,
@@ -61,8 +59,18 @@ class CollectionListViewModel(
         _groupBy.value = groupBy
     }
 
-    fun setSearchQuery(query: String?) {
-        _searchQuery.value = query
+    private var job: Job? = null
+
+    fun setSearchQuery(query: String?, debounceTimeMs: Long = 0L) {
+        job?.cancel(CancellationException("Search query changed, pending job cancelled"))
+
+        job = viewModelScope.launch {
+            delay(debounceTimeMs)
+
+            _searchQuery.value = query
+
+            requestCollectionItems(refreshData = true)
+        }
     }
 
     fun requestCollectionItems(refreshData: Boolean = false) {

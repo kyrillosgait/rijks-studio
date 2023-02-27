@@ -67,7 +67,6 @@ class CollectionListFragment :
                 searchView.setQuery(null, false)
                 searchView.onActionViewCollapsed()
             }
-            viewModel.requestCollectionItems(refreshData = true)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -123,16 +122,13 @@ class CollectionListFragment :
         searchView.setOnQueryTextListener(this@CollectionListFragment)
     }
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        viewModel.setSearchQuery(query)
-        viewModel.requestCollectionItems(refreshData = true)
-
-        searchView.clearFocus()
+    override fun onQueryTextChange(newText: String?): Boolean {
+        viewModel.setSearchQuery(newText, debounceTimeMs = 500L)
 
         return true
     }
 
-    override fun onQueryTextChange(newText: String?): Boolean = false
+    override fun onQueryTextSubmit(query: String?): Boolean = false
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
