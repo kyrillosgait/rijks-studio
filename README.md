@@ -1,7 +1,7 @@
 # Rijks-studio
 [![Build](https://github.com/kyrillosgait/rijks-studio/actions/workflows/build.yaml/badge.svg)](https://github.com/kyrillosgait/rijks-studio/actions/workflows/build.yaml) [![Release](https://github.com/kyrillosgait/rijks-studio/actions/workflows/release.yaml/badge.svg?branch=develop)](https://github.com/kyrillosgait/rijks-studio/actions/workflows/release.yaml)
 
-Displays a paginated list of art objects and additional details when clicked.
+Displays an infinite list of art objects and shows additional details when clicked. Supports searching.
 
 ![list detail screens](/images/list-detail-screens.png)
 
@@ -12,10 +12,10 @@ To see actual data from API you'll need an [API key](https://data.rijksmuseum.nl
 API_KEY="your_api_key"
 ```
 
-Alternatively, you can configure the app via DI to use the `FakeRijksGateway` as a data source, instead of the default implementation.
+> **Note:** By swapping the default API gateway implementation with `FakeRijksGateway` using dependency injection, you can use in-memory data instead of querying the actual API. This way you won't need to get an API key.
 
 ## Layering and modularization
-Presentation-domain-data layering, with MVVM in the presentation layer, split into several gradle modules.
+MVVM with presentation-domain-data layering. Organized into multiple gradle modules for more flexibility and better separation of concerns.
 
 ![gradle modules](/images/modules.png)
 
