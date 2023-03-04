@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class CollectionDetailViewModel(
+internal class CollectionDetailViewModel(
     private val getDetailedCollectionItemUseCase: GetDetailedCollectionItemUseCase,
 ) : ViewModel() {
 
@@ -38,7 +38,7 @@ class CollectionDetailViewModel(
     }
 }
 
-data class DetailScreenModel(
+internal data class DetailScreenModel(
     val imageUrl: String?,
     val imageRatio: String?,
     val description: String,

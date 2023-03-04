@@ -8,7 +8,7 @@ import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
-typealias BindingProvider<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
+private typealias BindingProvider<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
 open class ViewBindingFragment<T : ViewBinding>(
     private val bindingProvider: BindingProvider<T>,

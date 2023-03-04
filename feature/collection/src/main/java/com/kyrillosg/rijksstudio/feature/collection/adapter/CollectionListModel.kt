@@ -2,7 +2,7 @@ package com.kyrillosg.rijksstudio.feature.collection.adapter
 
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 
-sealed interface CollectionListModel {
+internal sealed interface CollectionListModel {
     val uniqueId: String
 
     data class ProgressBar(override val uniqueId: String = "Loading") : CollectionListModel

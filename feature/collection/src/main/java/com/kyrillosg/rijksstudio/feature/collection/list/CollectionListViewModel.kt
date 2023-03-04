@@ -14,7 +14,7 @@ import io.github.aakira.napier.Napier
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
-class CollectionListViewModel(
+internal class CollectionListViewModel(
     private val getGroupedCollectionStreamUseCase: GetGroupedCollectionStreamUseCase,
     private val requestMoreCollectionItemsUseCase: RequestMoreCollectionItemsUseCase,
 ) : ViewModel() {
@@ -153,7 +153,7 @@ class CollectionListViewModel(
     }
 }
 
-data class CollectionScreenModel(
+internal data class CollectionScreenModel(
     val items: List<CollectionListModel>,
 ) {
 
