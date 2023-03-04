@@ -86,7 +86,7 @@ internal class CollectionListViewModel(
             return
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             if (refreshData) {
                 _requestCollectionItemsState.value = RequestState.Refreshing
             } else {

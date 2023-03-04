@@ -10,6 +10,7 @@ import com.kyrillosg.rijksstudio.core.domain.collection.model.DetailedCollection
 import com.kyrillosg.rijksstudio.core.domain.collection.usecases.GetDetailedCollectionItemUseCase
 import com.kyrillosg.rijksstudio.core.ui.UiState
 import com.kyrillosg.rijksstudio.core.ui.views.ColorPaletteView
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -24,7 +25,7 @@ internal class CollectionDetailViewModel(
         get() = _screenState
 
     fun getDetails(id: CollectionItem.Id) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             _screenState.value = UiState.Loading
 
             runCatching {
