@@ -7,24 +7,32 @@ import com.kyrillosg.rijksstudio.core.domain.collection.fakes.FakeDetailedCollec
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.usecases.GetDetailedCollectionItemUseCase
 import com.kyrillosg.rijksstudio.core.ui.UiState
+import io.mockk.clearMocks
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.*
 
 class CollectionDetailViewModelTest {
+
+    private val getDetailedCollectionItemMock = mockk<GetDetailedCollectionItemUseCase>()
+
+    private lateinit var viewModel: CollectionDetailViewModel
+
+    @BeforeEach
+    fun setup() {
+        clearMocks(getDetailedCollectionItemMock)
+
+        viewModel = CollectionDetailViewModel(
+            getDetailedCollectionItemUseCase = getDetailedCollectionItemMock,
+        )
+    }
 
     @Test
     @DisplayName("Initial screen state is loading")
     fun initialScreenStateIsLoading() = runTest {
-        val viewModel = CollectionDetailViewModel(
-            getDetailedCollectionItemUseCase = mockk(),
-        )
-
         val initialScreenState = viewModel.screenState.first()
 
         assert(initialScreenState is UiState.Loading)
@@ -36,10 +44,7 @@ class CollectionDetailViewModelTest {
         @Test
         @DisplayName("Given a invalid ID, leads to error UI state")
         fun givenInvalidId_leadsToErrorUiState() = runTest {
-            val useCaseMock = mockk<GetDetailedCollectionItemUseCase>()
-            coEvery { useCaseMock(any()) } throws Exception("Not found")
-
-            val viewModel = CollectionDetailViewModel(getDetailedCollectionItemUseCase = useCaseMock)
+            coEvery { getDetailedCollectionItemMock(any()) } throws Exception("Not found")
 
             viewModel.getDetails(CollectionItem.Id("Invalid ID"))
 
@@ -51,10 +56,7 @@ class CollectionDetailViewModelTest {
         @Test
         @DisplayName("Given a valid ID, leads to successful UI state")
         fun givenValidId_leadsToSuccessUiState() = runTest {
-            val useCaseMock = mockk<GetDetailedCollectionItemUseCase>()
-            coEvery { useCaseMock(any()) } returns FakeDetailedCollectionItem.create()
-
-            val viewModel = CollectionDetailViewModel(getDetailedCollectionItemUseCase = useCaseMock)
+            coEvery { getDetailedCollectionItemMock(any()) } returns FakeDetailedCollectionItem.create()
 
             viewModel.getDetails(CollectionItem.Id("Valid ID"))
 
