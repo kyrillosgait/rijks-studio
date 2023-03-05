@@ -1,0 +1,149 @@
+@file:OptIn(ExperimentalCoroutinesApi::class)
+
+package com.kyrillosg.rijksstudio.feature.collection
+
+import com.kyrillosg.rijksstudio.core.domain.collection.usecases.GetGroupedCollectionStreamUseCase
+import com.kyrillosg.rijksstudio.core.domain.collection.usecases.GroupField
+import com.kyrillosg.rijksstudio.core.domain.collection.usecases.RequestMoreCollectionItemsUseCase
+import com.kyrillosg.rijksstudio.core.ui.UiState
+import com.kyrillosg.rijksstudio.feature.collection.list.CollectionListViewModel
+import com.kyrillosg.rijksstudio.feature.common.CoroutinesTestExtension
+import io.mockk.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.*
+import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.extension.ExtendWith
+
+@ExtendWith(CoroutinesTestExtension::class)
+class CollectionListViewModelTest {
+
+    private val getGroupedCollectionItemsMock = mockk<GetGroupedCollectionStreamUseCase>()
+    private val requestMoreCollectionItemsMock = mockk<RequestMoreCollectionItemsUseCase>(relaxed = true)
+
+    private lateinit var viewModel: CollectionListViewModel
+
+    @BeforeEach
+    fun setup() {
+        clearMocks(getGroupedCollectionItemsMock, requestMoreCollectionItemsMock)
+
+        viewModel = CollectionListViewModel(
+            getGroupedCollectionStreamUseCase = getGroupedCollectionItemsMock,
+            requestMoreCollectionItemsUseCase = requestMoreCollectionItemsMock,
+        )
+    }
+
+    @Nested
+    inner class SetGroupBy {
+
+        @Test
+        @DisplayName("Initial value is NONE")
+        fun initialIsNone() = runTest {
+            every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
+            coEvery { requestMoreCollectionItemsMock(any()) } returns false
+
+            assertEquals(GroupField.NONE, viewModel.groupBy)
+        }
+
+        @Test
+        @DisplayName("Correctly sets group field")
+        fun setsGroupField() = runTest {
+            every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
+            coEvery { requestMoreCollectionItemsMock(any()) } returns false
+
+            viewModel.setGroupBy(GroupField.ARTIST_ASCENDING)
+
+            assertEquals(GroupField.ARTIST_ASCENDING, viewModel.groupBy)
+        }
+    }
+
+    @Nested
+    inner class SetSearchQuery {
+
+        @Test
+        @DisplayName("Initial value is null")
+        fun initialIsNone() = runTest {
+            every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
+            coEvery { requestMoreCollectionItemsMock(any()) } returns false
+
+            assertEquals(null, viewModel.searchQuery)
+        }
+
+        @Test
+        @DisplayName("Correctly sets search query")
+        fun setsSearchQuery() = runTest {
+            every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
+            coEvery { requestMoreCollectionItemsMock(any()) } returns false
+
+            viewModel.setSearchQuery("Van Gogh")
+
+            assertEquals("Van Gogh", viewModel.searchQuery)
+        }
+
+        @Test
+        @DisplayName("If called multiple times, sets only last query")
+        fun ifCalledMultipleTimesWithinTheDebounceWindow_setsOnlyLastQuery() = runTest {
+            every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
+            coEvery { requestMoreCollectionItemsMock(any()) } returns false
+
+            viewModel.setSearchQuery("Van Gogh", debounceTimeMs = 250)
+            delay(100)
+
+            assertEquals(null, viewModel.searchQuery)
+
+            viewModel.setSearchQuery("Pablo Picasso", debounceTimeMs = 250)
+            delay(200)
+
+            assertEquals(null, viewModel.searchQuery)
+
+            viewModel.setSearchQuery("Salvador Dalí", debounceTimeMs = 250)
+            delay(300)
+
+            assertEquals("Salvador Dalí", viewModel.searchQuery)
+        }
+    }
+
+    @Nested
+    inner class ScreenState {
+
+        @Test
+        @DisplayName("Given successful request, returns successful UI state")
+        fun givenSuccessfulRequest_returnsSuccessfulUiState() = runTest {
+            every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
+            coEvery { requestMoreCollectionItemsMock(any()) } returns false
+
+            viewModel.requestCollectionItems()
+
+            assert(viewModel.screenState.first() is UiState.Success)
+        }
+
+        @Test
+        @DisplayName("Given failed request, returns error UI state")
+        fun givenFailedRequest_returnsErrorUiState() = runTest {
+            every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
+            coEvery { requestMoreCollectionItemsMock(any()) } throws Exception("Something went wrong")
+
+            viewModel.requestCollectionItems(refreshData = true)
+
+            assert(viewModel.screenState.first() is UiState.Error)
+        }
+
+        @Test
+        @DisplayName("Given failed request, but then successful request, returns successful UI state")
+        fun givenFailedRequest_andThenSuccessfulRequest_returnsSuccessfulUiState() = runTest {
+            every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
+            coEvery { requestMoreCollectionItemsMock(any()) } throws Exception("Something went wrong")
+            viewModel.requestCollectionItems(refreshData = true)
+
+            assert(viewModel.screenState.first() is UiState.Error)
+
+            coEvery { requestMoreCollectionItemsMock(any()) } returns false
+            viewModel.requestCollectionItems(refreshData = true)
+
+            assert(viewModel.screenState.first() is UiState.Success)
+        }
+    }
+}
