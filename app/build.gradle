@@ -59,6 +59,8 @@ android {
     }
 
     testOptions {
+        animationsDisabled true
+
         managedDevices {
             devices {
                 // Run instrumentation tests on this device with ./gradlew pixel2api30DebugAndroidTest
