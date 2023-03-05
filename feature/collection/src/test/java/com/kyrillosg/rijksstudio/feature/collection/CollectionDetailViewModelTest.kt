@@ -13,7 +13,6 @@ import io.mockk.clearMocks
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.extension.ExtendWith
@@ -37,9 +36,9 @@ class CollectionDetailViewModelTest {
     @Test
     @DisplayName("Initial screen state is loading")
     fun initialScreenStateIsLoading() = runTest {
-        val initialScreenState = viewModel.screenState.first()
-
-        assert(initialScreenState is UiState.Loading)
+        viewModel.screenState.test {
+            assert(awaitItem() is UiState.Loading)
+        }
     }
 
     @Nested
@@ -50,9 +49,11 @@ class CollectionDetailViewModelTest {
         fun givenInvalidId_leadsToErrorUiState() = runTest {
             coEvery { getDetailedCollectionItemMock(any()) } throws Exception("Not found")
 
-            viewModel.getDetails(CollectionItem.Id("Invalid ID"))
-
             viewModel.screenState.test {
+                assert(awaitItem() is UiState.Loading)
+
+                viewModel.getDetails(CollectionItem.Id("Invalid ID"))
+
                 assert(awaitItem() is UiState.Error)
             }
         }
@@ -62,10 +63,11 @@ class CollectionDetailViewModelTest {
         fun givenValidId_leadsToSuccessUiState() = runTest {
             coEvery { getDetailedCollectionItemMock(any()) } returns FakeDetailedCollectionItem.create()
 
-            viewModel.getDetails(CollectionItem.Id("Valid ID"))
-
             viewModel.screenState.test {
                 assert(awaitItem() is UiState.Loading)
+
+                viewModel.getDetails(CollectionItem.Id("Valid ID"))
+
                 assert(awaitItem() is UiState.Success)
             }
         }
