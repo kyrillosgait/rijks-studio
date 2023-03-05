@@ -2,6 +2,7 @@
 
 package com.kyrillosg.rijksstudio.feature.collection
 
+import app.cash.turbine.test
 import com.kyrillosg.rijksstudio.core.domain.collection.usecases.GetGroupedCollectionStreamUseCase
 import com.kyrillosg.rijksstudio.core.domain.collection.usecases.GroupField
 import com.kyrillosg.rijksstudio.core.domain.collection.usecases.RequestMoreCollectionItemsUseCase
@@ -24,11 +25,17 @@ class CollectionListViewModelTest {
     private val getGroupedCollectionItemsMock = mockk<GetGroupedCollectionStreamUseCase>()
     private val requestMoreCollectionItemsMock = mockk<RequestMoreCollectionItemsUseCase>(relaxed = true)
 
+    init {
+        coEvery { requestMoreCollectionItemsMock(any()) } returns true
+    }
+
     private lateinit var viewModel: CollectionListViewModel
 
     @BeforeEach
     fun setup() {
         clearMocks(getGroupedCollectionItemsMock, requestMoreCollectionItemsMock)
+
+        coEvery { requestMoreCollectionItemsMock(any()) } returns true
 
         viewModel = CollectionListViewModel(
             getGroupedCollectionStreamUseCase = getGroupedCollectionItemsMock,
@@ -144,6 +151,75 @@ class CollectionListViewModelTest {
             viewModel.requestCollectionItems(refreshData = true)
 
             assert(viewModel.screenState.first() is UiState.Success)
+        }
+    }
+
+    @Nested
+    inner class CanLoadMore {
+
+        @Test
+        @DisplayName("Given we not loading anything, returns true")
+        fun givenRequestStateIsSuccess_returnsTrue() = runTest {
+            every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
+            coEvery { requestMoreCollectionItemsMock(any()) } returns true
+
+            viewModel.canLoadMore.test {
+                assertEquals(true, awaitItem())
+            }
+        }
+
+        @Test
+        @DisplayName("Given we're loading more items, returns false")
+        fun givenRequestStateIsLoadingMore_returnsFalse() = runTest {
+            every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
+            coEvery { requestMoreCollectionItemsMock(any()) } coAnswers {
+                delay(50) // Assume some delay in answering
+                true
+            }
+
+            viewModel.canLoadMore.test {
+                assertEquals(true, awaitItem())
+
+                viewModel.requestCollectionItems(refreshData = false)
+
+                assertEquals(false, awaitItem())
+            }
+        }
+
+        @Test
+        @DisplayName("Given we're refreshing items, returns false")
+        fun givenRequestStateIsRefreshing_returnsFalse() = runTest {
+            every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
+            coEvery { requestMoreCollectionItemsMock(any()) } coAnswers {
+                delay(50) // Assume some delay in answering
+                true
+            }
+
+            viewModel.canLoadMore.test {
+                assertEquals(true, awaitItem())
+
+                viewModel.requestCollectionItems(refreshData = true)
+
+                assertEquals(false, awaitItem())
+            }
+        }
+
+        @Test
+        @DisplayName("Given all items have been loaded, returns false")
+        fun givenRequestStateIsAllItemsLoaded_returnsFalse() = runTest {
+            every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
+            coEvery { requestMoreCollectionItemsMock(any()) } coAnswers {
+                delay(50) // Assume some delay in answering
+                false
+            }
+
+            viewModel.canLoadMore.test {
+                assertEquals(true, awaitItem())
+
+                viewModel.requestCollectionItems()
+
+                assertEquals(false, awaitItem())
+            }
         }
     }
 }

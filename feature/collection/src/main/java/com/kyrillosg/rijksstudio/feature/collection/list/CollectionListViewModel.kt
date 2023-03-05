@@ -29,14 +29,6 @@ internal class CollectionListViewModel(
     val searchQuery: String?
         get() = _searchQuery.value
 
-    val canLoadMore: Boolean
-        get() {
-            val isLoading = _requestCollectionItemsState.value == RequestState.LoadingMore
-            val isRefreshing = _requestCollectionItemsState.value == RequestState.Refreshing
-            val hasLoadedAllItems = _requestCollectionItemsState.value == RequestState.AllItemsLoaded
-            return !isLoading && !isRefreshing && !hasLoadedAllItems
-        }
-
     val screenState: Flow<UiState<CollectionScreenModel>>
         get() = _groupBy
             .combine(_requestCollectionItemsState) { groupBy, requestState ->
@@ -50,6 +42,20 @@ internal class CollectionListViewModel(
                     .map { collection -> collection.toUiState(requestState = pair.second) }
                     .flowOn(Dispatchers.Default)
             }
+
+    val canLoadMore: StateFlow<Boolean>
+        get() = _requestCollectionItemsState
+            .map { requestState ->
+                when (requestState) {
+                    RequestState.LoadingMore, RequestState.Refreshing, RequestState.AllItemsLoaded -> false
+                    RequestState.None, RequestState.Success, is RequestState.Error -> true
+                }
+            }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Lazily,
+                initialValue = true,
+            )
 
     init {
         requestCollectionItems(refreshData = true)
@@ -86,13 +92,13 @@ internal class CollectionListViewModel(
             return
         }
 
-        viewModelScope.launch(Dispatchers.Default) {
-            if (refreshData) {
-                _requestCollectionItemsState.value = RequestState.Refreshing
-            } else {
-                _requestCollectionItemsState.value = RequestState.LoadingMore
-            }
+        if (refreshData) {
+            _requestCollectionItemsState.value = RequestState.Refreshing
+        } else {
+            _requestCollectionItemsState.value = RequestState.LoadingMore
+        }
 
+        viewModelScope.launch(Dispatchers.Default) {
             runCatching {
                 val hasMoreItems = requestMoreCollectionItemsUseCase(
                     input = RequestMoreCollectionItemsUseCase.Params(

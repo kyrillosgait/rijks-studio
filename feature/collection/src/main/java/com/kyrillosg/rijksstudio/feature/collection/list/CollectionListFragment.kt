@@ -20,7 +20,9 @@ import com.kyrillosg.rijksstudio.core.ui.addOnEndlessScrollListener
 import com.kyrillosg.rijksstudio.feature.collection.R
 import com.kyrillosg.rijksstudio.feature.collection.adapter.CollectionListAdapter
 import com.kyrillosg.rijksstudio.feature.collection.databinding.FragmentCollectionListBinding
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CollectionListFragment :
@@ -57,7 +59,7 @@ class CollectionListFragment :
             layoutManager = LinearLayoutManager(requireContext())
 
             addOnEndlessScrollListener(
-                predicate = { viewModel.canLoadMore },
+                predicate = { runBlocking { viewModel.canLoadMore.first() } },
                 onTrigger = { viewModel.requestCollectionItems(refreshData = false) },
             )
         }
