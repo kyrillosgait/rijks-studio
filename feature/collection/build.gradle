@@ -1,6 +1,7 @@
 plugins {
     id 'rijksstudio-library-convention'
     id 'rijksstudio-spotless-convention'
+    id 'rijksstudio-test-convention'
     id 'androidx.navigation.safeargs.kotlin'
 }
 
