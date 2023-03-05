@@ -13,7 +13,7 @@
         android:layout_height="64dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        tools:background="@color/black" />
+        android:background="#B8B8B8" />
 
     <TextView
         android:id="@+id/label"
