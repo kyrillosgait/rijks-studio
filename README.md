@@ -19,14 +19,31 @@ MVVM with presentation-domain-data layering. Organized into multiple gradle modu
 
 ![gradle modules](/images/modules.png)
 
-- `:app` -> Application class, single activity, test for dependency injection declarations.
-- `:feature:collection` -> Collection list and detail fragments along with their corresponding view models.
-- `:core:ui` -> Common extensions and reusable views that feature modules can tap into.
-- `:core:domain` -> Core models of the app, the repository interface, and use cases encapsulating reusable business logic, unit tested.
-- `:core:data` -> Repository implementation consuming the API gateway, unit tested.
-- `:core:network` -> API gateway implementation along with the network models, unit tested.
-- `:core:di` -> Glues domain and data layer modules. Provides them to `:app`.
-- `:build-logic` -> Reusable gradle precompiled script plugins.
+- `:app`
+  - Application class
+  - MainActivity
+  - Unit test for dependency injection declarations
+  - Test Application class for Instrumentation tests
+- `:feature:collection`
+  - Collection list Fragment, Adapter, and ViewModel
+  - Collection detail Fragment and ViewModel
+  - Unit tests for the ViewModels
+- `:core:ui` - Common extensions and a reusable view, which feature modules can tap into
+- `:core:domain`
+  - Domain entities and value objects
+  - Repository interface
+  - Use cases
+  - Unit tests for the use cases, along with fake implementations of the domain entities and the repository to enable testing the module independently
+- `:core:data`
+  - API gateway interface
+  - Default implementation of the repository
+  - Unit tests for the repository, along with a fake implementation of the gateway to enable testing the module independently
+- `:core:network`
+  - API models
+  - Default implementation of the API gateway
+  - Unit tests for the api gateway
+- `:core:di` - Glues domain and data layer modules
+- `:build-logic` - Reusable gradle precompiled script plugins
 
 ## Tooling
 - Kotlin, coroutines for asynchronous operations and flow for observable data streams
