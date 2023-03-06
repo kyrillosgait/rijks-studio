@@ -8,7 +8,6 @@ import com.kyrillosg.rijksstudio.core.domain.collection.CollectionRepository
 import com.kyrillosg.rijksstudio.core.domain.collection.fakes.fakeItems
 import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.model.DetailedCollectionItem
-import kotlinx.coroutines.delay
 
 internal class FakeRijksGateway(
     private val collectionItems: List<DetailedCollectionItem> = fakeItems,
@@ -16,8 +15,6 @@ internal class FakeRijksGateway(
 ) : RijksGateway {
 
     override suspend fun getCollection(filter: CollectionFilter): PaginatedData<List<CollectionItem>> {
-        delay(1_000)
-
         val start = filter.page * pageSize
         val items = (start until start + filter.pageSize).mapNotNull {
             runCatching { collectionItems[it] }.getOrNull()

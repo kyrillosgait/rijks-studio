@@ -63,6 +63,7 @@ coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 junit4 = { module = "junit:junit", version.ref = "junit4" }
 junit5-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit5" }
 junit5-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit5" }
+junit5-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junit5" }
 junit5-android-test-core = { module = "de.mannodermaus.junit5:android-test-core", version.ref = "junit5AndroidInstrumentation" }
 junit5-android-test-runner = { module = "de.mannodermaus.junit5:android-test-runner", version.ref = "junit5AndroidInstrumentation" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }

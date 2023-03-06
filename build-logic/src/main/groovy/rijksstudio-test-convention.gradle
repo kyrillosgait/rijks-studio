@@ -9,6 +9,7 @@ junitPlatform {
 dependencies {
     testImplementation(libs.junit5.api)
     testRuntimeOnly(libs.junit5.engine)
+    testImplementation(libs.junit5.params)
 
     testImplementation(libs.mockk)
     testImplementation(libs.turbine)

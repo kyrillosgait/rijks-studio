@@ -14,11 +14,12 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.EnumSource
 import java.util.*
 
 class DefaultCollectionRepositoryTest {
 
-    private val groupField = GroupField.NONE
     private val pageSize = 4
 
     private val repository = DefaultCollectionRepository(
@@ -43,7 +44,9 @@ class DefaultCollectionRepositoryTest {
 
     @AfterEach
     fun teardown() = runTest {
-        repository.invalidateCollectionItems(groupField)
+        GroupField.values().forEach {
+            repository.invalidateCollectionItems(it)
+        }
     }
 
     @Nested
@@ -73,17 +76,19 @@ class DefaultCollectionRepositoryTest {
     @Nested
     inner class GetCollectionItemsStream {
 
-        @Test
         @DisplayName("Is empty if no request was made")
-        fun isEmpty_ifNoRequestWasMade() = runTest {
+        @ParameterizedTest
+        @EnumSource
+        fun isEmpty_ifNoRequestWasMade(groupField: GroupField) = runTest {
             val items = repository.getCollectionItemsStream(groupField).first()
 
             assertEquals(0, items.size)
         }
 
-        @Test
         @DisplayName("Can return same number of items if there are no more items to load")
-        fun canReturnSameNumberOfItems_givenThereAreNoMoreItemsToLoad() = runTest {
+        @ParameterizedTest
+        @EnumSource
+        fun canReturnSameNumberOfItems_givenThereAreNoMoreItemsToLoad(groupField: GroupField) = runTest {
             // Given there are no more available items
             repository.requestMoreCollectionItems(groupField, count = pageSize)
             repository.requestMoreCollectionItems(groupField, count = pageSize)
@@ -102,9 +107,10 @@ class DefaultCollectionRepositoryTest {
     @Nested
     inner class InvalidateCollectionItems {
 
-        @Test
         @DisplayName("Given a group field, clears all collection items for that group field")
-        fun clearsAllCollectionItems_givenAGroupField() = runTest {
+        @ParameterizedTest
+        @EnumSource
+        fun clearsAllCollectionItems_givenAGroupField(groupField: GroupField) = runTest {
             // Given some items exist
             repository.requestMoreCollectionItems(groupField, pageSize)
 
@@ -119,9 +125,10 @@ class DefaultCollectionRepositoryTest {
     @Nested
     inner class RequestMoreCollectionItems {
 
-        @Test
         @DisplayName("Given a group field, requests more items for that group field")
-        fun requestsMoreItems_givenAGroupField() = runTest {
+        @ParameterizedTest
+        @EnumSource
+        fun requestsMoreItems_givenAGroupField(groupField: GroupField) = runTest {
             val itemsBeforeLoadingMore = repository.getCollectionItemsStream(groupField).first()
             repository.requestMoreCollectionItems(groupField, count = pageSize)
             repository.requestMoreCollectionItems(groupField, count = pageSize)
