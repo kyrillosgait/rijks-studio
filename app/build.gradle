@@ -5,7 +5,6 @@ plugins {
     id 'rijksstudio-test-convention'
     id 'rijksstudio-spotless-convention'
 }
-
 def versionPropertiesFile = project.file('version.properties')
 def versionProperties = new Properties()
 versionPropertiesFile.withInputStream { versionProperties.load(it) }
@@ -48,11 +47,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11
+        jvmTarget = JavaVersion.VERSION_17
     }
     buildFeatures {
         viewBinding true
