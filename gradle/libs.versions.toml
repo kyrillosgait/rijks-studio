@@ -34,7 +34,7 @@ material = "1.8.0"
 mockk = "1.13.4"
 napier = "2.6.1"
 slf4j = "2.0.6"
-spotless = "6.15.0"
+spotless = "6.16.0"
 turbine = "0.12.1"
 
 [libraries]
