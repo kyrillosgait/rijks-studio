@@ -73,6 +73,10 @@ android {
     }
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 dependencies {
     implementation(project(":core:di"))
     implementation(project(":feature:collection"))
