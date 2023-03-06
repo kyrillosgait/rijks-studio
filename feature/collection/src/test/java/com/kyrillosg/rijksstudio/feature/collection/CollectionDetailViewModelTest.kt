@@ -8,6 +8,7 @@ import com.kyrillosg.rijksstudio.core.domain.collection.model.CollectionItem
 import com.kyrillosg.rijksstudio.core.domain.collection.usecases.GetDetailedCollectionItemUseCase
 import com.kyrillosg.rijksstudio.core.ui.UiState
 import com.kyrillosg.rijksstudio.feature.collection.detail.CollectionDetailViewModel
+import com.kyrillosg.rijksstudio.feature.collection.detail.DetailScreenModel
 import com.kyrillosg.rijksstudio.feature.common.CoroutinesTestExtension
 import io.mockk.clearMocks
 import io.mockk.coEvery
@@ -15,6 +16,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(CoroutinesTestExtension::class)
@@ -37,7 +39,7 @@ class CollectionDetailViewModelTest {
     @DisplayName("Initial screen state is loading")
     fun initialScreenStateIsLoading() = runTest {
         viewModel.screenState.test {
-            assert(awaitItem() is UiState.Loading)
+            assertEquals(UiState.Loading, awaitItem())
         }
     }
 
@@ -50,25 +52,26 @@ class CollectionDetailViewModelTest {
             coEvery { getDetailedCollectionItemMock(any()) } throws Exception("Not found")
 
             viewModel.screenState.test {
-                assert(awaitItem() is UiState.Loading)
+                assertEquals(UiState.Loading, awaitItem())
 
                 viewModel.getDetails(CollectionItem.Id("Invalid ID"))
 
-                assert(awaitItem() is UiState.Error)
+                assertEquals(UiState.Error("Not found"), awaitItem())
             }
         }
 
         @Test
         @DisplayName("Given a valid ID, leads to successful UI state")
         fun givenValidId_leadsToSuccessUiState() = runTest {
-            coEvery { getDetailedCollectionItemMock(any()) } returns FakeDetailedCollectionItem.create()
+            val expected = FakeDetailedCollectionItem.create(id = CollectionItem.Id("Valid ID"))
+            coEvery { getDetailedCollectionItemMock(any()) } returns expected
 
             viewModel.screenState.test {
-                assert(awaitItem() is UiState.Loading)
+                assertEquals(UiState.Loading, awaitItem())
 
                 viewModel.getDetails(CollectionItem.Id("Valid ID"))
 
-                assert(awaitItem() is UiState.Success)
+                assertEquals(UiState.Success(DetailScreenModel.from(expected)), awaitItem())
             }
         }
     }
