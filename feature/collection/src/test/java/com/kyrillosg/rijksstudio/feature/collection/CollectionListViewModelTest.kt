@@ -8,11 +8,11 @@ import com.kyrillosg.rijksstudio.core.domain.collection.usecases.GroupField
 import com.kyrillosg.rijksstudio.core.domain.collection.usecases.RequestMoreCollectionItemsUseCase
 import com.kyrillosg.rijksstudio.core.ui.UiState
 import com.kyrillosg.rijksstudio.feature.collection.list.CollectionListViewModel
+import com.kyrillosg.rijksstudio.feature.collection.list.CollectionScreenModel
 import com.kyrillosg.rijksstudio.feature.common.CoroutinesTestExtension
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.*
 import org.junit.jupiter.api.*
@@ -120,11 +120,16 @@ class CollectionListViewModelTest {
         @DisplayName("Given successful request, returns successful UI state")
         fun givenSuccessfulRequest_returnsSuccessfulUiState() = runTest {
             every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
-            coEvery { requestMoreCollectionItemsMock(any()) } returns false
+            coEvery { requestMoreCollectionItemsMock(any()) } returns true
 
-            viewModel.requestCollectionItems()
+            viewModel.screenState.test {
+                assertEquals(UiState.Success(CollectionScreenModel(emptyList())), awaitItem())
 
-            assert(viewModel.screenState.first() is UiState.Success)
+                viewModel.requestCollectionItems(refreshData = true)
+
+                assertEquals(UiState.Success(CollectionScreenModel(emptyList())), awaitItem())
+                assertEquals(UiState.Success(CollectionScreenModel(emptyList())), awaitItem())
+            }
         }
 
         @Test
@@ -133,9 +138,14 @@ class CollectionListViewModelTest {
             every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
             coEvery { requestMoreCollectionItemsMock(any()) } throws Exception("Something went wrong")
 
-            viewModel.requestCollectionItems(refreshData = true)
+            viewModel.screenState.test {
+                assertEquals(UiState.Success(CollectionScreenModel(emptyList())), awaitItem())
 
-            assert(viewModel.screenState.first() is UiState.Error)
+                viewModel.requestCollectionItems(refreshData = true)
+
+                assertEquals(UiState.Success(CollectionScreenModel(emptyList())), awaitItem())
+                assertEquals(UiState.Error(message = "Something went wrong"), awaitItem())
+            }
         }
 
         @Test
@@ -143,14 +153,22 @@ class CollectionListViewModelTest {
         fun givenFailedRequest_andThenSuccessfulRequest_returnsSuccessfulUiState() = runTest {
             every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
             coEvery { requestMoreCollectionItemsMock(any()) } throws Exception("Something went wrong")
-            viewModel.requestCollectionItems(refreshData = true)
 
-            assert(viewModel.screenState.first() is UiState.Error)
+            viewModel.screenState.test {
+                assertEquals(UiState.Success(CollectionScreenModel(emptyList())), awaitItem())
 
-            coEvery { requestMoreCollectionItemsMock(any()) } returns false
-            viewModel.requestCollectionItems(refreshData = true)
+                viewModel.requestCollectionItems(refreshData = true)
 
-            assert(viewModel.screenState.first() is UiState.Success)
+                assertEquals(UiState.Success(CollectionScreenModel(emptyList())), awaitItem())
+                assertEquals(UiState.Error(message = "Something went wrong"), awaitItem())
+
+                coEvery { requestMoreCollectionItemsMock(any()) } returns true
+
+                viewModel.requestCollectionItems(refreshData = true)
+
+                assertEquals(UiState.Success(CollectionScreenModel(emptyList())), awaitItem())
+                assertEquals(UiState.Success(CollectionScreenModel(emptyList())), awaitItem())
+            }
         }
     }
 
@@ -172,10 +190,7 @@ class CollectionListViewModelTest {
         @DisplayName("Given we're loading more items, returns false")
         fun givenRequestStateIsLoadingMore_returnsFalse() = runTest {
             every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
-            coEvery { requestMoreCollectionItemsMock(any()) } coAnswers {
-                delay(50) // Assume some delay in answering
-                true
-            }
+            coEvery { requestMoreCollectionItemsMock(any()) } returns true
 
             viewModel.canLoadMore.test {
                 assertEquals(true, awaitItem())
@@ -183,6 +198,7 @@ class CollectionListViewModelTest {
                 viewModel.requestCollectionItems(refreshData = false)
 
                 assertEquals(false, awaitItem())
+                assertEquals(true, awaitItem())
             }
         }
 
@@ -190,10 +206,7 @@ class CollectionListViewModelTest {
         @DisplayName("Given we're refreshing items, returns false")
         fun givenRequestStateIsRefreshing_returnsFalse() = runTest {
             every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
-            coEvery { requestMoreCollectionItemsMock(any()) } coAnswers {
-                delay(50) // Assume some delay in answering
-                true
-            }
+            coEvery { requestMoreCollectionItemsMock(any()) } returns true
 
             viewModel.canLoadMore.test {
                 assertEquals(true, awaitItem())
@@ -201,6 +214,7 @@ class CollectionListViewModelTest {
                 viewModel.requestCollectionItems(refreshData = true)
 
                 assertEquals(false, awaitItem())
+                assertEquals(true, awaitItem())
             }
         }
 
@@ -208,10 +222,7 @@ class CollectionListViewModelTest {
         @DisplayName("Given all items have been loaded, returns false")
         fun givenRequestStateIsAllItemsLoaded_returnsFalse() = runTest {
             every { getGroupedCollectionItemsMock(any()) } returns flowOf(emptyList())
-            coEvery { requestMoreCollectionItemsMock(any()) } coAnswers {
-                delay(50) // Assume some delay in answering
-                false
-            }
+            coEvery { requestMoreCollectionItemsMock(any()) } returns true
 
             viewModel.canLoadMore.test {
                 assertEquals(true, awaitItem())
@@ -219,6 +230,7 @@ class CollectionListViewModelTest {
                 viewModel.requestCollectionItems()
 
                 assertEquals(false, awaitItem())
+                assertEquals(true, awaitItem())
             }
         }
     }
