@@ -39,8 +39,8 @@ internal class CollectionListViewModel(
 
                 getGroupedCollectionStreamUseCase(groupBy)
                     .map { collection -> collection.toUiState(requestState = pair.second) }
-                    .flowOn(Dispatchers.Default)
             }
+            .distinctUntilChanged()
             .flowOn(Dispatchers.Default)
 
     val canLoadMore: StateFlow<Boolean>
@@ -51,6 +51,7 @@ internal class CollectionListViewModel(
                     RequestState.None, RequestState.Success, is RequestState.Error -> true
                 }
             }
+            .distinctUntilChanged()
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.Lazily,

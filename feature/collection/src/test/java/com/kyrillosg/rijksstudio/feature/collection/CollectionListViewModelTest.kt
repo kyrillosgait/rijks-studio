@@ -123,11 +123,8 @@ class CollectionListViewModelTest {
             coEvery { requestMoreCollectionItemsMock(any()) } returns true
 
             viewModel.screenState.test {
-                assertEquals(UiState.Success(CollectionScreenModel(emptyList())), awaitItem())
-
                 viewModel.requestCollectionItems(refreshData = true)
 
-                assertEquals(UiState.Success(CollectionScreenModel(emptyList())), awaitItem())
                 assertEquals(UiState.Success(CollectionScreenModel(emptyList())), awaitItem())
             }
         }
@@ -143,7 +140,6 @@ class CollectionListViewModelTest {
 
                 viewModel.requestCollectionItems(refreshData = true)
 
-                assertEquals(UiState.Success(CollectionScreenModel(emptyList())), awaitItem())
                 assertEquals(UiState.Error(message = "Something went wrong"), awaitItem())
             }
         }
@@ -159,14 +155,12 @@ class CollectionListViewModelTest {
 
                 viewModel.requestCollectionItems(refreshData = true)
 
-                assertEquals(UiState.Success(CollectionScreenModel(emptyList())), awaitItem())
                 assertEquals(UiState.Error(message = "Something went wrong"), awaitItem())
 
                 coEvery { requestMoreCollectionItemsMock(any()) } returns true
 
                 viewModel.requestCollectionItems(refreshData = true)
 
-                assertEquals(UiState.Success(CollectionScreenModel(emptyList())), awaitItem())
                 assertEquals(UiState.Success(CollectionScreenModel(emptyList())), awaitItem())
             }
         }
