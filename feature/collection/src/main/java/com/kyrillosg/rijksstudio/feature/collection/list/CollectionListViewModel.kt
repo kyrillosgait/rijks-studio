@@ -38,10 +38,10 @@ internal class CollectionListViewModel(
                 val groupBy = pair.first
 
                 getGroupedCollectionStreamUseCase(groupBy)
-                    .distinctUntilChanged()
                     .map { collection -> collection.toUiState(requestState = pair.second) }
                     .flowOn(Dispatchers.Default)
             }
+            .flowOn(Dispatchers.Default)
 
     val canLoadMore: StateFlow<Boolean>
         get() = _requestCollectionItemsState
