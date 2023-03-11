@@ -9,7 +9,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.EnumSource
 
 class RequestMoreCollectionItemsUseCaseTest {
 
@@ -17,15 +18,18 @@ class RequestMoreCollectionItemsUseCaseTest {
 
     @AfterEach
     fun teardown() = runTest {
-        repository.invalidateCollectionItems(GroupField.NONE)
+        GroupField.values().forEach {
+            repository.invalidateCollectionItems(it)
+        }
     }
 
-    @Test
     @DisplayName("Given no refresh adds data on top")
-    fun appendsData_givenNoRefresh() = runTest {
+    @ParameterizedTest
+    @EnumSource
+    fun appendsData_givenNoRefresh(groupField: GroupField) = runTest {
         val useCase = RequestMoreCollectionItemsUseCase(repository)
         val params = RequestMoreCollectionItemsUseCase.Params(
-            groupBy = GroupField.NONE,
+            groupBy = groupField,
             refreshData = false,
             count = 4,
         )
@@ -41,12 +45,13 @@ class RequestMoreCollectionItemsUseCaseTest {
         assertEquals(8, itemsAfter - itemsBefore)
     }
 
-    @Test
     @DisplayName("Given refresh replaces current data")
-    fun replacesCurrentData_givenRefresh() = runTest {
+    @ParameterizedTest
+    @EnumSource
+    fun replacesCurrentData_givenRefresh(groupField: GroupField) = runTest {
         val useCase = RequestMoreCollectionItemsUseCase(repository)
         val params = RequestMoreCollectionItemsUseCase.Params(
-            groupBy = GroupField.NONE,
+            groupBy = groupField,
             refreshData = true,
             count = 4,
         )
