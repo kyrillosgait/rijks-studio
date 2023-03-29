@@ -28,7 +28,7 @@ internal sealed interface CollectionListModel {
                 return ImageWithLabel(
                     uniqueId = collectionItem.itemId.value,
                     label = collectionItem.title,
-                    image = collectionItem.image?.url,
+                    image = collectionItem.thumbnailUrl,
                     header = collectionItem.author,
                 )
             }

@@ -50,8 +50,8 @@ internal data class DetailScreenModel(
     companion object {
         fun from(item: DetailedCollectionItem): DetailScreenModel {
             return DetailScreenModel(
-                imageUrl = item.image?.url,
-                imageRatio = item.image?.toImageRatio(),
+                imageUrl = item.imageUrl,
+                imageRatio = item.originalImage?.toImageRatio(),
                 description = item.plaqueDescription ?: item.description,
                 colors = item.normalizedColors.toViewModel(label = "Colors"),
                 normalizedColors = item.normalizedColors.toViewModel(label = "Normalized colors"),

@@ -8,7 +8,9 @@ interface CollectionItem {
     val itemId: Id
     val title: String
     val author: String
-    val image: CollectionItemImage?
+    val originalImage: CollectionItemImage?
+    val imageUrl: String?
+    val thumbnailUrl: String?
 
     @Serializable
     @Parcelize

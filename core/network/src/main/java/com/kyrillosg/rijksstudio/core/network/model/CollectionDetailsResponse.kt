@@ -16,7 +16,7 @@ internal data class NetworkCollectionDetailsItem(
     val objectNumber: String,
     val principalOrFirstMaker: String,
     val plaqueDescriptionEnglish: String? = null,
-    @SerialName("webImage") override val image: NetworkCollectionImage? = null,
+    @SerialName("webImage") override val originalImage: NetworkCollectionImage? = null,
     override val title: String,
     override val description: String = "",
     override val colors: List<NetworkCollectionColor>,
@@ -31,6 +31,9 @@ internal data class NetworkCollectionDetailsItem(
 
     override val plaqueDescription: String?
         get() = plaqueDescriptionEnglish
+
+    override val imageUrl: String? = originalImage?.resizeTo(CollectionImageSize.REGULAR)
+    override val thumbnailUrl: String? = originalImage?.resizeTo(CollectionImageSize.THUMBNAIL)
 }
 
 @Serializable

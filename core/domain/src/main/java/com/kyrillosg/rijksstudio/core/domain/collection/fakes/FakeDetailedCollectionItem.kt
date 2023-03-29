@@ -10,7 +10,9 @@ data class FakeDetailedCollectionItem(
     override val itemId: CollectionItem.Id,
     override val title: String,
     override val author: String,
-    override val image: CollectionItemImage?,
+    override val originalImage: CollectionItemImage?,
+    override val imageUrl: String?,
+    override val thumbnailUrl: String?,
     override val description: String,
     override val plaqueDescription: String?,
     override val colors: List<CollectionItemColor>,
@@ -30,14 +32,17 @@ data class FakeDetailedCollectionItem(
             colors: List<CollectionItemColor> = emptyList(),
         ): DetailedCollectionItem {
             val imageUrl = "https://via.placeholder.com/${imageWidth}x$imageHeight.$imageFormat?text=$imageText"
+            val image = object : CollectionItemImage {
+                override val url = imageUrl
+                override val width = imageWidth
+                override val height = imageHeight
+            }
             return FakeDetailedCollectionItem(
                 itemId = id,
                 title = title,
-                image = object : CollectionItemImage {
-                    override val url = imageUrl
-                    override val width = imageWidth
-                    override val height = imageHeight
-                },
+                originalImage = image,
+                imageUrl = image.url,
+                thumbnailUrl = image.url,
                 author = author,
                 description = description,
                 plaqueDescription = description,
