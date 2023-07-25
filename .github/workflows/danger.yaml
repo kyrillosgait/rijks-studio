@@ -16,3 +16,4 @@ jobs:
           args: --failOnErrors --no-publish-check --verbose
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      - run: danger-kotlin pr https://github.com/kyrillosgait/rijks-studio/pull/2 --failOnErrors --no-publish-check --verbose
