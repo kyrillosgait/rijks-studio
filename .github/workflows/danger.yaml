@@ -1,6 +1,7 @@
 name: Danger
 
-on: workflow_dispatch
+on:
+  pull_request:
 
 jobs:
   danger:
